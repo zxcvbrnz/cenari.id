@@ -80,6 +80,9 @@
                 <a href="{{ route('shop') }}" wire:navigate
                     class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('shop*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6]">Toko</a>
 
+                <a href="{{ route('blog.index') }}" wire:navigate
+                    class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('blog*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6]">Blog</a>
+
                 <a href="{{ route('b2b.solution') }}" wire:navigate
                     class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('b2b.*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-slate-900">Mitra
                     Sekolah</a>
@@ -160,6 +163,9 @@
                 <a href="{{ route('shop') }}" wire:navigate @click="mobileMenu = false"
                     class="text-xs font-black uppercase tracking-widest {{ request()->routeIs('shop*') ? 'text-[#3B82F6]' : 'text-slate-600' }}">Toko</a>
 
+                <a href="{{ route('blog.index') }}" wire:navigate @click="mobileMenu = false"
+                    class="text-xs font-black uppercase tracking-widest {{ request()->routeIs('blog*') ? 'text-[#3B82F6]' : 'text-slate-600' }}">Blog</a>
+
                 <div x-data="{ otherOpen: {{ request()->routeIs('course.*') || request()->routeIs('workshops*') ? 'true' : 'false' }} }">
                     <button @click="otherOpen = !otherOpen"
                         class="w-full flex justify-between items-center text-xs font-black uppercase tracking-widest {{ request()->routeIs('course.*') || request()->routeIs('workshops*') ? 'text-[#3B82F6]' : 'text-slate-600' }}">
@@ -209,17 +215,22 @@
                 <div>
                     <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Program</h4>
                     <ul class="space-y-3 text-slate-500 text-[11px] font-semibold">
-                        <li><a href="#" class="hover:text-[#3B82F6] transition-colors">Coding Academy</a></li>
-                        <li><a href="#" class="hover:text-[#3B82F6] transition-colors">Robotik Pro</a></li>
-                        <li><a href="#" class="hover:text-[#3B82F6] transition-colors">Digital Bisnis</a></li>
+                        <li><a href="{{ route('program.detail', 'software-control') }}"
+                                class="hover:text-[#3B82F6] transition-colors">Coding Academy</a></li>
+                        <li><a href="{{ route('program.detail', 'creative-design') }}"
+                                class="hover:text-[#3B82F6] transition-colors">Robotik Pro</a></li>
+                        <li><a href="{{ route('program.detail', 'business-intel') }}"
+                                class="hover:text-[#3B82F6] transition-colors">Digital Bisnis</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Lembaga</h4>
                     <ul class="space-y-3 text-slate-500 text-[11px] font-semibold">
-                        <li><a href="#" class="hover:text-[#3B82F6] transition-colors">Tentang Kami</a></li>
-                        <li><a href="#" class="hover:text-[#3B82F6] transition-colors">Mitra Sekolah</a></li>
+                        <li><a href="https://cenari.sch.id/profil"
+                                class="hover:text-[#3B82F6] transition-colors">Tentang Kami</a></li>
+                        <li><a href="{{ route('b2b.solution') }}"
+                                class="hover:text-[#3B82F6] transition-colors">Mitra Sekolah</a></li>
                         <li><a href="#" class="hover:text-[#3B82F6] transition-colors">Kontak</a></li>
                     </ul>
                 </div>

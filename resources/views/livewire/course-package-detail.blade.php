@@ -1,15 +1,6 @@
 <div class="min-h-screen bg-[#FBFDFF] py-12">
     <div class="max-w-7xl mx-auto px-6">
 
-        {{-- <a href="{{ route('course.packages') }}" wire:navigate
-            class="inline-flex items-center gap-2 text-slate-400 hover:text-[#3B82F6] transition-colors mb-8 group">
-            <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
-                viewBox="0 0 24 24">
-                <path d="M15 19l-7-7 7-7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <span class="text-[10px] font-black uppercase tracking-[0.2em]">Kembali ke Paket</span>
-        </a> --}}
-
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
             <div class="lg:col-span-8">
@@ -33,46 +24,129 @@
                 <div class="space-y-6">
                     <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-3">
                         <span class="w-8 h-[2px] bg-[#3B82F6]"></span>
-                        Kurikulum Pembelajaran
+                        Materi Pembelajaran
                     </h2>
 
-                    <div class="grid gap-4">
-                        @foreach ($package->moduls as $index => $module)
-                            <div x-data="{ open: false }"
-                                class="bg-white border border-slate-100 rounded-[1.5rem] overflow-hidden transition-all hover:shadow-md">
-                                <button @click="open = !open"
-                                    class="w-full px-8 py-6 flex items-center justify-between text-left">
-                                    <div class="flex items-center gap-6">
-                                        <span
-                                            class="text-2xl font-black text-slate-100 italic">0{{ $index + 1 }}</span>
-                                        <h3 class="font-bold text-slate-800 tracking-tight">{{ $module->title }}</h3>
-                                    </div>
-                                    <svg class="w-5 h-5 text-slate-400 transition-transform duration-300"
-                                        :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path d="M19 9l-7 7-7-7" stroke-width="2" />
-                                    </svg>
-                                </button>
+                    @if ($package->moduls)
+                        <div
+                            class="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-10 shadow-sm relative overflow-hidden">
+                            <span
+                                class="absolute -top-4 -right-4 text-8xl font-black text-slate-50 italic opacity-50 select-none">01</span>
 
-                                <div x-show="open" x-collapse x-cloak>
-                                    <div class="px-8 pb-8 ml-14 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        @foreach (['text_1', 'text_2', 'text_3', 'text_4'] as $field)
-                                            @if ($module->$field)
-                                                <div class="flex items-start gap-3">
-                                                    <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#3B82F6] shrink-0">
-                                                    </div>
-                                                    <span
-                                                        class="text-sm text-slate-500 font-medium">{{ $module->$field }}</span>
+                            <div class="relative">
+                                <h3 class="text-2xl font-black text-slate-800 tracking-tight mb-6">
+                                    {{ $package->moduls->title }}
+                                </h3>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+                                    @foreach (['text_1', 'text_2', 'text_3', 'text_4'] as $field)
+                                        @if ($package->moduls->$field)
+                                            <div
+                                                class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100/50 transition-colors hover:bg-white hover:border-blue-100">
+                                                <div
+                                                    class="mt-1 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-200">
+                                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round"
+                                                            stroke-linejoin="round" />
+                                                    </svg>
                                                 </div>
-                                            @endif
-                                        @endforeach
+                                                <span class="text-sm text-slate-600 font-bold leading-relaxed">
+                                                    {{ $package->moduls->$field }}
+                                                </span>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="p-8 border-2 border-dashed border-slate-100 rounded-[2rem] text-center">
+                            <p class="text-slate-400 text-sm font-medium italic">Detail materi belum tersedia untuk
+                                paket ini.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            @if ($package->kitRobotics)
+                <div class="mt-16 space-y-8">
+                    <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight flex items-center gap-3">
+                        <span class="w-8 h-[2px] bg-emerald-500"></span>
+                        Starter Kit Robotik
+                    </h2>
+
+                    <div
+                        class="bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-10 shadow-sm relative overflow-hidden group">
+                        <div
+                            class="absolute top-0 right-0 w-64 h-64 bg-slate-50 rounded-full -mr-32 -mt-32 transition-transform group-hover:scale-110">
+                        </div>
+
+                        <div class="relative grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+                            <div class="md:col-span-4 lg:col-span-3">
+                                <div
+                                    class="aspect-square bg-slate-900 rounded-[2rem] flex items-center justify-center shadow-2xl relative overflow-hidden">
+                                    <svg class="w-20 h-20 text-white/20 absolute -bottom-5 -right-5 rotate-12"
+                                        fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                    </svg>
+                                    <div class="text-center p-6">
+                                        <svg class="w-16 h-16 text-[#3B82F6] mx-auto mb-4" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                        </svg>
+                                        <span
+                                            class="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">Hardware
+                                            Kit</span>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+
+                            <div class="md:col-span-8 lg:col-span-9">
+                                <div class="flex flex-wrap items-center gap-3 mb-4">
+                                    <h3 class="text-2xl font-black text-slate-900 tracking-tight">
+                                        {{ $package->kitRobotics->name }}</h3>
+                                    @if ($package->kitRobotics->discount > 0)
+                                        <span
+                                            class="px-3 py-1 bg-rose-50 text-rose-500 text-[10px] font-black rounded-lg">Hemat
+                                            {{ $package->kitRobotics->discount }}%</span>
+                                    @endif
+                                </div>
+
+                                <p class="text-slate-500 text-sm leading-relaxed mb-8 max-w-xl italic">
+                                    "{{ $package->kitRobotics->description ?? 'Kit hardware lengkap yang dirancang khusus untuk menunjang modul praktik langsung di kelas ini.' }}"
+                                </p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    @if ($package->kitRobotics->pelatihan_price)
+                                        <div
+                                            class="bg-slate-50 p-5 rounded-2xl border border-slate-100 transition-colors hover:border-[#3B82F6]/30">
+                                            <p class="text-[9px] font-black uppercase text-slate-400 mb-1">Upgrade
+                                                Pelatihan</p>
+                                            <p class="text-lg font-black text-slate-900">+ Rp
+                                                {{ number_format($package->kitRobotics->pelatihan_price, 0, ',', '.') }}
+                                            </p>
+                                        </div>
+                                    @endif
+
+                                    @if ($package->kitRobotics->private_price)
+                                        <div
+                                            class="bg-slate-50 p-5 rounded-2xl border border-slate-100 transition-colors hover:border-[#3B82F6]/30">
+                                            <p class="text-[9px] font-black uppercase text-slate-400 mb-1">Opsi Private
+                                            </p>
+                                            <p class="text-lg font-black text-slate-900">+ Rp
+                                                {{ number_format($package->kitRobotics->private_price, 0, ',', '.') }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <div class="lg:col-span-4">
                 <div class="sticky top-28 space-y-6">

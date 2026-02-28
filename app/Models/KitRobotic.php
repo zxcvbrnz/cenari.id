@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class KitRobotic extends Model
 {
@@ -16,9 +18,9 @@ class KitRobotic extends Model
         'course_package_id',
     ];
 
-    public function moduls(): HasMany
+    public function moduls(): HasOne
     {
-        return $this->hasMany(KitRoboticModul::class);
+        return $this->hasOne(KitRoboticModul::class);
     }
 
     public function images(): HasMany
@@ -32,5 +34,10 @@ class KitRobotic extends Model
             ->using(ItemKitRobotic::class)
             ->withPivot('quantity')
             ->withTimestamps(); // agar created_at terisi otomatis
+    }
+
+    public function coursePackage(): BelongsTo
+    {
+        return $this->belongsTo(CoursePackage::class);
     }
 }

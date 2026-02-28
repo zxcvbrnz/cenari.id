@@ -12,7 +12,12 @@ class Shop extends Component
     use WithPagination;
 
     public $search = '';
-    public $viewMode = 'kits'; // 'kits' atau 'items'
+    public $viewMode = 'kits';
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {

@@ -5,6 +5,8 @@ use App\Livewire\CourseList;
 use App\Livewire\CoursePackageDetail;
 use App\Livewire\DetailProgram;
 use App\Livewire\HomePage;
+use App\Livewire\ItemDetail;
+use App\Livewire\KitDetail;
 use App\Livewire\PortfolioGallery;
 use App\Livewire\Shop;
 use App\Livewire\WorkshopDetail;
@@ -22,6 +24,10 @@ Route::get('/b2b-solution', B2BSolution::class)->name('b2b.solution');
 Route::get('/portfolio-gallery', PortfolioGallery::class)->name('portfolio.gallery');
 
 Route::get('/shop', Shop::class)->name('shop');
+Route::get('/shop/kit/{id}', KitDetail::class)->name('kit.detail');
+Route::get('/shop/item/{id}', ItemDetail::class)->name('item.detail');
+
+Route::get('/blog', Shop::class)->name('blog.index');
 
 Route::get('/course-packages', CourseList::class)->name('course.packages');
 

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CoursePackage extends Model
 {
@@ -25,8 +26,13 @@ class CoursePackage extends Model
         return $this->belongsTo(Program::class);
     }
 
-    public function moduls(): HasMany
+    public function moduls(): HasOne
     {
-        return $this->hasMany(ModulCoursePackage::class);
+        return $this->hasOne(ModulCoursePackage::class);
+    }
+
+    public function kitRobotics(): HasOne
+    {
+        return $this->hasOne(KitRobotic::class);
     }
 }
