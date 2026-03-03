@@ -62,7 +62,7 @@
                     class="bg-[#0F172A]/70 backdrop-blur-2xl border border-white/10 p-5 md:p-7 rounded-[2rem] shadow-2xl max-w-fit w-full text-center transition-all duration-500 hover:bg-[#0F172A]/90 hover:border-white/20">
 
                     <h1
-                        class="font-heading text-base md:text-xl font-bold text-white mb-2 uppercase tracking-widest whitespace-nowrap">
+                        class="font-heading text-sm md:text-xl font-bold text-white mb-2 uppercase tracking-widest whitespace-nowrap">
                         Kuasai Teknologi. <span class="text-[#84CC16]">Kendalikan Masa Depan.</span>
                     </h1>
 
