@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Program;
 use App\Models\CoursePackage;
+use App\Models\Instansi;
 use App\Models\MissingLink;
 use App\Models\Workshop;
 use Illuminate\Database\Seeder;
@@ -13,9 +14,24 @@ class ProgramSeeder extends Seeder
 {
     public function run(): void
     {
+        $cenari = Instansi::create([
+            'name' => 'Cenari Education Center',
+            'profile' => 'Yayasan Cerdas Banua Mandiri (CENARI) bergerak dalam bidang pendidikan, yang dikelola secara professional dengan konsep memberikan lebih... dan yang terbaikyang berdomisili di Banjarmasin - Kalimantan Selatan. Berawal dari minimnya informasi tentang Informasi Teknologi serta masih banyaknya masyarakat yang belum mengerti tentang Informasi Teknologi. Maka sejumlah tenaga professional, yang sebagian besar terdiri dari kalangan praktisi, dosen dan guru bergabung suatu wadah yang bernama Yayasan Cerdas Banua Mandiri (CENARI) sebagai antisipasi kebutuhan masyarakat akan pendidikan.'
+        ]);
+        $sekolah_robot = Instansi::create([
+            'name' => 'Sekolah Robot Banjarmasin',
+            'profile' => 'Sekolah Robot Banjarmasin merupakan Lembaga Kursus dan Pelatihan yang bergerak di bidang Teknologi (Robotik & IOT) dan pertama di Banjarmasin.
+
+Sekolah Robot Banjarmasin mempunyai program unggulan seperti: Making Robot, Ekstrakurikuler Robotik, Lego Robotik, Elektronika Sederhana, Workshop Robotik, Camp Robotik, Membuat RC Car dan Drone, Pelatihan Arduino Basic, dan IOT.
+
+Sekolah Robot Banjarmasin didirikan diawal tahun 2018, merupakan sebagai tindak lanjut untuk menciptakan sumber daya manusia yang handal dibidang teknologi disemua lini usia dari tingkat PAUD sampai dengan umum.
+Sekolah Robot Banjarmasin didukung tenaga profesional dari dunia praktisi dan pendidikan, kami siap berbagi pengetahuan dan pengalaman.'
+        ]);
         $data = [
             'smart-building' => [
                 'title' => 'Smart Architecture & BIM',
+                'navigation' => 'Desain',
+                'instansi_id' => $cenari->id,
                 'category' => ['Architecture'],
                 'hero_image' => 'https://images.pexels.com/photos/323705/pexels-photo-323705.jpeg',
                 'accent_color' => '#3B82F6',
@@ -32,26 +48,51 @@ class ProgramSeeder extends Seeder
                     'url' => 'creative-design'
                 ]
             ],
-            'creative-design' => [
-                'title' => 'Visual Branding & UI Design',
-                'category' => ['Desain', 'Robotik'],
-                'hero_image' => 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg',
-                'accent_color' => '#84CC16',
-                'icon' => 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-                'badges' => ['UI/UX Focus', 'Tech-Driven'],
+            'web-programming' => [
+                'title' => 'Fullstack Web Development',
+                'navigation' => 'Web Developer',
+                'instansi_id' => $cenari->id,
+                'category' => ['Programming', 'Web'],
+                'hero_image' => 'https://images.pexels.com/photos/270408/pexels-photo-270408.jpeg', // Gambar coding/workspace
+                'accent_color' => '#2563EB', // Blue-600 yang techy
+                'icon' => 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4', // Icon kode </>
+                'badges' => ['Laravel Ecosystem', 'Industry Ready'],
                 'course_packages' => [
-                    ['level' => 1, 'name_ref' => 'Visual Branding', 'tool' => 'Corel/Canva', 'count' => 10, 'price' => 1200000],
-                    ['level' => 2, 'name_ref' => 'UI Design', 'tool' => 'Figma', 'count' => 10, 'price' => 1800000],
-                    ['level' => 3, 'name_ref' => 'Interactive App', 'tool' => 'Robot Controller', 'count' => 10, 'price' => 2200000],
+                    [
+                        'level' => 1,
+                        'name_ref' => 'Frontend Foundation',
+                        'tool' => 'HTML, CSS & Tailwind',
+                        'count' => 12,
+                        'price' => 1500000,
+                        'slug' => 'frontend-foundation'
+                    ],
+                    [
+                        'level' => 2,
+                        'name_ref' => 'Backend Core',
+                        'tool' => 'PHP & Laravel Basic',
+                        'count' => 15,
+                        'price' => 2500000,
+                        'slug' => 'backend-core'
+                    ],
+                    [
+                        'level' => 3,
+                        'name_ref' => 'Fullstack Pro',
+                        'tool' => 'Livewire & Alpine JS',
+                        'count' => 20,
+                        'price' => 3500000,
+                        'slug' => 'fullstack-pro'
+                    ],
                 ],
                 'missing_link' => [
-                    'text' => 'Desainer Grafis di Cenari tidak cuma gambar, tapi belajar mendesain antarmuka aplikasi untuk mengontrol Robot.',
-                    'cta' => 'Pelajari Kontroler Robot',
-                    'url' => 'software-control'
+                    'text' => 'Bukan sekadar website biasa, di Cenari Anda belajar membangun Dashboard IoT untuk memantau perangkat pintar secara Real-Time.',
+                    'cta' => 'Pelajari Dashboard IoT',
+                    'url' => 'iot-dashboard'
                 ]
             ],
             'business-intel' => [
                 'title' => 'Digital Business Productivity',
+                'navigation' => 'Bisnis $ AI',
+                'instansi_id' => $cenari->id,
                 'category' => ['Office', 'AI'],
                 'hero_image' => 'https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg',
                 'accent_color' => '#3B82F6',
@@ -70,6 +111,8 @@ class ProgramSeeder extends Seeder
             ],
             'software-control' => [
                 'title' => 'Software & Hardware Control',
+                'navigation' => 'Robotik & IoT',
+                'instansi_id' => $sekolah_robot->id,
                 'category' => ['Web', 'Microcontroller'],
                 'hero_image' => 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg',
                 'accent_color' => '#84CC16',
@@ -91,7 +134,9 @@ class ProgramSeeder extends Seeder
         foreach ($data as $slug => $item) {
             $program = Program::create([
                 'slug' => $slug,
+                'instansi_id' => $item['instansi_id'],
                 'title' => $item['title'],
+                'navigation' => $item['navigation'],
                 'category' => $item['category'],
                 'hero_image' => $item['hero_image'],
                 'accent_color' => $item['accent_color'],

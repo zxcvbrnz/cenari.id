@@ -35,4 +35,11 @@ class CoursePackage extends Model
     {
         return $this->hasOne(KitRobotic::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withPivot('learning_methode', 'status')
+            ->withTimestamps();
+    }
 }

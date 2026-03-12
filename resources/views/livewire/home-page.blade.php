@@ -331,7 +331,6 @@
                 @endforeach
             </div>
         </div>
-
         <template x-if="copied">
             <div x-show="copied" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
@@ -343,6 +342,175 @@
                 <span class="text-sm font-bold">Link berhasil disalin!</span>
             </div>
         </template>
+    </section>
+
+    <section class="py-24 bg-[#F8FAFC]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div class="max-w-xl">
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-4">Agenda Resmi</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tighter">
+                        Jadwal & <span class="text-slate-400 font-light">Kegiatan Internal</span>
+                    </h3>
+                </div>
+                @if (count($events) > 0)
+                    <a href="/agenda" wire:navigate
+                        class="text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-blue-600 transition-colors flex items-center gap-2 group">
+                        Arsip Agenda
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                @endif
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse($events as $event)
+                    <div
+                        class="group bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-xl shadow-slate-200/40 transition-all duration-500">
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Official
+                                    Agenda</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="block text-2xl font-black text-slate-900 leading-none">
+                                    {{ date('d', strtotime($event->date)) }}
+                                </span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                    {{ date('M Y', strtotime($event->date)) }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <h4 class="text-lg font-black text-slate-900 mb-3 italic">
+                            {{ $event->title }}
+                        </h4>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-8 line-clamp-3 font-medium">
+                            {{ $event->description }}
+                        </p>
+
+                        <div class="flex flex-col gap-3 py-6 border-t border-slate-50 mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="text-[10px] font-black text-slate-600 uppercase tracking-widest">{{ $event->time }}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                            stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <span
+                                    class="text-[10px] font-black text-slate-600 uppercase tracking-widest">{{ $event->location }}</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-end">
+                            <a href="" wire:navigate
+                                class="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:text-slate-900 transition-colors flex items-center gap-2">
+                                Detail Maklumat
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 5l7 7-7 7" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                @empty
+                    <div
+                        class="col-span-full py-20 bg-white rounded-[3rem] border-2 border-dashed border-slate-100 flex flex-col items-center justify-center text-center px-6">
+                        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-10 h-10 text-slate-200" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h4 class="text-xl font-black text-slate-900 uppercase tracking-tighter mb-2">Belum Ada
+                            Pengumuman</h4>
+                        <p class="text-slate-400 text-sm max-w-sm font-medium leading-relaxed">
+                            Tidak ada agenda resmi atau maklumat internal untuk saat ini.
+                        </p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-4">Our Collaboration
+                </h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tighter">
+                    Dipercaya oleh Instansi & <span class="text-slate-400 font-light">Mitra Strategis</span>
+                </h3>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12 items-center justify-center">
+
+                <div class="group flex justify-center">
+                    <div
+                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                        <span class="font-black text-xl tracking-tighter text-slate-800">CENARI<span
+                                class="text-blue-600 italic">EDU</span></span>
+                    </div>
+                </div>
+
+                <div class="group flex justify-center">
+                    <div
+                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center text-center">
+                        <span
+                            class="font-bold text-[10px] leading-tight text-slate-800 uppercase tracking-tighter">Sekolah
+                            Robot<br>Banjarmasin</span>
+                    </div>
+                </div>
+
+                <div class="group flex justify-center">
+                    <div
+                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                        <span class="font-black text-xl tracking-widest text-slate-800 italic">PARTNER</span>
+                    </div>
+                </div>
+
+                <div class="group flex justify-center">
+                    <div
+                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                        <span class="font-serif text-2xl text-slate-800">INSTITUSI</span>
+                    </div>
+                </div>
+
+                <div class="group flex justify-center">
+                    <div
+                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                        <span class="font-mono text-xl font-bold text-slate-800 tracking-tighter">GLOBAL.CO</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-16 pt-8 border-t border-slate-50 text-center">
+                <p class="text-slate-400 text-xs font-medium italic">
+                    Bekerja sama untuk membangun ekosistem teknologi dan edukasi yang lebih baik di Kalimantan
+                    Selatan.
+                </p>
+            </div>
+        </div>
     </section>
 
     <section class="bg-[#0F172A] py-24">

@@ -7,8 +7,8 @@
                 <div class="mb-10">
                     <div class="flex items-center gap-3 mb-4">
                         <span
-                            class="px-3 py-1 bg-blue-50 text-[#3B82F6] text-[10px] font-black uppercase tracking-widest rounded-lg">Level
-                            {{ $package->level }}</span>
+                            class="px-3 py-1 bg-blue-50 text-[#3B82F6] text-[10px] font-black uppercase tracking-widest rounded-lg">
+                            {{ $package->program->title }}</span>
                         <span class="text-slate-300">•</span>
                         <span
                             class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">{{ $package->program->name ?? 'Program' }}</span>

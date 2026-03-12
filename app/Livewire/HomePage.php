@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Agenda;
 use App\Models\Program;
 use App\Models\Workshop;
 use Livewire\Component;
@@ -10,8 +11,8 @@ class HomePage extends Component
 {
 
     public $programs;
-
     public $seminars;
+    public $events;
     public $selected = [];
     public $simulatorResult = null;
 
@@ -19,6 +20,7 @@ class HomePage extends Component
     {
         $this->programs = Program::all();
         $this->seminars = Workshop::all();
+        $this->events = Agenda::all();
     }
 
     public function toggleChoice($choice)

@@ -48,12 +48,12 @@
                         <div
                             class="group relative bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col transform-gpu">
 
-                            <div class="mb-6">
+                            {{-- <div class="mb-6">
                                 <span
                                     class="text-[10px] font-black uppercase tracking-widest {{ $package->level > 2 ? 'text-purple-600 bg-purple-50' : 'text-emerald-600 bg-emerald-50' }} px-4 py-1.5 rounded-full">
                                     Level {{ $package->level }}
                                 </span>
-                            </div>
+                            </div> --}}
 
                             <h3
                                 class="text-2xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">

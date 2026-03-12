@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class KitRoboticImage extends Model
 {
-    protected $fillable = ['kit_robotic_id', 'image'];
+    protected $fillable = ['kit_robotic_id', 'filename', 'is_featured'];
 }

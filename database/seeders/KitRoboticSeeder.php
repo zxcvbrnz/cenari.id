@@ -19,7 +19,7 @@ class KitRoboticSeeder extends Seeder
             'description' => 'Kit robot pengikut garis dengan kecepatan tinggi.',
         ]);
 
-        KitRoboticImage::create(['kit_robotic_id' => $kit1->id, 'image' => 'https://placehold.co/600x400?text=Line+Follower']);
+        KitRoboticImage::create(['kit_robotic_id' => $kit1->id, 'filename' => 'https://placehold.co/600x400?text=Line+Follower']);
         KitRoboticModul::create(['kit_robotic_id' => $kit1->id, 'name' => 'Panduan Coding PID', 'file' => 'pid.pdf', 'price' => 45000]);
 
         // Hubungkan Items ke Kit 1
@@ -36,7 +36,7 @@ class KitRoboticSeeder extends Seeder
             'description' => 'Lengan robot akrilik dengan 4 motor servo.',
         ]);
 
-        KitRoboticImage::create(['kit_robotic_id' => $kit2->id, 'image' => 'https://placehold.co/600x400?text=Robotic+Arm']);
+        KitRoboticImage::create(['kit_robotic_id' => $kit2->id, 'filename' => 'https://placehold.co/600x400?text=Robotic+Arm']);
         KitRoboticModul::create(['kit_robotic_id' => $kit2->id, 'name' => 'Buku Rakit Mekanik', 'file' => 'rakit.pdf', 'price' => 30000]);
 
         $kit2->items()->attach([

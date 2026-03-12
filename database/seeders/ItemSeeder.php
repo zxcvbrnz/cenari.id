@@ -23,7 +23,7 @@ class ItemSeeder extends Seeder
             $item = Item::create($data);
             ItemImage::create([
                 'item_id' => $item->id,
-                'image' => 'https://placehold.co/600x400?text=' . urlencode($item->name)
+                'filename' => 'https://placehold.co/600x400?text=' . urlencode($item->name)
             ]);
         }
     }

@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('instansi_id')->constrained()->onDelete('cascade');
             $table->string('slug')->unique();
             $table->string('title');
+            $table->string('navigation');
             $table->json('category')->nullable(); // JSON Array
             $table->string('hero_image')->nullable();
             $table->string('accent_color')->default('#3B82F6');

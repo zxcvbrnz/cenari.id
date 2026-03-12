@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('kit_robotic_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kit_robotic_id')->constrained()->onDelete('cascade');
-            $table->string('image');
+            $table->string('filename');
+            $table->boolean('is_featured')->default(false);
             $table->timestamps();
         });
     }

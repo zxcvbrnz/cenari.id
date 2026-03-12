@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Program extends Model
 {
-    protected $fillable = ['slug', 'title', 'category', 'hero_image', 'accent_color', 'icon', 'badges'];
+    protected $fillable = [
+        'slug',
+        'instansi_id',
+        'navigation',
+        'title',
+        'category',
+        'hero_image',
+        'accent_color',
+        'icon',
+        'badges'
+    ];
 
     // Casting JSON ke Array otomatis
     protected $casts = [
@@ -18,5 +28,9 @@ class Program extends Model
     public function coursePackages(): HasMany
     {
         return $this->hasMany(CoursePackage::class);
+    }
+    public function instansi()
+    {
+        return $this->belongsTo(Instansi::class);
     }
 }

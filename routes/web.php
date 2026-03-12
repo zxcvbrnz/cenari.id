@@ -1,6 +1,9 @@
 <?php
 
 use App\Livewire\B2BSolution;
+use App\Livewire\Blog;
+use App\Livewire\BlogShow;
+use App\Livewire\Contact;
 use App\Livewire\CourseList;
 use App\Livewire\CoursePackageDetail;
 use App\Livewire\DetailProgram;
@@ -27,15 +30,18 @@ Route::get('/shop', Shop::class)->name('shop');
 Route::get('/shop/kit/{id}', KitDetail::class)->name('kit.detail');
 Route::get('/shop/item/{id}', ItemDetail::class)->name('item.detail');
 
-Route::get('/blog', Shop::class)->name('blog.index');
+Route::get('/blog', Blog::class)->name('blog.index');
+Route::get('/blog/{slug}', BlogShow::class)->name('blog.show');
 
 Route::get('/course-packages', CourseList::class)->name('course.packages');
 
 Route::get('/workshops', WorkshopPage::class)->name('workshops');
 Route::get('/workshops/{slug}', WorkshopDetail::class)->name('workshop.detail');
 
+Route::get('/contact-us', Contact::class)->name('contact.us');
+
 Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'admin'])
     ->name('dashboard');
 
 Route::view('profile', 'profile')
