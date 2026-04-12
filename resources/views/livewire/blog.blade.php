@@ -12,7 +12,7 @@
                     <div
                         class="relative aspect-[16/10] overflow-hidden rounded-[2.5rem] bg-slate-100 mb-6 shadow-2xl shadow-slate-200/50">
                         @if ($post->featuredImage)
-                            <img src="{{ asset('storage/' . $post->featuredImage->file_path) }}"
+                            <img src="{{ asset('storage/' . $post->featuredImage->filename) }}"
                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 alt="{{ $post->title }}">
                         @else

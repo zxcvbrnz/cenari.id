@@ -95,7 +95,8 @@
 
                     <div
                         class="absolute inset-0 z-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none overflow-hidden">
-                        <img src="{{ $item->hero_image }}" alt="{{ $item->title }}" {{-- Scale diperkecil agar tidak terlalu berat saat ditarik --}}
+                        <img src="{{ asset('storage/' . $item->hero_image) }}" alt="{{ $item->title }}"
+                            {{-- Scale diperkecil agar tidak terlalu berat saat ditarik --}}
                             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 transform-gpu"
                             loading="lazy">
                     </div>
@@ -151,7 +152,7 @@
                         <div class="flex flex-wrap gap-2">
                             @foreach ($item->badges as $badge)
                                 <span
-                                    class="text-[10px] font-bold bg-slate-50 text-slate-500 group-hover:bg-slate-900 group-hover:text-white px-3 py-1.5 rounded-xl border border-slate-100 group-hover:border-slate-900 transition-all duration-300">
+                                    class="capitalize text-[10px] font-bold bg-slate-50 text-slate-500 group-hover:bg-slate-900 group-hover:text-white px-3 py-1.5 rounded-xl border border-slate-100 group-hover:border-slate-900 transition-all duration-300">
                                     {{ $badge }}
                                 </span>
                             @endforeach
@@ -162,48 +163,40 @@
         </div>
     </section>
 
-    <section class="relative py-24 px-6 md:py-32 overflow-hidden bg-gray-900">
-        <div class="absolute inset-0">
-            {{-- Gambar Latar Belakang --}}
-            <img src="https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt="Inspiring background" class="w-full h-full object-cover opacity-20 scale-105">
-
-            {{-- Overlay Gradient untuk Keterbacaan Teks --}}
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
-        </div>
-
-        <div class="max-w-4xl mx-auto relative z-10 text-center">
-            {{-- Ikon Quote --}}
-            <svg class="w-16 h-16 text-gray-500 mx-auto mb-8 opacity-70" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                    d="M9.707 16.707a1 1 0 01-1.414 0L6 14.414l-2.293 2.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0L9 13.586l2.293-2.293a1 1 0 011.414 1.414l-3 3zM16.707 16.707a1 1 0 01-1.414 0L13 14.414l-2.293 2.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0L16 13.586l2.293-2.293a1 1 0 011.414 1.414l-3 3z"
-                    clip-rule="evenodd" fill-rule="evenodd" />
-            </svg>
-
-
-            {{-- Teks Quote --}}
-            <blockquote class="text-4xl md:text-5xl font-heading font-extrabold leading-tight text-white mb-10 italic">
-                "The future belongs to those who learn more skills and combine them in creative ways."
-            </blockquote>
-
-            {{-- Penulis Quote --}}
-            <p class="text-lg font-medium text-gray-300">
-                — Robert Greene, <span class="font-normal">Mastery</span>
-            </p>
-
-            {{-- Tombol CTA (Opsional) --}}
-            <div class="mt-16">
-                <a href="/about-us"
-                    class="inline-flex items-center px-8 py-4 bg-[#3B82F6] text-white font-bold rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-300 transform hover:-translate-y-1">
-                    Explore Our Philosophy
-                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </a>
+    @isset($featuredQuote)
+        <section class="relative py-24 px-6 md:py-32 overflow-hidden bg-gray-900">
+            <div class="absolute inset-0">
+                <img src="https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Inspiring background" class="w-full h-full object-cover opacity-20 scale-105 select-none">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
             </div>
-        </div>
-    </section>
+
+            <div class="max-w-4xl mx-auto relative z-10 text-center">
+                <svg class="w-12 h-12 md:w-16 md:h-16 text-blue-600/50 mx-auto mb-8" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM3.01697 21L3.01697 18C3.01697 16.8954 3.9124 16 5.01697 16H8.01697C8.56925 16 9.01697 15.5523 9.01697 15V9C9.01697 8.44772 8.56925 8 8.01697 8H4.01697C3.46468 8 3.01697 8.44772 3.01697 9V11C3.01697 11.5523 2.56925 12 2.01697 12H1.01697V5H11.017V15C11.017 18.3137 8.33068 21 5.01697 21H3.01697Z" />
+                </svg>
+
+                <blockquote
+                    class="text-3xl md:text-5xl font-black leading-tight text-white mb-10 italic uppercase tracking-tighter">
+                    "{{ $featuredQuote->content }}"
+                </blockquote>
+
+                <div class="inline-flex items-center gap-3">
+                    <div class="h-px w-8 bg-blue-600"></div>
+                    <p class="text-sm md:text-lg font-bold text-gray-300 uppercase tracking-widest">
+                        {{ $featuredQuote->author }}
+                        @if ($featuredQuote->source)
+                            <span class="text-gray-500 font-medium normal-case italic ml-1">—
+                                {{ $featuredQuote->source }}</span>
+                        @endif
+                    </p>
+                    <div class="h-px w-8 bg-blue-600"></div>
+                </div>
+            </div>
+        </section>
+    @endisset
 
     <section class="max-w-7xl mx-auto px-6 py-24" x-data="{
         copied: false,
@@ -258,7 +251,7 @@
                             class="flex flex-col h-full bg-white rounded-[2rem] border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300">
 
                             <div class="relative h-56 overflow-hidden">
-                                <img src="{{ $item->image }}" alt="{{ $item->title }}"
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
                                     class="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-105"
                                     loading="lazy">
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
@@ -455,8 +448,7 @@
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-4">Our Collaboration
-                </h2>
+                <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-4">Our Collaboration</h2>
                 <h3 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tighter">
                     Dipercaya oleh Instansi & <span class="text-slate-400 font-light">Mitra Strategis</span>
                 </h3>
@@ -464,50 +456,29 @@
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12 items-center justify-center">
 
-                <div class="group flex justify-center">
-                    <div
-                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                        <span class="font-black text-xl tracking-tighter text-slate-800">CENARI<span
-                                class="text-blue-600 italic">EDU</span></span>
+                @forelse($partners as $partner)
+                    <div class="group flex justify-center">
+                        <div
+                            class="h-16 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                            {{-- Menampilkan Gambar dari Database --}}
+                            <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
+                                class="max-h-full max-w-full object-contain filter drop-shadow-sm"
+                                title="{{ $partner->name }}">
+                        </div>
                     </div>
-                </div>
-
-                <div class="group flex justify-center">
-                    <div
-                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center text-center">
-                        <span
-                            class="font-bold text-[10px] leading-tight text-slate-800 uppercase tracking-tighter">Sekolah
-                            Robot<br>Banjarmasin</span>
+                @empty
+                    {{-- Tampilan jika database kosong (Opsional) --}}
+                    <div class="col-span-full text-center">
+                        <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest">Partner data is
+                            being updated</p>
                     </div>
-                </div>
-
-                <div class="group flex justify-center">
-                    <div
-                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                        <span class="font-black text-xl tracking-widest text-slate-800 italic">PARTNER</span>
-                    </div>
-                </div>
-
-                <div class="group flex justify-center">
-                    <div
-                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                        <span class="font-serif text-2xl text-slate-800">INSTITUSI</span>
-                    </div>
-                </div>
-
-                <div class="group flex justify-center">
-                    <div
-                        class="h-12 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                        <span class="font-mono text-xl font-bold text-slate-800 tracking-tighter">GLOBAL.CO</span>
-                    </div>
-                </div>
+                @endforelse
 
             </div>
 
             <div class="mt-16 pt-8 border-t border-slate-50 text-center">
                 <p class="text-slate-400 text-xs font-medium italic">
-                    Bekerja sama untuk membangun ekosistem teknologi dan edukasi yang lebih baik di Kalimantan
-                    Selatan.
+                    Bekerja sama untuk membangun ekosistem teknologi dan edukasi yang lebih baik di Kalimantan Selatan.
                 </p>
             </div>
         </div>

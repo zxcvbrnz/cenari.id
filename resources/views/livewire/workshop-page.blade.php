@@ -12,7 +12,7 @@
         </div>
 
         <div class="flex flex-wrap justify-center gap-3 mb-12">
-            @foreach (['all' => 'Semua', 'Workshop' => 'Workshop', 'Seminar' => 'Seminar', 'Bootcamp' => 'Bootcamp'] as $key => $label)
+            @foreach (['all' => 'Semua', 'Workshop' => 'Workshop', 'Seminar' => 'Seminar', 'Bootcamp' => 'Bootcamp', 'OnSchool' => 'OnSchool'] as $key => $label)
                 <button wire:click="$set('filterType', '{{ $key }}')"
                     class="px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all
                     {{ $filterType == $key ? 'bg-slate-900 text-white shadow-xl shadow-slate-200' : 'bg-white text-slate-400 border border-slate-100 hover:border-slate-300' }}">
@@ -31,7 +31,7 @@
                     class="group/card flex flex-col bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 transform-gpu">
 
                     <div class="relative h-64 overflow-hidden">
-                        <img src="{{ $item->image }}" alt="{{ $item->title }}"
+                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
                             class="w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-110">
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-60">

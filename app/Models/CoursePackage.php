@@ -26,9 +26,9 @@ class CoursePackage extends Model
         return $this->belongsTo(Program::class);
     }
 
-    public function moduls(): HasOne
+    public function moduls(): HasMany
     {
-        return $this->hasOne(ModulCoursePackage::class);
+        return $this->hasMany(ModulCoursePackage::class);
     }
 
     public function kitRobotics(): HasOne

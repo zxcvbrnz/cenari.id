@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-white pb-20">
     <div class="relative h-[450px] w-full overflow-hidden">
-        <img src="{{ $workshop->image }}" class="w-full h-full object-cover">
+        <img src="{{ asset('storage/' . $workshop->image) }}" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px]"></div>
 
         <div class="absolute inset-0 flex items-center max-w-7xl mx-auto px-6">
@@ -25,7 +25,8 @@
                     </h2>
                     <div class="text-slate-500 leading-relaxed space-y-4">
                         <p>Event <strong>{{ $workshop->title }}</strong> ini akan dilaksanakan pada tanggal
-                            <strong>{{ $workshop->date_string }}</strong>.</p>
+                            <strong>{{ $workshop->date_string }}</strong>.
+                        </p>
                         <p>Segera daftarkan diri Anda untuk mendapatkan materi eksklusif dan sertifikat resmi dari
                             CENARIID.</p>
                     </div>

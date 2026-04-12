@@ -57,25 +57,71 @@
             <a href="{{ route('blog.index') }}" wire:navigate
                 class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('blog*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6]">Blog</a>
 
-            <a href="{{ route('b2b.solution') }}" wire:navigate
+            {{-- <a href="{{ route('b2b.solution') }}" wire:navigate
                 class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('b2b.*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-slate-900">Mitra
-                Sekolah</a>
+                Sekolah</a> --}}
 
             <div x-data="{ open: false }" @mouseleave="open = false" class="relative h-full flex items-center group">
                 <button @mouseenter="open = true"
-                    class="text-[11px] font-bold uppercase tracking-widest flex items-center gap-1 {{ request()->routeIs('course.*') || request()->routeIs('workshops*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-slate-900">
-                    Layanan Lain <svg class="w-3 h-3 transition-transform" :class="open ? 'rotate-180' : ''"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="text-[11px] font-bold uppercase tracking-widest flex items-center gap-1 {{ request()->routeIs('b2b.*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-slate-900">
+                    Mitra Kerjasama
+                    <svg class="w-3 h-3 transition-transform" :class="open ? 'rotate-180' : ''" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
                         <path d="M19 9l-7 7-7-7" stroke-width="3" />
                     </svg>
                 </button>
+
                 <div x-show="open" x-cloak x-transition class="absolute left-0 top-[70%] pt-4 w-52">
                     <div class="bg-white border border-slate-100 shadow-xl rounded-2xl py-3 overflow-hidden">
-                        <a href="{{ route('course.packages') }}" wire:navigate
-                            class="block px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-slate-600 hover:bg-slate-50">Paket
+                        <a href="{{ route('b2b.solution') }}" wire:navigate @class([
+                            'block px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest transition-all duration-200',
+                            'bg-blue-50 text-[#3B82F6] border-r-4 border-[#3B82F6]' => request()->routeIs(
+                                'b2b.solution'),
+                            'text-slate-600 hover:bg-slate-50 hover:text-[#3B82F6]' => !request()->routeIs(
+                                'b2b.solution'),
+                        ])>Mitra
+                            Sekolah</a>
+
+                        <a href="{{ route('b2b.institution') }}" wire:navigate @class([
+                            'block px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest transition-all duration-200',
+                            'bg-blue-50 text-[#3B82F6] border-r-4 border-[#3B82F6]' => request()->routeIs(
+                                'b2b.institution'),
+                            'text-slate-600 hover:bg-slate-50 hover:text-[#3B82F6]' => !request()->routeIs(
+                                'b2b.institution'),
+                        ])>Mitra
+                            Instansi</a>
+                    </div>
+                </div>
+            </div>
+
+            <div x-data="{ open: false }" @mouseleave="open = false" class="relative h-full flex items-center group">
+                <button @mouseenter="open = true"
+                    class="text-[11px] font-bold uppercase tracking-widest flex items-center gap-1 {{ request()->routeIs('course.packages') || request()->routeIs('workshops') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-slate-900">
+                    Layanan Lain
+                    <svg class="w-3 h-3 transition-transform" :class="open ? 'rotate-180' : ''" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 9l-7 7-7-7" stroke-width="3" />
+                    </svg>
+                </button>
+
+                <div x-show="open" x-cloak x-transition class="absolute left-0 top-[70%] pt-4 w-52">
+                    <div class="bg-white border border-slate-100 shadow-xl rounded-2xl py-3 overflow-hidden">
+                        <a href="{{ route('course.packages') }}" wire:navigate @class([
+                            'block px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest transition-all duration-200',
+                            'bg-blue-50 text-[#3B82F6] border-r-4 border-[#3B82F6]' => request()->routeIs(
+                                'course.packages'),
+                            'text-slate-600 hover:bg-slate-50 hover:text-[#3B82F6]' => !request()->routeIs(
+                                'course.packages'),
+                        ])>Paket
                             Kursus</a>
-                        <a href="{{ route('workshops') }}" wire:navigate
-                            class="block px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-slate-600 hover:bg-slate-50">Workshop</a>
+
+                        <a href="{{ route('workshops') }}" wire:navigate @class([
+                            'block px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest transition-all duration-200',
+                            'bg-blue-50 text-[#3B82F6] border-r-4 border-[#3B82F6]' => request()->routeIs(
+                                'workshops'),
+                            'text-slate-600 hover:bg-slate-50 hover:text-[#3B82F6]' => !request()->routeIs(
+                                'workshops'),
+                        ])>Workshop</a>
                     </div>
                 </div>
             </div>
@@ -173,7 +219,8 @@
             <button @click="mobileMenu = !mobileMenu"
                 class="lg:hidden p-2 text-slate-600 hover:bg-slate-50 rounded-xl transition-colors">
                 <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
                 <svg x-show="mobileMenu" x-cloak class="w-6 h-6" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">

@@ -28,38 +28,41 @@
                     </h2>
 
                     @if ($package->moduls)
-                        <div
-                            class="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-10 shadow-sm relative overflow-hidden">
-                            <span
-                                class="absolute -top-4 -right-4 text-8xl font-black text-slate-50 italic opacity-50 select-none">01</span>
+                        @forelse ($package->moduls as $item)
+                            <div
+                                class="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-10 shadow-sm relative overflow-hidden">
+                                <span
+                                    class="absolute -top-4 -right-4 text-8xl font-black text-slate-50 italic opacity-50 select-none">01</span>
 
-                            <div class="relative">
-                                <h3 class="text-2xl font-black text-slate-800 tracking-tight mb-6">
-                                    {{ $package->moduls->title }}
-                                </h3>
+                                <div class="relative">
+                                    <h3 class="text-2xl font-black text-slate-800 tracking-tight mb-6">
+                                        {{ $item->title }}
+                                    </h3>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
-                                    @foreach (['text_1', 'text_2', 'text_3', 'text_4'] as $field)
-                                        @if ($package->moduls->$field)
-                                            <div
-                                                class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100/50 transition-colors hover:bg-white hover:border-blue-100">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+                                        @foreach (['text_1', 'text_2', 'text_3', 'text_4'] as $field)
+                                            @if ($item->$field)
                                                 <div
-                                                    class="mt-1 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-200">
-                                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24">
-                                                        <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round"
-                                                            stroke-linejoin="round" />
-                                                    </svg>
+                                                    class="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100/50 transition-colors hover:bg-white hover:border-blue-100">
+                                                    <div
+                                                        class="mt-1 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center shrink-0 shadow-lg shadow-blue-200">
+                                                        <svg class="w-3 h-3 text-white" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M5 13l4 4L19 7" stroke-width="3"
+                                                                stroke-linecap="round" stroke-linejoin="round" />
+                                                        </svg>
+                                                    </div>
+                                                    <span class="text-sm text-slate-600 font-bold leading-relaxed">
+                                                        {{ $item->$field }}
+                                                    </span>
                                                 </div>
-                                                <span class="text-sm text-slate-600 font-bold leading-relaxed">
-                                                    {{ $package->moduls->$field }}
-                                                </span>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @empty
+                        @endforelse
                     @else
                         <div class="p-8 border-2 border-dashed border-slate-100 rounded-[2rem] text-center">
                             <p class="text-slate-400 text-sm font-medium italic">Detail materi belum tersedia untuk

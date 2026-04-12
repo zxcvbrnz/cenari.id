@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('instansis', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('image')->nullable();
             $table->text('profile');
             $table->string('colour')->nullable();
             $table->timestamps();

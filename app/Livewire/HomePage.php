@@ -3,7 +3,9 @@
 namespace App\Livewire;
 
 use App\Models\Agenda;
+use App\Models\Collaboration;
 use App\Models\Program;
+use App\Models\Quote;
 use App\Models\Workshop;
 use Livewire\Component;
 
@@ -15,12 +17,17 @@ class HomePage extends Component
     public $events;
     public $selected = [];
     public $simulatorResult = null;
+    public $partners;
+    public $featuredQuote;
 
     public function mount()
     {
         $this->programs = Program::all();
         $this->seminars = Workshop::all();
         $this->events = Agenda::all();
+        $this->partners = Collaboration::where('is_active', true)->orderBy('sort_order')->get();
+        $this->featuredQuote = Quote::where('is_featured', true)->first()
+            ?? Quote::latest()->first();
     }
 
     public function toggleChoice($choice)

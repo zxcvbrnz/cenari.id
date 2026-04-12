@@ -2,7 +2,9 @@
 
     <section id="home" class="relative h-[85vh] flex items-center bg-[#0F172A] overflow-hidden">
         <div class="absolute inset-0">
-            <img src="{{ $program->hero_image }}" class="w-full h-full object-cover opacity-20 scale-105">
+            <img src="{{ asset('storage/' . $program->hero_image) }}"
+                class="w-full h-full object-cover opacity-20 scale-105">
+            {{-- Gradient overlay menggunakan warna Instansi untuk kedalaman --}}
             <div class="absolute inset-0 bg-gradient-to-b from-[#0F172A]/50 via-transparent to-white"></div>
         </div>
 
@@ -14,22 +16,27 @@
                 <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white">New Enrollment Open
                     2026</span>
             </div>
+
             <h1
                 class="text-6xl md:text-8xl font-heading font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
                 {{ $program->title }}
             </h1>
+
             <p class="text-white/60 max-w-xl text-lg font-medium italic mb-10 leading-relaxed">
                 Membangun masa depan teknologi dari Banjarmasin. Kurikulum berbasis industri untuk generasi inovator
                 berikutnya.
             </p>
+
             <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                {{-- Tombol Utama: Warna Program dengan Glow dari Warna Instansi --}}
                 <a href="#packages"
                     @click.prevent="document.getElementById('packages').scrollIntoView({ behavior: 'smooth' })"
-                    class="px-10 py-5 bg-blue-600 text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-2xl shadow-blue-500/40 hover:scale-105 transition-transform">
+                    style="background-color: {{ $program->accent_color }}; box-shadow: 0 20px 25px -5px {{ $program->instansi->colour }}50"
+                    class="px-10 py-5 text-white rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:scale-105 transition-all duration-300">
                     Mulai Belajar
                 </a>
                 <a href="#profile"
-                    @click.prevent="document.getElementById('packages').scrollIntoView({ behavior: 'smooth' })"
+                    @click.prevent="document.getElementById('profile').scrollIntoView({ behavior: 'smooth' })"
                     class="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-2xl font-black uppercase text-xs tracking-[0.2em] hover:bg-white/20 transition-all">
                     Tentang Kami
                 </a>
@@ -40,28 +47,39 @@
     <section id="profile" class="py-32 max-w-7xl mx-auto px-6">
         <div class="grid lg:grid-cols-2 gap-20 items-center">
             <div class="relative">
-                <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-50 rounded-full blur-3xl opacity-60"></div>
+                {{-- Ornamen belakang menggunakan warna Instansi --}}
+                <div class="absolute -top-10 -left-10 w-40 h-40 rounded-full blur-3xl opacity-20"
+                    style="background-color: {{ $program->instansi->colour }}"></div>
+
                 <div
                     class="relative rounded-[4rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
-                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"
+                    <img src="{{ asset('storage/' . $program->instansi->image) }}"
                         class="w-full aspect-[4/5] object-cover">
                 </div>
             </div>
             <div class="space-y-8">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-blue-600 italic">The Core Profile</h2>
+                <h2 class="text-xs font-black uppercase tracking-[0.5em] italic"
+                    style="color: {{ $program->accent_color }}">The Core Profile</h2>
+
                 <h3 class="text-5xl font-black text-slate-900 leading-tight uppercase italic tracking-tighter">
-                    {{ $program->instansi->name }}.</h3>
+                    {{ $program->instansi->name }}.
+                </h3>
+
+                {{-- Garis dekoratif menggunakan warna Instansi --}}
+                <div class="h-1.5 w-24 rounded-full" style="background-color: {{ $program->instansi->colour }}"></div>
+
                 <p class="text-slate-500 text-lg leading-relaxed font-medium">
                     {{ $program->instansi->profile }}
                 </p>
+
                 <div class="grid grid-cols-2 gap-8 pt-6">
                     <div>
                         <p class="text-4xl font-black text-slate-900 mb-1">500+</p>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Alumni</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Alumni Terdaftar</p>
                     </div>
                     <div>
                         <p class="text-4xl font-black text-slate-900 mb-1">12+</p>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Global Partners</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Partner Industri</p>
                     </div>
                 </div>
             </div>
@@ -71,29 +89,36 @@
     <section id="packages" class="py-32 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
-                <h2 class="text-4xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">Pilih
-                    Jalur Belajarmu</h2>
-                <p class="text-slate-600 font-medium tracking-widest uppercase text-sm">{{ $program->title }}</p>
+                <h2 class="text-4xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">
+                    Pilih Jalur Belajarmu
+                </h2>
+                <p class="text-slate-600 font-medium tracking-widest uppercase text-sm inline-block pb-2"
+                    style="border-bottom: 3px solid {{ $program->instansi->colour }}">
+                    {{ $program->title }}
+                </p>
             </div>
 
             <div class="grid lg:grid-cols-12 gap-20">
-
                 <div class="lg:col-span-7">
                     <h2 class="font-heading text-3xl font-bold mb-12 flex items-center gap-4 italic">
                         Curriculum Path
-                        <span class="h-[1px] flex-grow bg-slate-100"></span>
+                        <span class="h-[1px] flex-grow bg-slate-200"></span>
                     </h2>
 
                     <div class="space-y-6" x-data="{ activeAccordion: 1 }">
                         @foreach ($program->coursePackages as $index => $package)
                             <div class="group p-8 rounded-[2rem] border transition-all duration-500 bg-white"
-                                :class="activeAccordion === {{ $package->level }} ? 'border-slate-900 shadow-xl' :
-                                    'border-slate-100'">
+                                :style="activeAccordion === {{ $package->level }} ?
+                                    'border-color: {{ $program->accent_color }}; box-shadow: 0 20px 25px -5px {{ $program->accent_color }}15' :
+                                    'border-color: #f1f5f9'">
 
                                 <div class="flex gap-8 cursor-pointer"
                                     @click="activeAccordion = (activeAccordion === {{ $package->level }} ? null : {{ $package->level }})">
+
                                     <span class="text-5xl font-black transition-colors duration-500"
-                                        :class="activeAccordion === {{ $package->level }} ? 'text-slate-900' :
+                                        :style="activeAccordion === {{ $package->level }} ?
+                                            'color: {{ $program->accent_color }}' : ''"
+                                        :class="activeAccordion === {{ $package->level }} ? '' :
                                             'text-slate-100 group-hover:text-slate-300'">
                                         0{{ $package->level }}
                                     </span>
@@ -106,9 +131,9 @@
                                                 <p class="text-slate-500 mb-4">{{ $package->description }}</p>
                                             </div>
                                             <svg class="w-6 h-6 text-slate-300 transition-transform duration-300"
-                                                :class="activeAccordion === {{ $package->level }} ?
-                                                    'rotate-180 text-slate-900' :
-                                                    ''"
+                                                :style="activeAccordion === {{ $package->level }} ?
+                                                    'color: {{ $program->accent_color }}' : ''"
+                                                :class="activeAccordion === {{ $package->level }} ? 'rotate-180' : ''"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 9l-7 7-7-7" />
@@ -120,9 +145,9 @@
                                                 class="px-3 py-1 bg-slate-50 text-slate-400 text-[10px] font-bold uppercase rounded-lg border border-slate-100">
                                                 Tools: {{ $package->tool }}
                                             </span>
-                                            <span
-                                                class="px-3 py-1 bg-blue-50 text-[#3B82F6] text-[10px] font-bold uppercase rounded-lg">
-                                                {{ $package->course_count }} Sesi
+                                            <span class="px-3 py-1 text-[10px] font-bold uppercase rounded-lg"
+                                                style="background-color: {{ $program->accent_color }}15; color: {{ $program->accent_color }}">
+                                                {{ $package->course_count }} Sesi Belajar
                                             </span>
                                         </div>
                                     </div>
@@ -134,39 +159,33 @@
                                             <div>
                                                 <p
                                                     class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-                                                    Priece</p>
+                                                    Investasi</p>
                                                 <p class="text-lg font-bold text-slate-900">Rp
                                                     {{ number_format($package->price, 0, ',', '.') }}</p>
                                             </div>
                                             <div>
                                                 <p
                                                     class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-                                                    Durasi /Pertemuan</p>
+                                                    Durasi</p>
                                                 <p class="text-lg font-bold text-slate-900">
-                                                    {{ $package->course_during }}
-                                                    Jam
-                                                </p>
+                                                    {{ $package->course_during }} Jam / Sesi</p>
                                             </div>
                                             <div>
                                                 <p
                                                     class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-                                                    Total Pertemuan</p>
-                                                <p class="text-lg font-bold text-slate-900">
-                                                    {{ $package->course_count }}x
-                                                </p>
+                                                    Kurikulum</p>
+                                                <p class="text-lg font-bold text-slate-900">Level
+                                                    0{{ $package->level }}</p>
                                             </div>
-                                            {{-- <div>
-                                            <p
-                                                class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-                                                Kesulitan</p>
-                                            <p class="text-lg font-bold text-slate-900">Level {{ $package->level }}</p>
-                                        </div> --}}
                                         </div>
 
                                         <div class="mt-8 flex justify-end">
                                             <a href="{{ route('program.course.detail', ['slug' => $program->slug, 'course_slug' => $package->slug]) }}"
-                                                class="px-8 py-3 bg-slate-900 text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-[#3B82F6] transition-colors flex items-center gap-2">
-                                                Lihat Detail
+                                                style="background-color: #0F172A"
+                                                onmouseover="this.style.backgroundColor='{{ $program->accent_color }}'"
+                                                onmouseout="this.style.backgroundColor='#0F172A'"
+                                                class="px-8 py-3 text-white text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all flex items-center gap-2">
+                                                Pelajari Kurikulum
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2"
@@ -186,24 +205,24 @@
                         @if ($missingLink)
                             <div
                                 class="relative p-10 rounded-[3rem] bg-[#0F172A] text-white overflow-hidden shadow-2xl">
-                                <div class="absolute top-0 right-0 w-40 h-40 blur-[80px] opacity-30"
-                                    style="background-color: {{ $program->accent_color }}"></div>
+                                {{-- Glow menggunakan warna Instansi --}}
+                                <div class="absolute top-0 right-0 w-40 h-40 blur-[80px] opacity-40"
+                                    style="background-color: {{ $program->instansi->colour }}"></div>
 
                                 <div class="relative z-10">
                                     <div class="mb-10 inline-flex items-center gap-2">
                                         <div class="w-2 h-2 rounded-full animate-ping"
                                             style="background-color: {{ $program->accent_color }}"></div>
-                                        <span class="text-[10px] font-black uppercase tracking-widest text-white/50">
-                                            The Missing Link
-                                        </span>
+                                        <span
+                                            class="text-[10px] font-black uppercase tracking-widest text-white/50">The
+                                            Missing Link</span>
                                     </div>
 
                                     <p class="text-2xl font-medium leading-relaxed mb-12 italic">
-                                        "{{ $missingLink->text }}"
-                                    </p>
+                                        "{{ $missingLink->text }}"</p>
 
-                                    <a href="{{ url('programs/' . $missingLink->url) }}"
-                                        class="group flex items-center justify-between p-6 bg-white rounded-2xl text-[#0F172A] font-bold transition-all hover:scale-[1.02] active:scale-95">
+                                    <a href="{{ url('programs/' . $missingLink->url) }}" style="color: #0F172A"
+                                        class="group flex items-center justify-between p-6 bg-white rounded-2xl font-bold transition-all hover:scale-[1.02]">
                                         <span class="uppercase tracking-widest text-xs">{{ $missingLink->cta }}</span>
                                         <svg class="w-5 h-5 group-hover:translate-x-2 transition-transform"
                                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,7 +235,6 @@
                         @endif
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -224,21 +242,22 @@
     <section id="gallery" class="py-32 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-16 text-center">
-                <h2 class="text-xs font-black uppercase tracking-[0.5em] text-blue-600 mb-4 italic">Our Atmosphere</h2>
-                <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">Learning in <span
-                        class="text-blue-600 text-outline">Action.</span></h3>
+                <h2 class="text-xs font-black uppercase tracking-[0.5em] mb-4 italic"
+                    style="color: {{ $program->instansi->colour }}">Our Atmosphere</h2>
+                <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">
+                    Learning in <span class="text-outline" style="color: {{ $program->accent_color }}">Action.</span>
+                </h3>
             </div>
 
             <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-                @foreach ($galleryImages as $image)
+                @foreach ($program->instansi->galleries as $image)
                     <div
                         class="break-inside-avoid relative group rounded-[2.5rem] overflow-hidden shadow-lg border border-slate-100">
-                        <img src="{{ $image->url }}" alt="{{ $image->caption }}"
+                        <img src="{{ asset('storage/' . $image->image) }}"
                             class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-1000">
-
-                        {{-- Caption Overlay --}}
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
+                        {{-- Overlay: Gradasi dari warna Instansi ke Program --}}
+                        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8"
+                            style="background: linear-gradient(to top, {{ $program->accent_color }}DD, {{ $program->instansi->colour }}44)">
                             <p class="text-white text-sm font-bold italic uppercase tracking-wider">
                                 {{ $image->caption }}</p>
                         </div>
@@ -250,34 +269,35 @@
 
     <section id="testimoni" class="py-32 bg-slate-50 overflow-hidden" x-data="{
         active: 0,
-        total: {{ $testimonials->count() }},
-        // Menghitung berapa maksimal slide bisa bergeser (Total - 3 kartu yang tampil)
-        get max() {
-            return window.innerWidth < 1024 ? this.total - 1 : this.total - 3;
-        }
+        total: {{ $program->instansi->testimonis->count() }},
+        get max() { return window.innerWidth < 1024 ? this.total - 1 : this.total - 3; }
     }">
         <div class="max-w-7xl mx-auto px-6">
-
             <div class="flex justify-between items-end mb-16">
                 <div>
-                    <h2 class="text-xs font-black uppercase tracking-[0.5em] text-blue-600 mb-4 italic">Testimonials
-                    </h2>
+                    <h2 class="text-xs font-black uppercase tracking-[0.5em] mb-4 italic"
+                        style="color: {{ $program->instansi->colour }}">Testimonials</h2>
                     <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">Voice of Success.
                     </h3>
                 </div>
 
                 <div class="flex gap-4">
                     <button @click="if(active > 0) active--"
-                        :class="active === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-slate-900 hover:text-white'"
-                        class="w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center text-slate-900 transition-all">
+                        class="w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all"
+                        :class="active === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:text-white'"
+                        :style="active !== 0 ? `border-color: ${active !== 0 ? '{{ $program->accent_color }}' : ''}` : ''"
+                        onmouseover="this.style.backgroundColor='{{ $program->accent_color }}'; this.style.color='white'"
+                        onmouseout="this.style.backgroundColor=''; this.style.color=''">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M15 19l-7-7 7-7" stroke-width="2.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
                     </button>
                     <button @click="if(active < max) active++"
-                        :class="active >= max ? 'opacity-30 cursor-not-allowed' : 'hover:bg-slate-900 hover:text-white'"
-                        class="w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center text-slate-900 transition-all">
+                        class="w-14 h-14 rounded-full border-2 border-slate-200 flex items-center justify-center transition-all"
+                        :class="active >= max ? 'opacity-30 cursor-not-allowed' : 'hover:text-white'"
+                        onmouseover="this.style.backgroundColor='{{ $program->accent_color }}'; this.style.color='white'"
+                        onmouseout="this.style.backgroundColor=''; this.style.color=''">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path d="M9 5l7 7-7 7" stroke-width="2.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -286,16 +306,17 @@
                 </div>
             </div>
 
-            <div class="relative py-10 overflow-hidden">
+            <div class="relative py-10">
                 <div class="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
                     :style="`transform: translateX(-${active * (window.innerWidth < 1024 ? 100 : 33.3333)}%)`">
 
-                    @foreach ($testimonials as $testi)
+                    @foreach ($program->instansi->testimonis as $testi)
                         <div class="w-full lg:w-1/3 flex-shrink-0 px-4">
-                            <div
-                                class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl h-full flex flex-col justify-between group hover:border-blue-500 transition-colors duration-500">
+                            <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl h-full flex flex-col justify-between transition-all duration-500"
+                                onmouseover="this.style.borderColor='{{ $program->accent_color }}'"
+                                onmouseout="this.style.borderColor=''">
                                 <div>
-                                    <div class="flex text-yellow-400 gap-1 mb-6">
+                                    <div class="flex gap-1 mb-6" style="color: {{ $program->accent_color }}">
                                         @for ($i = 0; $i < $testi->rating; $i++)
                                             <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
                                                 <path
@@ -308,8 +329,10 @@
                                 </div>
 
                                 <div class="mt-8 flex items-center gap-4 border-t border-slate-50 pt-8">
-                                    <div
-                                        class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center font-black italic group-hover:bg-blue-600 transition-colors">
+                                    <div class="w-12 h-12 text-white rounded-2xl flex items-center justify-center font-black italic transition-all"
+                                        style="background-color: #0F172A"
+                                        onmouseover="this.style.backgroundColor='{{ $program->accent_color }}'"
+                                        onmouseout="this.style.backgroundColor='#0F172A'">
                                         {{ substr($testi->name, 0, 1) }}
                                     </div>
                                     <div>
@@ -321,7 +344,6 @@
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </div>

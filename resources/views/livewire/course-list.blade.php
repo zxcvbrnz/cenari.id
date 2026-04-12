@@ -97,7 +97,7 @@
                                     <p class="text-2xl font-black text-slate-900">Rp
                                         {{ number_format($package->price, 0, ',', '.') }}</p>
                                 </div>
-                                <a href="#"
+                                <a href="{{ route('program.course.detail', ['slug' => $program->slug, 'course_slug' => $package->slug]) }}"
                                     class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center hover:bg-blue-600 transition-all shadow-lg shadow-slate-200 transform active:scale-90">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2.5" stroke-linecap="round"

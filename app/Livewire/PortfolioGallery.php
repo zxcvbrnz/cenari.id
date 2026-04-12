@@ -4,55 +4,35 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\Portfolio;
+use App\Models\PortfolioCategory;
 
 class PortfolioGallery extends Component
 {
     public $filter = 'all';
 
-    public function setFilter($category)
+    public function setFilter($categoryId)
     {
-        $this->filter = $category;
+        $this->filter = $categoryId;
     }
 
     public function getProjectsProperty()
     {
-        $projects = [
-            [
-                'title' => 'Smart City Dashboard',
-                'category' => 'hybrid',
-                'author' => 'Tim SMA 1 Blue City',
-                'desc' => 'Web Dashboard yang menampilkan data kualitas udara dan CCTV real-time dari robot patroli.',
-                'image' => 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg',
-                'tech' => ['Laravel', 'ESP32', 'MQTT']
-            ],
-            [
-                'title' => 'Branding Identity: EcoBot',
-                'category' => 'software',
-                'author' => 'Andini - Kelas Desain',
-                'desc' => 'Desain poster, logo, dan UI App untuk produk robot pembersih lingkungan.',
-                'image' => 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg',
-                'tech' => ['CorelDraw', 'Figma']
-            ],
-            [
-                'title' => 'Heavy-Lifter Robot Arm',
-                'category' => 'hardware',
-                'author' => 'Rizky - Kelas Robotik',
-                'desc' => 'Lengan robot 4-DOF yang mampu memindahkan beban hingga 1kg secara presisi.',
-                'image' => 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg',
-                'tech' => ['Arduino', 'Servo MG996R']
-            ],
-            // Tambahkan lebih banyak data di sini...
-        ];
-
-        if ($this->filter === 'all') return $projects;
-
-        return array_filter($projects, fn($p) => $p['category'] === $this->filter);
+        return Portfolio::with(['categories', 'featuredImage', 'images'])
+            ->when($this->filter !== 'all', function ($query) {
+                $query->whereHas('categories', function ($q) {
+                    $q->where('portfolio_categories.id', $this->filter);
+                });
+            })
+            ->latest()
+            ->get();
     }
 
     public function render()
     {
         return view('livewire.portfolio-gallery', [
-            'projects' => $this->projects
+            'projects' => $this->projects,
+            'categories' => PortfolioCategory::all()
         ]);
     }
 }

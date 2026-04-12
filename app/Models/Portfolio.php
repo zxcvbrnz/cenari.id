@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Portfolio extends Model
 {
-    protected $fillable = ['title', 'category_id', 'author', 'description', 'tech'];
+    protected $fillable = ['title', 'slug', 'category_id', 'author', 'description', 'tech'];
 
     protected $casts = [
-        'category_id' => 'array',
         'tech' => 'array',
     ];
 
@@ -22,5 +21,10 @@ class Portfolio extends Model
     public function categories()
     {
         return $this->belongsToMany(PortfolioCategory::class, 'portfolio_portfolio_category');
+    }
+
+    public function featuredImage()
+    {
+        return $this->hasOne(PortfolioImage::class)->where('is_featured', true);
     }
 }

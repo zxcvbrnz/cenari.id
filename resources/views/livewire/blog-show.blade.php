@@ -39,7 +39,7 @@
     <figure class="mb-16">
         <div class="rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-500/10 aspect-[16/9] bg-slate-100">
             @if ($post->featuredImage)
-                <img src="{{ asset('storage/' . $post->featuredImage->file_path) }}" alt="{{ $post->title }}"
+                <img src="{{ asset('storage/' . $post->featuredImage->filename) }}" alt="{{ $post->title }}"
                     class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
             @else
                 <div class="w-full h-full flex items-center justify-center text-slate-300">
