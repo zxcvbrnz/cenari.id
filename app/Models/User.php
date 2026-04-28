@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\CustomResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
@@ -22,6 +23,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    // Di Model User.php
     protected $fillable = [
         'name',
         'nik',
@@ -33,8 +35,22 @@ class User extends Authenticatable
         'email',
         'last_education',
         'current_status',
-        'role',
+        'nama_ayah',
+        'nama_ibu',
+        'nisn',
+        'agama',
+        'rt',
+        'rw',
+        'kodepos',
+        'provinsi',
+        'kab_kota',
+        'kecamatan',
+        'kelurahan',
+        'desa/kelurahan',
+        'jenis_tinggal',
+        'alat_transportasi',
         'password',
+        'role'
     ];
 
     protected $casts = [
@@ -70,5 +86,10 @@ class User extends Authenticatable
         return $this->belongsToMany(CoursePackage::class)
             ->withPivot('learning_methode', 'status')
             ->withTimestamps();
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(UserAddress::class);
     }
 }

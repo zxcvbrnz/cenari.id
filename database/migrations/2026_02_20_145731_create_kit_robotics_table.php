@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('pelatihan_price', 12, 2)->nullable();
             $table->decimal('private_price', 12, 2)->nullable();
-            $table->foreignId('course_package_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

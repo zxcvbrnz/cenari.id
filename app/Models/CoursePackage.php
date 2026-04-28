@@ -18,7 +18,8 @@ class CoursePackage extends Model
         'tool',
         'course_count',
         'course_during',
-        'price'
+        'price',
+        'kit_robotic_id',
     ];
 
     public function program(): BelongsTo
@@ -31,9 +32,9 @@ class CoursePackage extends Model
         return $this->hasMany(ModulCoursePackage::class);
     }
 
-    public function kitRobotics(): HasOne
+    public function kitRobotic(): BelongsTo
     {
-        return $this->hasOne(KitRobotic::class);
+        return $this->belongsTo(KitRobotic::class);
     }
 
     public function users()

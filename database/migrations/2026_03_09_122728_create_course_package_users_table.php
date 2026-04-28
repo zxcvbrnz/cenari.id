@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_package_id')->constrained()->onDelete('cascade');
 
-            $table->string('username');
-            $table->string('password');
+            $table->string('username')->nullable();
+            $table->string('password')->nullable();
             $table->enum('learning_methode', ['Online', 'Offline', 'Hybrid']);
-            $table->enum('payment_status', ['Pending', 'Paid']);
+            $table->enum('payment_status', ['Pending', 'Paid'])->default('Pending');
             $table->enum('status', ['Diproses', 'Sedang Berjalan', 'Selesai'])->default('Diproses');
 
             $table->timestamps();

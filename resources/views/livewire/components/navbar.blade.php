@@ -155,12 +155,23 @@
                             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Akun Saya</p>
                         </div>
 
-                        <a href="/profile" wire:navigate
-                            class="block px-6 py-3 text-[10px] font-bold text-slate-600 hover:bg-slate-50 transition-colors uppercase tracking-widest">
+                        <a href="{{ route('profile') }}" wire:navigate
+                            class="block px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors 
+                                {{ request()->routeIs('profile')
+                                    ? 'bg-blue-50 text-[#3B82F6] border-r-4 border-[#3B82F6]'
+                                    : 'text-slate-600 hover:bg-slate-50' }}">
                             Pengaturan Profil
                         </a>
 
-                        <div class="px-6 py-3 mt-2">
+                        <a href="{{ route('course.packages.user.list') }}" wire:navigate
+                            class="block px-6 py-3 text-[10px] font-bold uppercase tracking-widest transition-colors 
+                                {{ request()->routeIs('course.packages.user.list')
+                                    ? 'bg-blue-50 text-[#3B82F6] border-r-4 border-[#3B82F6]'
+                                    : 'text-slate-600 hover:bg-slate-50' }}">
+                            Kursus Saya
+                        </a>
+
+                        {{-- <div class="px-6 py-3 mt-2">
                             <p class="text-[9px] font-black text-blue-600 uppercase tracking-widest mb-3">Kursus Aktif</p>
                             <div class="space-y-2 max-h-56 overflow-y-auto pr-2 custom-scrollbar">
                                 @forelse(auth()->user()->coursePackages as $course)
@@ -195,12 +206,12 @@
                                     <p class="text-[8px] font-medium text-slate-400 italic">Belum ada kursus aktif.</p>
                                 @endforelse
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="border-t border-slate-50 mt-2 pt-2">
                             <button wire:click="logout"
                                 class="w-full text-left px-6 py-3 text-[10px] font-black text-red-500 hover:bg-red-50 transition-colors uppercase tracking-widest">
-                                Keluar Aplikasi
+                                Logout
                             </button>
                         </div>
                     </div>
@@ -219,8 +230,7 @@
             <button @click="mobileMenu = !mobileMenu"
                 class="lg:hidden p-2 text-slate-600 hover:bg-slate-50 rounded-xl transition-colors">
                 <svg x-show="!mobileMenu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16m-7 6h7" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
                 <svg x-show="mobileMenu" x-cloak class="w-6 h-6" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">

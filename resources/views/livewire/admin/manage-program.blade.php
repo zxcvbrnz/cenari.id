@@ -302,6 +302,18 @@
                             class="w-full bg-slate-50 border-none rounded-xl p-4 text-[11px] font-medium italic h-24"
                             placeholder="Apa yang dipelajari?"></textarea>
                     </div>
+                    <div class="space-y-1">
+                        <label
+                            class="text-[9px] font-black uppercase text-slate-400 ml-1 tracking-widest">{{ 'Kit Robotik (Optional)' }}</label>
+                        <select wire:model="pkg_kit_robotic_id"
+                            class="w-full bg-slate-50 border-none rounded-xl p-4 text-[11px] font-bold"
+                            placeholder="Apa yang dipelajari?">
+                            <option value="">Tidak Pakai Kit Robotik</option>
+                            @foreach ($kit_robotics as $kit)
+                                <option value="{{ $kit->id }}">{{ $kit->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
 
                 <button wire:click="savePackage"

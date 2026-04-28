@@ -191,10 +191,27 @@
                             </div>
                         @endif
 
-                        <button
-                            class="w-full bg-[#3B82F6] text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-slate-900 transition-all shadow-lg shadow-blue-500/20 active:scale-95">
+                        @if ($package->kitRobotic)
+                            <div class="mb-8 p-5 border border-dashed border-slate-200 rounded-2xl">
+                                <p class="text-[9px] font-black uppercase text-slate-400 mb-3">Kit Robotic</p>
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                        </svg>
+                                    </div>
+                                    <span
+                                        class="text-sm font-black text-slate-800 uppercase tracking-tight">{{ $package->kitRobotic->name }}</span>
+                                </div>
+                            </div>
+                        @endif
+                        <a href="{{ route('program.course.detail.register', ['slug' => $slug, 'course_slug' => $course_slug]) }}"
+                            wire:navigate
+                            class="block w-full text-center bg-[#3B82F6] text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-slate-900 transition-all shadow-lg shadow-blue-500/20 active:scale-95">
                             Daftar Kelas
-                        </button>
+                        </a>
                     </div>
 
                     <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100 flex items-center gap-4">

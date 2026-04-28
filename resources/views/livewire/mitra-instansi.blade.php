@@ -110,10 +110,10 @@
                         Siap Membangun <br> <span class="text-blue-500">Masa Depan Digital?</span>
                     </h2>
                     <div class="flex flex-col md:flex-row justify-center gap-4">
-                        <button
+                        <a href="{{ route('b2b.institution.form') }}" wire:navigate
                             class="bg-white/10 text-white backdrop-blur-md px-10 py-5 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] hover:bg-white/20 transition-all border border-white/20">
                             Proposal Kerjasama
-                        </button>
+                        </a>
                     </div>
                     <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-8">Cenari & Tebar Kode
                         Teknologi</p>

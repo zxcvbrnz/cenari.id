@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Program;
 use App\Models\Instansi;
 use App\Models\CoursePackage;
+use App\Models\KitRobotic;
 use App\Models\ModulCoursePackage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -24,13 +25,14 @@ class ManageProgram extends Component
     public $newCategoryItem, $newBadgeItem;
 
     // Package Fields
-    public $pkg_id, $pkg_name, $pkg_level, $pkg_price, $pkg_description, $pkg_tool, $pkg_count, $pkg_during;
+    public $pkg_id, $pkg_name, $pkg_level, $pkg_price, $pkg_description, $pkg_tool, $pkg_count, $pkg_during, $pkg_kit_robotic_id;
 
     public function render()
     {
         return view('livewire.admin.manage-program', [
             'programs' => Program::with('instansi')->latest()->get(),
             'instansis' => Instansi::all(),
+            'kit_robotics' => KitRobotic::all(),
             'currentProgram' => Program::with('coursePackages.moduls')->find($this->selectedProgramId),
         ]);
     }
@@ -88,7 +90,7 @@ class ManageProgram extends Component
     public function showPackageDetail($id)
     {
         $this->selectedProgramId = $id;
-        $this->reset(['pkg_id', 'pkg_name', 'pkg_level', 'pkg_price', 'pkg_description', 'pkg_tool', 'pkg_count', 'pkg_during']);
+        $this->reset(['pkg_id', 'pkg_name', 'pkg_level', 'pkg_price', 'pkg_description', 'pkg_tool', 'pkg_count', 'pkg_during', 'pkg_kit_robotic_id']);
         $this->view = 'package-detail';
     }
 
@@ -156,6 +158,7 @@ class ManageProgram extends Component
         $this->pkg_tool = $pkg->tool;
         $this->pkg_count = $pkg->course_count;
         $this->pkg_during = $pkg->course_during;
+        $this->pkg_kit_robotic_id = $pkg->kit_robotic_id;
     }
 
     public function savePackage()
@@ -170,6 +173,7 @@ class ManageProgram extends Component
             'course_count' => $this->pkg_count,
             'course_during' => $this->pkg_during,
             'price' => $this->pkg_price,
+            'kit_robotic_id' => $this->pkg_kit_robotic_id,
         ];
 
         CoursePackage::updateOrCreate(['id' => $this->pkg_id], $data);
@@ -180,7 +184,7 @@ class ManageProgram extends Component
             'text' => 'Detail paket kursus telah diperbarui.'
         ]);
 
-        $this->reset(['pkg_id', 'pkg_name', 'pkg_level', 'pkg_price', 'pkg_description', 'pkg_tool', 'pkg_count', 'pkg_during']);
+        $this->reset(['pkg_id', 'pkg_name', 'pkg_level', 'pkg_price', 'pkg_description', 'pkg_tool', 'pkg_count', 'pkg_during', 'pkg_kit_robotic_id']);
     }
 
     public function deletePackage($id)

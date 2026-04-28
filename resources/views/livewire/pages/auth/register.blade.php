@@ -44,11 +44,11 @@ new class extends Component {
             'gender' => ['required', 'in:Laki-laki,Perempuan'],
             'born_place' => ['required', 'string', 'max:255'],
             'born_date' => ['required', 'date'],
-            'address' => ['required', 'string'],
+            // 'address' => ['required', 'string'],
             'whatsapp' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
-            'last_education' => ['required', 'string'],
-            'current_status' => ['required', 'string'],
+            // 'last_education' => ['required', 'string'],
+            // 'current_status' => ['required', 'string'],
             'password' => ['required', 'string', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
         ]);
 
@@ -151,9 +151,9 @@ new class extends Component {
                     <div class="space-y-5">
                         <h2
                             class="text-[11px] font-black uppercase tracking-[0.3em] text-blue-600 border-b border-slate-50 pb-2">
-                            Pendidikan & Akun</h2>
+                            Akun</h2>
 
-                        <div>
+                        {{-- <div>
                             <label
                                 class="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2 ml-1">Alamat
                                 Domisili</label>
@@ -179,7 +179,7 @@ new class extends Component {
                                     class="w-full px-6 py-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 text-sm font-bold text-slate-700"
                                     type="text" placeholder="Pelajar/Bekerja" />
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div>
                             <label

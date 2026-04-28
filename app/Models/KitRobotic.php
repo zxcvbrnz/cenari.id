@@ -15,7 +15,6 @@ class KitRobotic extends Model
         'description',
         'pelatihan_price',
         'private_price',
-        'course_package_id',
     ];
 
     public function moduls(): HasOne
@@ -36,8 +35,8 @@ class KitRobotic extends Model
             ->withTimestamps(); // agar created_at terisi otomatis
     }
 
-    public function coursePackage(): BelongsTo
+    public function coursePackage(): HasMany
     {
-        return $this->belongsTo(CoursePackage::class);
+        return $this->HasMany(CoursePackage::class);
     }
 }

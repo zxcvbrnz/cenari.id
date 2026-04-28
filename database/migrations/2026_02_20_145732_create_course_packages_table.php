@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('course_count');
             $table->integer('course_during');
             $table->decimal('price', 12, 2);
+            $table->foreignId('kit_robotic_id')->nullable()->constrained();
             $table->timestamps();
         });
     }
