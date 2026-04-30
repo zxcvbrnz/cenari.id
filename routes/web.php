@@ -27,6 +27,7 @@ use App\Livewire\WorkshopPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MidtransCallbackController;
+use App\Livewire\PaymentFinish;
 
 // Route::view('/', 'welcome');
 Route::get('/', HomePage::class)->name('home');
@@ -64,6 +65,8 @@ Route::get('/profile/address', AddressManager::class)->name('profile.address')->
 Route::get('/shop/order', OrderIndex::class)->name('order.index')->middleware(['auth']);
 
 Route::get('/shop/order/{id}', OrderShow::class)->name('order.show')->middleware(['auth']);
+
+Route::get('/payment-finish', PaymentFinish::class)->name('payment.finish')->middleware(['auth']);
 
 Route::post('/api/midtrans-callback', [MidtransCallbackController::class, 'handle']);
 
