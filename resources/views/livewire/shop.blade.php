@@ -8,7 +8,18 @@
                 <p class="text-slate-400 text-sm">Temukan komponen dan kit robotik terbaik.</p>
             </div>
 
-            <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+            <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center">
+                <!-- Tombol Pesanan Saya -->
+                <a href="{{ route('order.index') }}" wire:navigate
+                    class="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-slate-100 hover:bg-slate-50 transition-all shadow-sm group">
+                    <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-slate-600">Pesanan Saya</span>
+                </a>
+
                 <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari produk..."
                     class="px-6 py-3 rounded-2xl border-none bg-slate-100 focus:ring-2 focus:ring-blue-500 w-full md:w-64 text-sm font-medium">
 
