@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => AdminMiddleware::class,
             'check.profile' => CheckProfileCompletion::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'api/midtrans-callback'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

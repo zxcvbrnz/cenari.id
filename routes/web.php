@@ -16,6 +16,8 @@ use App\Livewire\ItemDetail;
 use App\Livewire\KitDetail;
 use App\Livewire\LearningList;
 use App\Livewire\MitraInstansi;
+use App\Livewire\OrderIndex;
+use App\Livewire\OrderShow;
 use App\Livewire\PortfolioGallery;
 use App\Livewire\SchoolPartner;
 use App\Livewire\Shop;
@@ -24,6 +26,7 @@ use App\Livewire\WorkshopDetail;
 use App\Livewire\WorkshopPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MidtransCallbackController;
 
 // Route::view('/', 'welcome');
 Route::get('/', HomePage::class)->name('home');
@@ -54,10 +57,15 @@ Route::get('/workshops/{slug}', WorkshopDetail::class)->name('workshop.detail');
 
 Route::get('/contact-us', Contact::class)->name('contact.us');
 
-
 Route::get('/course-packages-user/list', LearningList::class)->name('course.packages.user.list')->middleware(['auth']);
 
 Route::get('/profile/address', AddressManager::class)->name('profile.address')->middleware(['auth']);
+
+Route::get('/shop/order', OrderIndex::class)->name('order.index')->middleware(['auth']);
+
+Route::get('/shop/order/{id}', OrderShow::class)->name('order.show')->middleware(['auth']);
+
+Route::post('/api/midtrans-callback', [MidtransCallbackController::class, 'handle']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'admin'])
