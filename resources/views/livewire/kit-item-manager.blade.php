@@ -240,6 +240,11 @@
                                 class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600">
                         </div>
                         <div>
+                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Deskripsi</label>
+                            <input type="text" wire:model="i_description"
+                                class="w-full border-slate-200 rounded-2xl p-4 text-slate-600">
+                        </div>
+                        <div>
                             <label class="text-[9px] font-black uppercase text-slate-400 ml-2 block mb-3 italic">Foto
                                 Komponen</label>
                             <div class="flex flex-wrap gap-3">
