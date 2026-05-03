@@ -45,7 +45,7 @@
                         class="group bg-white rounded-[2.5rem] border border-slate-100 p-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
                         <a href="{{ route('kit.detail', $kit->id) }}" wire:navigate class="block">
                             <div class="relative h-56 rounded-[2rem] overflow-hidden mb-6 shadow-inner bg-slate-50">
-                                <img src="{{ asset('storage/' . $kit->images->first()->filename) ?? 'https://placehold.co/600x400' }}"
+                                <img src="{{ $kit->images->isNotEmpty() ? asset('storage/' . $kit->images->first()->filename) : 'https://placehold.co/600x400' }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
 
                                 @if ($kit->discount > 0)
@@ -97,7 +97,7 @@
                         class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden">
                         <a href="{{ route('item.detail', $item->id) }}" wire:navigate class="block">
                             <div class="aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden relative">
-                                <img src="{{ asset('storage/' . $item->images->first()->filename) ?? 'https://placehold.co/400x400' }}"
+                                <img src="{{ $item->images->isNotEmpty() ? asset('storage/' . $item->images->first()->filename) : 'https://placehold.co/400x400' }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
                             <h4
