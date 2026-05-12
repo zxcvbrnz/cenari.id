@@ -148,7 +148,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full"
                                         style="background-color: {{ $item->accent_color }}"></span>
-                                    <p class="text-[10px] font-black tracking-[0.15em] uppercase text-slate-400">
+                                    <p class="text-[8px] font-black tracking-[0.15em] uppercase text-slate-400">
                                         {{ $cat }}
                                     </p>
                                 </div>
