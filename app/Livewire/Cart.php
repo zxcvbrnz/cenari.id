@@ -54,8 +54,9 @@ class Cart extends Component
 
         // mengecek apakah user sudah login, jika tidak maka terdapat sweetalert setelahkan di alihkan ke halaman login
         if (!Auth::check()) {
+            redirect()->route('login');
             session()->flash('swal:modal', ['icon' => 'error', 'title' => 'Gagal!', 'text' => 'Silahkan login terlebih dahulu.']);
-            return redirect()->route('login');
+            return;
         }
 
         // Ambil alamat hanya jika metode pengiriman adalah 'send'
