@@ -161,7 +161,7 @@
                         <div class="flex flex-wrap gap-2">
                             @foreach ($item->badges as $badge)
                                 <span
-                                    class="capitalize text-[8--px] font-bold bg-slate-50 text-slate-500 group-hover:bg-slate-900 group-hover:text-white px-3 py-1.5 rounded-xl border border-slate-100 group-hover:border-slate-900 transition-all duration-300">
+                                    class="capitalize text-[8px] font-bold bg-slate-50 text-slate-500 group-hover:bg-slate-900 group-hover:text-white px-3 py-1.5 rounded-xl border border-slate-100 group-hover:border-slate-900 transition-all duration-300">
                                     {{ $badge }}
                                 </span>
                             @endforeach
