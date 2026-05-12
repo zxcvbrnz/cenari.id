@@ -113,7 +113,7 @@ class KitItemManager extends Component
         $this->item_id = $item->id;
         $this->i_name = $item->name;
         $this->i_price = (float) $item->price;
-        $this->i_stock = (int) $item->stock;
+        $this->i_stock = $item->stock;
         $this->i_description = $item->description;
         $this->view = 'item-form';
     }

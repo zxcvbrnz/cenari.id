@@ -241,7 +241,7 @@
                         </div>
                         <div>
                             <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Stock</label>
-                            <input type="number" step="0.01" wire:model="i_stock"
+                            <input type="number" wire:model="i_stock"
                                 class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600">
                         </div>
                         <div>
