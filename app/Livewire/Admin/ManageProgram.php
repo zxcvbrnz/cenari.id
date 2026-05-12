@@ -205,23 +205,11 @@ class ManageProgram extends Component
             'course_package_id' => $packageId,
             'title' => 'Judul Materi Baru',
         ]);
-
-        $this->dispatch('swal:modal', [
-            'title' => 'Modul Ditambahkan',
-            'icon' => 'success',
-            'text' => 'Satu baris materi baru telah dibuat.'
-        ]);
     }
 
     public function updateModul($modulId, $field, $value)
     {
         ModulCoursePackage::where('id', $modulId)->update([$field => $value]);
-
-        $this->dispatch('swal:modal', [
-            'title' => 'Modul Diperbarui',
-            'icon' => 'success',
-            'text' => 'Konten materi berhasil disimpan.'
-        ]);
     }
 
     public function deleteModul($id)

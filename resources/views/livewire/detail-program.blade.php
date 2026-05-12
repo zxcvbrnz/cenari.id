@@ -185,7 +185,7 @@
                                                 onmouseover="this.style.backgroundColor='{{ $program->accent_color }}'"
                                                 onmouseout="this.style.backgroundColor='#0F172A'"
                                                 class="px-8 py-3 text-white text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all flex items-center gap-2">
-                                                Pelajari Kurikulum
+                                                Pelajari Materi
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24">
                                                     <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2"

@@ -165,20 +165,25 @@
     data-client-key="{{ config('midtrans.client_key') }}"></script>
 
 <script type="text/javascript">
-    const payButton = document.getElementById('pay-button');
-    if (payButton) {
-        payButton.addEventListener('click', function() {
-            window.snap.pay('{{ $order->snap_token }}', {
-                onSuccess: function(result) {
-                    window.location.href = "{{ route('order.index') }}";
-                },
-                onPending: function(result) {
-                    location.reload();
-                },
-                onError: function(result) {
-                    alert("Pembayaran gagal!");
-                }
-            });
+    window.addEventListener('open-midtrans', event => {
+        // Mengambil snap_token dari detail event dispatch Livewire
+        const snapToken = event.detail[0].snap_token;
+
+        window.snap.pay(snapToken, {
+            onSuccess: function(result) {
+                window.location.href = "{{ route('order.index') }}";
+            },
+            onPending: function(result) {
+                location.reload();
+            },
+            onError: function(result) {
+                // Menggunakan SweetAlert jika pembayaran gagal
+                Swal.fire({
+                    title: 'Gagal!',
+                    text: 'Terjadi kesalahan pada pembayaran.',
+                    icon: 'error'
+                });
+            }
         });
-    }
+    });
 </script>
