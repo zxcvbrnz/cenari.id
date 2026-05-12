@@ -178,6 +178,7 @@ class KitItemManager extends Component
         $item = Item::updateOrCreate(['id' => $this->item_id], [
             'name' => $this->i_name,
             'price' => round($this->i_price, 2),
+            'stock' => $this->i_stock ?? 0,
             'description' => $this->i_description,
         ]);
 
