@@ -142,7 +142,11 @@
                             <span class="w-2 h-2 rounded-full"
                                 style="background-color: {{ $item->accent_color }}"></span>
                             <p class="text-[10px] font-black tracking-[0.15em] uppercase text-slate-400">
-                                {{ is_array($item->category) ? $item->category[0] : $item->category }}
+                                @if (is_array($item->category))
+                                    {{ implode(', ', $item->category) }}
+                                @else
+                                    {{ $item->category }}
+                                @endif
                             </p>
                         </div>
                     </div>
