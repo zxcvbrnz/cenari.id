@@ -215,7 +215,7 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div class="max-w-2xl">
                 <h2 class="font-heading text-4xl md:text-3xl font-black text-slate-900 mb-4 leading-tight">
-                    Empower Your Skills with Our <span class="text-[#3B82F6]">Exclusive Workshops</span>
+                    Tingkatkan Keahlian Anda dengan <span class="text-[#3B82F6]">Workshop Eksklusif</span> Kami
                 </h2>
             </div>
 
@@ -240,7 +240,7 @@
                 class="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory scroll-smooth hide-scrollbar"
                 style="scrollbar-width: none; -ms-overflow-style: none;">
 
-                @foreach ($seminars as $item)
+                @forelse ($seminars as $item)
                     @php
                         $detailUrl = route('workshop.detail', ['slug' => $item->slug]);
                     @endphp
@@ -306,7 +306,7 @@
                                     <div>
                                         <p
                                             class="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-0.5">
-                                            Registration Fee
+                                            Biaya Pendaftaran
                                         </p>
                                         <p class="text-base font-black text-slate-900">
                                             {{ $item->price }}
@@ -321,9 +321,22 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div
+                        class="w-full py-12 flex flex-col items-center justify-center border-2 border-dashed border-slate-100 rounded-[2rem] bg-slate-50/50">
+                        <svg class="w-12 h-12 text-slate-300 mb-4" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        <p class="text-slate-500 font-bold text-sm text-center">Belum ada workshop yang tersedia saat
+                            ini.</p>
+                        <p class="text-slate-400 text-xs text-center mt-1">Silakan cek kembali di lain waktu.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
+
         <template x-if="copied">
             <div x-show="copied" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
