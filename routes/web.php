@@ -98,6 +98,10 @@ Route::view('manage-shop', 'manage-shop')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.shop');
 
+Route::view('manage-order', 'manage-order')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('manage.order');
+
 Route::view('manage-enrollment', 'manage-enrollment')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.enrollment');
