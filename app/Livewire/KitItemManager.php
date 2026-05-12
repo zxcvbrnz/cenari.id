@@ -29,7 +29,7 @@ class KitItemManager extends Component
     public $selectedItems = [];
 
     // Data Binding - ITEM COMPONENT
-    public $item_id, $i_name, $i_price, $i_description;
+    public $item_id, $i_name, $i_price, $i_stock, $i_description;
     public $new_images_item = [];
 
     public function render()
@@ -56,7 +56,7 @@ class KitItemManager extends Component
     {
         $item = Item::find($id);
         if ($item) {
-            $this->selectedItems[] = ['id' => $item->id, 'name' => $item->name, 'price' => $item->price];
+            $this->selectedItems[] = ['id' => $item->id, 'name' => $item->name, 'price' => $item->price, 'stock' => $item->stock];
         }
         $this->searchItem = '';
     }
@@ -95,7 +95,7 @@ class KitItemManager extends Component
         $this->k_private_price = (float) $kit->private_price;
 
         foreach ($kit->items as $item) {
-            $this->selectedItems[] = ['id' => $item->id, 'name' => $item->name, 'price' => $item->price, 'quantity' => $item->pivot->quantity];
+            $this->selectedItems[] = ['id' => $item->id, 'name' => $item->name, 'price' => $item->price,  'quantity' => $item->pivot->quantity];
         }
 
         if ($kit->moduls) {
@@ -113,6 +113,7 @@ class KitItemManager extends Component
         $this->item_id = $item->id;
         $this->i_name = $item->name;
         $this->i_price = (float) $item->price;
+        $this->i_stock = (int) $item->stock;
         $this->i_description = $item->description;
         $this->view = 'item-form';
     }
@@ -229,6 +230,7 @@ class KitItemManager extends Component
             'item_id',
             'i_name',
             'i_price',
+            'i_stock',
             'i_description',
             'new_images_item',
             'searchItem',

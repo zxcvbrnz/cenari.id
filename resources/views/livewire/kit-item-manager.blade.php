@@ -240,6 +240,11 @@
                                 class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600">
                         </div>
                         <div>
+                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Stock</label>
+                            <input type="number" step="0.01" wire:model="i_stock"
+                                class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600">
+                        </div>
+                        <div>
                             <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Deskripsi</label>
                             <input type="text" wire:model="i_description"
                                 class="w-full border-slate-200 rounded-2xl p-4 text-slate-600">
