@@ -72,7 +72,7 @@
                     {{ $program->instansi->profile }}
                 </p>
 
-                <div class="grid grid-cols-2 gap-8 pt-6">
+                {{-- <div class="grid grid-cols-2 gap-8 pt-6">
                     <div>
                         <p class="text-4xl font-black text-slate-900 mb-1">500+</p>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Alumni Terdaftar</p>
@@ -81,7 +81,7 @@
                         <p class="text-4xl font-black text-slate-900 mb-1">12+</p>
                         <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Partner Industri</p>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
