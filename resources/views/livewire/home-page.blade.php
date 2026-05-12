@@ -138,16 +138,21 @@
                             class="font-heading text-xl font-bold text-[#0F172A] mb-2 group-hover:text-[#3B82F6] transition-colors duration-300">
                             {{ $item->title }}
                         </h3>
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full"
-                                style="background-color: {{ $item->accent_color }}"></span>
-                            <p class="text-[10px] font-black tracking-[0.15em] uppercase text-slate-400">
-                                @if (is_array($item->category))
-                                    {{ implode(', ', $item->category) }}
-                                @else
-                                    {{ $item->category }}
-                                @endif
-                            </p>
+                        <div class="flex flex-col gap-1.5">
+                            @php
+                                // Memastikan categories selalu berupa array agar bisa di-loop
+                                $categories = is_array($item->category) ? $item->category : [$item->category];
+                            @endphp
+
+                            @foreach ($categories as $cat)
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full"
+                                        style="background-color: {{ $item->accent_color }}"></span>
+                                    <p class="text-[10px] font-black tracking-[0.15em] uppercase text-slate-400">
+                                        {{ $cat }}
+                                    </p>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
