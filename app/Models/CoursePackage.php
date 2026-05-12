@@ -40,7 +40,7 @@ class CoursePackage extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)
-            ->withPivot('learning_methode', 'status')
+            ->withPivot('learning_methode', 'status', 'payment_status', 'username', 'password')
             ->withTimestamps();
     }
 }
