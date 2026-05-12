@@ -15,8 +15,9 @@ use Midtrans\Config;
 
 class Cart extends Component
 {
-
     public $selectedAddressId;
+    public $shipping_method = 'cod'; // Default ke COD
+    public $isSendAvailable = false; // Variable boolean untuk menonaktifkan fitur 'send'
 
     #[On('cartUpdated')]
     public function refreshCart()
@@ -50,27 +51,46 @@ class Cart extends Component
     public function processCheckout()
     {
         $cart = session()->get('cart', []);
-        $address = UserAddress::find($this->selectedAddressId);
 
-        if (!$address || empty($cart)) return;
+        // mengecek apakah user sudah login, jika tidak maka terdapat sweetalert setelahkan di alihkan ke halaman login
+        if (!Auth::check()) {
+            $this->dispatch('swal:modal', ['icon' => 'error', 'title' => 'Gagal!', 'text' => 'Silahkan login terlebih dahulu.']);
+            return redirect()->route('login');
+        }
+
+        // Ambil alamat hanya jika metode pengiriman adalah 'send'
+        $address = null;
+        if ($this->shipping_method === 'send') {
+            $address = UserAddress::find($this->selectedAddressId);
+            if (!$address) {
+                $this->dispatch('swal:modal', ['icon' => 'error', 'title' => 'Gagal!', 'text' => 'Silahkan pilih alamat terlebih dahulu.']);
+                return;
+            }
+        }
+
+        if (empty($cart)) return;
 
         DB::beginTransaction();
         try {
             // 1. Simpan Order
-            $order = Order::create([
+            $orderData = [
                 'user_id' => Auth::id(),
                 'order_number' => 'ORD-' . time() . rand(100, 999),
                 'total_amount' => collect($cart)->sum(fn($i) => $i['price'] * $i['quantity']),
                 'status' => 'pending',
-                'recipient_name' => $address->recipient_name,
-                'phone_number' => $address->phone_number,
-                'full_address' => $address->full_address,
-                'province' => $address->province,
-                'city' => $address->city,
-                'district' => $address->district,
-                'village' => $address->village,
-                'postal_code' => $address->postal_code,
-            ]);
+                'shipping_method' => $this->shipping_method,
+                // Kolom alamat akan NULL jika COD
+                'recipient_name' => $address ? $address->recipient_name : null,
+                'phone_number' => $address ? $address->phone_number : null,
+                'full_address' => $address ? $address->full_address : null,
+                'province' => $address ? $address->province : null,
+                'city' => $address ? $address->city : null,
+                'district' => $address ? $address->district : null,
+                'village' => $address ? $address->village : null,
+                'postal_code' => $address ? $address->postal_code : null,
+            ];
+
+            $order = Order::create($orderData);
 
             // 2. Simpan Items
             foreach ($cart as $item) {
@@ -98,7 +118,7 @@ class Cart extends Component
                 'customer_details' => [
                     'first_name' => Auth::user()->name,
                     'email' => Auth::user()->email,
-                    'phone' => $address->phone_number,
+                    'phone' => $address ? $address->phone_number : '',
                 ],
             ];
 

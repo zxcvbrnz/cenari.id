@@ -85,125 +85,150 @@
                     </div>
                 @endforelse
             </div>
+
             @if (count($cart) > 0)
-                <div class="mt-2 pt-2 border-t border-slate-100 space-y-6">
-
+                <div class="mt-2 pt-2 border-t border-slate-100 space-y-4">
+                    <!-- PEMILIHAN METODE -->
                     <div class="space-y-2">
-                        <label class="text-[9px] font-black uppercase text-slate-400 tracking-widest px-1">Kirim
-                            Ke:</label>
-
-                        <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" type="button"
-                                class="w-full bg-slate-50 border border-slate-100 p-3 rounded-2xl flex items-center justify-between hover:bg-white hover:border-blue-300 transition-all group">
-
-                                <div class="flex items-center gap-3 text-left overflow-hidden">
-                                    <div
-                                        class="shrink-0 w-8 h-8 bg-white rounded-lg flex items-center justify-center text-blue-600 shadow-sm">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        </svg>
-                                    </div>
-                                    <div class="truncate">
-                                        @php
-                                            $selected = collect($addresses)->firstWhere('id', $selectedAddressId);
-                                        @endphp
-
-                                        <div class="flex items-center gap-2 mb-0.5">
-                                            <p class="text-[10px] font-black text-slate-800 uppercase truncate">
-                                                {{ $selected ? $selected->recipient_name : 'Pilih Alamat' }}
-                                            </p>
-                                            @if ($selected)
-                                                <span
-                                                    class="text-[9px] font-bold text-slate-400 italic">({{ $selected->phone_number }})</span>
-                                            @endif
-                                        </div>
-
-                                        <p class="text-[9px] text-slate-500 truncate leading-tight">
-                                            @if ($selected)
-                                                <span
-                                                    class="font-bold text-slate-700">{{ $selected->full_address }}</span>
-                                                <span class="mx-1 text-slate-300">•</span>
-                                                {{ $selected->village }}, {{ $selected->district }},
-                                                {{ $selected->city }}
-                                            @else
-                                                Klik untuk memilih lokasi pengiriman
-                                            @endif
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <svg class="w-3 h-3 text-slate-300 transition-transform"
-                                    :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
+                        <label class="text-[9px] font-black uppercase text-slate-400 tracking-widest px-1">Metode
+                            Pengiriman:</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button wire:click="$set('shipping_method', 'cod')"
+                                class="py-2 px-3 rounded-xl text-[9px] font-black uppercase border transition-all {{ $shipping_method === 'cod' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-400 border-slate-100' }}">
+                                COD
                             </button>
+                            <button
+                                @if ($isSendAvailable) wire:click="$set('shipping_method', 'send')" @endif
+                                class="py-2 px-3 rounded-xl text-[9px] font-black uppercase border transition-all {{ $shipping_method === 'send' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-400 border-slate-100' }} {{ !$isSendAvailable ? 'opacity-50 cursor-not-allowed' : '' }}">
+                                Send @if (!$isSendAvailable)
+                                    (Off)
+                                @endif
+                            </button>
+                        </div>
+                    </div>
 
-                            <div x-show="open" @click.away="open = false"
-                                x-transition:enter="transition ease-out duration-200"
-                                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
-                                class="absolute z-[60] bottom-full mb-2 w-full bg-white border border-slate-100 rounded-3xl shadow-2xl overflow-hidden">
+                    <!-- ALAMAT (Hanya muncul jika metode 'send') -->
+                    @if ($shipping_method === 'send')
+                        <div class="space-y-2">
+                            <label class="text-[9px] font-black uppercase text-slate-400 tracking-widest px-1">Kirim
+                                Ke:</label>
 
-                                <div class="max-h-48 overflow-y-auto p-2 space-y-1 custom-scrollbar">
-                                    @forelse($addresses as $addr)
-                                        <button type="button" @click="open = false"
-                                            wire:click="$set('selectedAddressId', {{ $addr->id }})"
-                                            class="w-full p-3 rounded-xl flex items-center gap-3 hover:bg-blue-50 transition-all text-left border {{ $selectedAddressId == $addr->id ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100' }}">
+                            <div x-data="{ open: false }" class="relative">
+                                <button @click="open = !open" type="button"
+                                    class="w-full bg-slate-50 border border-slate-100 p-3 rounded-2xl flex items-center justify-between hover:bg-white hover:border-blue-300 transition-all group">
 
-                                            <div class="shrink-0">
-                                                <div
-                                                    class="w-2 h-2 rounded-full {{ $selectedAddressId == $addr->id ? 'bg-blue-600' : 'bg-slate-200' }}">
-                                                </div>
+                                    <div class="flex items-center gap-3 text-left overflow-hidden">
+                                        <div
+                                            class="shrink-0 w-8 h-8 bg-white rounded-lg flex items-center justify-center text-blue-600 shadow-sm">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            </svg>
+                                        </div>
+                                        <div class="truncate">
+                                            @php
+                                                $selected = collect($addresses)->firstWhere('id', $selectedAddressId);
+                                            @endphp
+
+                                            <div class="flex items-center gap-2 mb-0.5">
+                                                <p class="text-[10px] font-black text-slate-800 uppercase truncate">
+                                                    {{ $selected ? $selected->recipient_name : 'Pilih Alamat' }}
+                                                </p>
+                                                @if ($selected)
+                                                    <span
+                                                        class="text-[9px] font-bold text-slate-400 italic">({{ $selected->phone_number }})</span>
+                                                @endif
                                             </div>
 
-                                            <div class="min-w-0 flex-1">
-                                                <div class="flex items-center gap-2 mb-0.5">
+                                            <p class="text-[9px] text-slate-500 truncate leading-tight">
+                                                @if ($selected)
                                                     <span
-                                                        class="text-[10px] font-black text-slate-900 uppercase truncate">{{ $addr->recipient_name }}</span>
-                                                    <span
-                                                        class="text-[9px] font-bold text-slate-400 italic">({{ $addr->phone_number }})</span>
-                                                </div>
-
-                                                <div
-                                                    class="text-[9px] text-slate-500 font-medium truncate leading-tight">
-                                                    <span
-                                                        class="font-bold text-slate-700">{{ $addr->full_address }}</span>
+                                                        class="font-bold text-slate-700">{{ $selected->full_address }}</span>
                                                     <span class="mx-1 text-slate-300">•</span>
-                                                    {{ $addr->village }}, {{ $addr->district }}, {{ $addr->city }},
-                                                    {{ $addr->province }}
-                                                    @if ($addr->postal_code)
-                                                        <span
-                                                            class="ml-1 text-slate-400">[{{ $addr->postal_code }}]</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </button>
-                                    @empty
-                                        <p
-                                            class="p-4 text-center text-[9px] text-slate-400 font-bold uppercase italic">
-                                            Alamat belum ada</p>
-                                    @endforelse
-                                </div>
+                                                    {{ $selected->village }}, {{ $selected->district }},
+                                                    {{ $selected->city }}
+                                                @else
+                                                    Klik untuk memilih lokasi pengiriman
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
 
-                                <div class="p-2 border-t border-slate-50 bg-slate-50/50">
-                                    <a href="{{ route('profile.address') }}" wire:navigate
-                                        class="flex items-center justify-center gap-2 w-full p-2.5 rounded-xl border-2 border-dashed border-slate-200 text-slate-400 hover:border-blue-400 hover:text-blue-600 hover:bg-white transition-all">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 4v16m8-8H4" />
-                                        </svg>
-                                        <span class="text-[9px] font-black uppercase tracking-widest">Tambah
-                                            Alamat</span>
-                                    </a>
+                                    <svg class="w-3 h-3 text-slate-300 transition-transform"
+                                        :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+
+                                <div x-show="open" @click.away="open = false"
+                                    x-transition:enter="transition ease-out duration-200"
+                                    x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                                    class="absolute z-[60] bottom-full mb-2 w-full bg-white border border-slate-100 rounded-3xl shadow-2xl overflow-hidden">
+
+                                    <div class="max-h-48 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                                        @forelse($addresses as $addr)
+                                            <button type="button" @click="open = false"
+                                                wire:click="$set('selectedAddressId', {{ $addr->id }})"
+                                                class="w-full p-3 rounded-xl flex items-center gap-3 hover:bg-blue-50 transition-all text-left border {{ $selectedAddressId == $addr->id ? 'bg-blue-50 border-blue-200' : 'bg-white border-slate-100' }}">
+
+                                                <div class="shrink-0">
+                                                    <div
+                                                        class="w-2 h-2 rounded-full {{ $selectedAddressId == $addr->id ? 'bg-blue-600' : 'bg-slate-200' }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="min-w-0 flex-1">
+                                                    <div class="flex items-center gap-2 mb-0.5">
+                                                        <span
+                                                            class="text-[10px] font-black text-slate-900 uppercase truncate">{{ $addr->recipient_name }}</span>
+                                                        <span
+                                                            class="text-[9px] font-bold text-slate-400 italic">({{ $addr->phone_number }})</span>
+                                                    </div>
+
+                                                    <div
+                                                        class="text-[9px] text-slate-500 font-medium truncate leading-tight">
+                                                        <span
+                                                            class="font-bold text-slate-700">{{ $addr->full_address }}</span>
+                                                        <span class="mx-1 text-slate-300">•</span>
+                                                        {{ $addr->village }}, {{ $addr->district }},
+                                                        {{ $addr->city }},
+                                                        {{ $addr->province }}
+                                                        @if ($addr->postal_code)
+                                                            <span
+                                                                class="ml-1 text-slate-400">[{{ $addr->postal_code }}]</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        @empty
+                                            <p
+                                                class="p-4 text-center text-[9px] text-slate-400 font-bold uppercase italic">
+                                                Alamat belum ada</p>
+                                        @endforelse
+                                    </div>
+
+                                    <div class="p-2 border-t border-slate-50 bg-slate-50/50">
+                                        <a href="{{ route('profile.address') }}" wire:navigate
+                                            class="flex items-center justify-center gap-2 w-full p-2.5 rounded-xl border-2 border-dashed border-slate-200 text-slate-400 hover:border-blue-400 hover:text-blue-600 hover:bg-white transition-all">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 4v16m8-8H4" />
+                                            </svg>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">Tambah
+                                                Alamat</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @endif
+
             @if (count($cart) > 0)
                 @php
                     $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
@@ -217,7 +242,8 @@
                                 {{ number_format($total, 0, ',', '.') }}</p>
                         </div>
                     </div>
-                    @if (!$selectedAddressId)
+
+                    @if ($shipping_method === 'send' && !$selectedAddressId)
                         <div class="mb-3 flex items-center gap-2 text-rose-500 animate-pulse">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd"
@@ -228,9 +254,11 @@
                                 terlebih dahulu</span>
                         </div>
                     @endif
-                    <button {{ !$selectedAddressId ? 'disabled' : '' }} wire:click="processCheckout"
+
+                    <button {{ $shipping_method === 'send' && !$selectedAddressId ? 'disabled' : '' }}
+                        wire:click="processCheckout"
                         class="w-full py-5 rounded-[1.5rem] text-[11px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95
-                            {{ !$selectedAddressId
+                            {{ $shipping_method === 'send' && !$selectedAddressId
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
                                 : 'bg-[#3B82F6] text-white hover:bg-slate-900 shadow-blue-500/20' }}">
                         Lanjutkan Checkout
