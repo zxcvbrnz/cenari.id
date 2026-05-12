@@ -18,13 +18,49 @@ class OrderManager extends Component
     public function updateStatus($orderId, $newStatus)
     {
         $order = Order::findOrFail($orderId);
-        $order->update(['status' => $newStatus]);
+        $currentStatus = $order->status;
 
-        $this->dispatch('swal:modal', [
-            'title' => 'Status Diperbarui',
-            'icon'  => 'success',
-            'text'  => 'Pesanan #' . $order->order_number . ' sekarang berstatus ' . strtoupper($newStatus) . '.'
-        ]);
+        // 1. Jika sudah Cancelled atau Completed, kunci status (tidak bisa diubah lagi)
+        if (in_array($currentStatus, ['cancelled', 'completed'])) {
+            $this->dispatch('swal:modal', [
+                'title' => 'Aksi Ditolak',
+                'icon'  => 'error',
+                'text'  => 'Pesanan yang sudah ' . strtoupper($currentStatus) . ' tidak dapat diubah lagi.'
+            ]);
+            return;
+        }
+
+        // 2. Logika transisi status
+        $canUpdate = false;
+
+        if ($currentStatus === 'pending') {
+            // Pending hanya bisa ke Processing atau Cancelled
+            if (in_array($newStatus, ['processing', 'cancelled'])) {
+                $canUpdate = true;
+            }
+        } elseif ($currentStatus === 'processing') {
+            // Processing hanya bisa ke Completed
+            if ($newStatus === 'completed') {
+                $canUpdate = true;
+            }
+        }
+
+        // 3. Eksekusi jika memenuhi syarat
+        if ($canUpdate) {
+            $order->update(['status' => $newStatus]);
+
+            $this->dispatch('swal:modal', [
+                'title' => 'Status Diperbarui',
+                'icon'  => 'success',
+                'text'  => 'Pesanan #' . $order->order_number . ' berhasil diupdate ke ' . strtoupper($newStatus) . '.'
+            ]);
+        } else {
+            $this->dispatch('swal:modal', [
+                'title' => 'Urutan Salah',
+                'icon'  => 'info',
+                'text'  => 'Status ' . strtoupper($currentStatus) . ' tidak bisa langsung ke ' . strtoupper($newStatus) . '.'
+            ]);
+        }
     }
 
     public function deleteOrder($orderId)

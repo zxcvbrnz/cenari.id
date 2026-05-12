@@ -122,17 +122,37 @@
                             </p>
                         </div>
 
-                        <!-- Update Status Buttons -->
+                        <!-- Bagian Update Status di dalam Loop Order -->
                         <p class="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-3">Update Status
                         </p>
                         <div class="grid grid-cols-2 gap-2">
-                            <button wire:click="updateStatus({{ $order->id }}, 'processing')"
-                                class="px-3 py-2 rounded-xl bg-blue-50 text-blue-600 text-[9px] font-black uppercase hover:bg-blue-600 hover:text-white transition-all">Proses</button>
-                            <button wire:click="updateStatus({{ $order->id }}, 'completed')"
-                                class="px-3 py-2 rounded-xl bg-emerald-50 text-emerald-600 text-[9px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all">Selesai</button>
-                            <button wire:click="updateStatus({{ $order->id }}, 'cancelled')"
-                                class="col-span-2 px-3 py-2 rounded-xl bg-slate-100 text-slate-400 text-[9px] font-black uppercase hover:bg-red-500 hover:text-white transition-all">Batalkan
-                                Pesanan</button>
+
+                            @if ($order->status === 'pending')
+                                <button wire:click="updateStatus({{ $order->id }}, 'processing')"
+                                    class="px-3 py-2 rounded-xl bg-blue-50 text-blue-600 text-[9px] font-black uppercase hover:bg-blue-600 hover:text-white transition-all">
+                                    Proses
+                                </button>
+                                <button wire:click="updateStatus({{ $order->id }}, 'cancelled')"
+                                    class="px-3 py-2 rounded-xl bg-slate-100 text-slate-400 text-[9px] font-black uppercase hover:bg-red-500 hover:text-white transition-all">
+                                    Batalkan
+                                </button>
+                            @endif
+
+                            @if ($order->status === 'processing')
+                                <button wire:click="updateStatus({{ $order->id }}, 'completed')"
+                                    class="col-span-2 px-3 py-2 rounded-xl bg-emerald-50 text-emerald-600 text-[9px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all">
+                                    Selesaikan Pesanan
+                                </button>
+                            @endif
+
+                            @if (in_array($order->status, ['completed', 'cancelled']))
+                                <div
+                                    class="col-span-2 py-2 px-3 rounded-xl bg-slate-50 border border-slate-100 text-center">
+                                    <p class="text-[8px] font-black uppercase text-slate-400">Transaksi Selesai /
+                                        Terkunci</p>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
