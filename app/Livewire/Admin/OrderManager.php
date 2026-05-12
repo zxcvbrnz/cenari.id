@@ -20,13 +20,23 @@ class OrderManager extends Component
         $order = Order::findOrFail($orderId);
         $order->update(['status' => $newStatus]);
 
-        session()->flash('success', "Status pesanan #{$order->order_number} diperbarui menjadi {$newStatus}.");
+        $this->dispatch('swal:modal', [
+            'title' => 'Status Diperbarui',
+            'icon'  => 'success',
+            'text'  => 'Pesanan #' . $order->order_number . ' sekarang berstatus ' . strtoupper($newStatus) . '.'
+        ]);
     }
 
     public function deleteOrder($orderId)
     {
-        Order::findOrFail($orderId)->delete();
-        session()->flash('success', 'Data pesanan berhasil dihapus.');
+        $order = Order::findOrFail($orderId);
+        $orderNumber = $order->order_number;
+        $order->delete();
+        $this->dispatch('swal:modal', [
+            'title' => 'Pesanan Dihapus',
+            'icon'  => 'warning',
+            'text'  => 'Data pesanan #' . $orderNumber . ' telah dihapus dari sistem.'
+        ]);
     }
 
     public function render()

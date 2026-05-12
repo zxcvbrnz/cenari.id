@@ -22,12 +22,20 @@ class PartnerManager extends Component
     public function deletePartner($id)
     {
         if ($this->type === 'school') {
-            SchoolPartner::findOrFail($id)->delete();
+            $partner = SchoolPartner::findOrFail($id);
+            $nama = $partner->nama_lengkap;
+            $partner->delete();
         } else {
-            InstitutionPartner::findOrFail($id)->delete();
+            $partner = InstitutionPartner::findOrFail($id);
+            $nama = $partner->nama_lengkap;
+            $partner->delete();
         }
 
-        session()->flash('success', 'Data partner berhasil dihapus.');
+        $this->dispatch('swal:modal', [
+            'title' => 'Partner Dihapus',
+            'icon'  => 'warning',
+            'text'  => 'Data partner "' . $nama . '" telah dihapus permanen.'
+        ]);
     }
 
     public function render()
