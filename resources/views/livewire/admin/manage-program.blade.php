@@ -36,26 +36,24 @@
                             <label class="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-widest">Pilih
                                 Instansi</label>
                             <select wire:model="instansi_id"
-                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase tracking-tight focus:ring-2 focus:ring-blue-500 transition-all">
+                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs tracking-tight focus:ring-2 focus:ring-blue-500 transition-all">
                                 <option value="">Pilih...</option>
                                 @foreach ($instansis as $ins)
                                     <option value="{{ $ins->id }}">{{ $ins->name }}</option>
                                 @endforeach
                             </select>
                             @error('instansi_id')
-                                <span
-                                    class="text-[9px] text-red-500 font-bold uppercase ml-1 italic">{{ $message }}</span>
+                                <span class="text-[9px] text-red-500 font-bold ml-1 italic">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-widest">Nama
+                            <label class="text-[10px] font-black text-slate-500 ml-1 tracking-widest">Nama
                                 Program (Title)</label>
                             <input type="text" wire:model="title" placeholder="Contoh: Sekolah Robot"
-                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500">
+                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs focus:ring-2 focus:ring-blue-500">
                             @error('title')
-                                <span
-                                    class="text-[9px] text-red-500 font-bold uppercase ml-1 italic">{{ $message }}</span>
+                                <span class="text-[9px] text-red-500 font-bold ml-1 italic">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -63,7 +61,7 @@
                             <label class="text-[10px] font-black uppercase text-slate-500 ml-1 tracking-widest">Label
                                 Navigasi</label>
                             <input type="text" wire:model="navigation" placeholder="Contoh: Kurikulum Robotik"
-                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs italic uppercase focus:ring-2 focus:ring-blue-500">
+                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs italic focus:ring-2 focus:ring-blue-500">
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
@@ -74,14 +72,14 @@
                                 <div class="flex gap-2">
                                     <input type="text" wire:model.defer="newCategoryItem"
                                         wire:keydown.enter.prevent="addCategory" placeholder="IoT, Web..."
-                                        class="flex-1 bg-slate-50 border-none rounded-xl p-4 text-xs font-bold uppercase focus:ring-2 focus:ring-blue-500">
+                                        class="flex-1 bg-slate-50 border-none rounded-xl p-4 text-xs font-bold focus:ring-2 focus:ring-blue-500">
                                     <button type="button" wire:click="addCategory"
                                         class="bg-slate-900 text-white px-5 rounded-xl font-black shadow-lg hover:bg-blue-600 transition-all">+</button>
                                 </div>
                                 <div class="flex flex-wrap gap-2 mt-3">
                                     @foreach ($category as $index => $item)
                                         <span
-                                            class="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-[10px] font-black uppercase flex items-center gap-2 border border-blue-100 animate-fade-in">
+                                            class="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-[10px] font-black flex items-center gap-2 border border-blue-100 animate-fade-in">
                                             {{ $item }}
                                             <button type="button" wire:click="removeCategory({{ $index }})"
                                                 class="text-red-400 hover:text-red-600 font-bold text-sm">×</button>
@@ -97,14 +95,14 @@
                                 <div class="flex gap-2">
                                     <input type="text" wire:model.defer="newBadgeItem"
                                         wire:keydown.enter.prevent="addBadge" placeholder="Populer, Baru..."
-                                        class="flex-1 bg-slate-50 border-none rounded-xl p-4 text-xs font-bold uppercase focus:ring-2 focus:ring-amber-500">
+                                        class="flex-1 bg-slate-50 border-none rounded-xl p-4 text-xs font-bold focus:ring-2 focus:ring-amber-500">
                                     <button type="button" wire:click="addBadge"
                                         class="bg-amber-500 text-white px-5 rounded-xl font-black shadow-lg hover:bg-slate-900 transition-all">+</button>
                                 </div>
                                 <div class="flex flex-wrap gap-2 mt-3">
                                     @foreach ($badges as $index => $item)
                                         <span
-                                            class="bg-amber-50 text-amber-700 px-3 py-2 rounded-lg text-[10px] font-black uppercase flex items-center gap-2 border border-amber-100 animate-fade-in">
+                                            class="bg-amber-50 text-amber-700 px-3 py-2 rounded-lg text-[10px] font-black flex items-center gap-2 border border-amber-100 animate-fade-in">
                                             {{ $item }}
                                             <button type="button" wire:click="removeBadge({{ $index }})"
                                                 class="text-red-400 hover:text-red-600 font-bold text-sm">×</button>
@@ -204,11 +202,11 @@
                         <img src="{{ asset('storage/' . $p->hero_image) }}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 flex items-end p-4">
                             <span
-                                class="bg-white/20 backdrop-blur-md text-white text-[7px] font-bold px-2 py-1 rounded-full uppercase">{{ $p->instansi->name }}</span>
+                                class="bg-white/20 backdrop-blur-md text-white text-[7px] font-bold px-2 py-1 rounded-full">{{ $p->instansi->name }}</span>
                         </div>
                     </div>
                     <div class="p-4 md:p-6">
-                        <h3 class="font-black italic uppercase text-base md:text-lg text-slate-800 mb-4 leading-tight">
+                        <h3 class="font-black italic text-base md:text-lg text-slate-800 mb-4 leading-tight">
                             {{ $p->title }}</h3>
                         <div class="flex flex-wrap gap-2">
                             <button wire:click.prevent="showPackageDetail({{ $p->id }})"
@@ -279,7 +277,7 @@
                         <label class="text-[9px] font-black uppercase text-slate-400 ml-1 tracking-widest">Alat /
                             Software</label>
                         <input type="text" wire:model="pkg_tool" placeholder="e.g Arduino IDE"
-                            class="w-full bg-slate-50 border-none rounded-xl p-4 text-[11px] font-bold uppercase">
+                            class="w-full bg-slate-50 border-none rounded-xl p-4 text-[11px] font-bold">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="space-y-1">
@@ -341,10 +339,9 @@
                                     <span class="text-base leading-none">{{ $package->level }}</span>
                                 </div>
                                 <div>
-                                    <h4
-                                        class="font-black uppercase text-xs md:text-sm italic text-slate-800 leading-tight">
+                                    <h4 class="font-black text-xs md:text-sm italic text-slate-800 leading-tight">
                                         {{ $package->name }}</h4>
-                                    <p class="text-[9px] font-bold text-blue-600 uppercase tracking-tighter">Rp
+                                    <p class="text-[9px] font-bold text-blue-600 tracking-tighter">Rp
                                         {{ number_format($package->price, 0, ',', '.') }} •
                                         {{ $package->course_count }} Pertemuan</p>
                                 </div>
@@ -393,7 +390,7 @@
                                                 Modul</label>
                                             <input type="text" value="{{ $modul->title }}"
                                                 wire:blur="updateModul({{ $modul->id }}, 'title', $event.target.value)"
-                                                class="w-full bg-slate-50 border-none rounded-lg p-3 text-[10px] font-black uppercase italic text-slate-700">
+                                                class="w-full bg-slate-50 border-none rounded-lg p-3 text-[10px] font-black italic text-slate-700">
                                         </div>
 
                                         <button type="button"

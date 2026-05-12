@@ -47,24 +47,46 @@
                     @endforeach
                 @else
                     @foreach ($all_items as $item)
-                        <div class="bg-white p-4 rounded-[2rem] border border-slate-100 shadow-sm">
+                        <div class="bg-white p-4 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col h-full">
                             @if ($item->images->first())
                                 <img src="{{ asset('storage/' . $item->images->first()->filename) }}"
                                     class="w-full h-32 object-cover rounded-2xl mb-3">
                             @else
                                 <div
                                     class="w-full h-32 bg-slate-50 rounded-2xl mb-3 flex items-center justify-center text-[8px] font-bold text-slate-300 italic uppercase">
-                                    No Image</div>
+                                    No Image
+                                </div>
                             @endif
+
                             <h5 class="font-bold text-slate-700 text-[10px] truncate mb-1">{{ $item->name }}</h5>
-                            <p class="text-[10px] font-black text-blue-500 mb-4 italic uppercase">Rp
-                                {{ number_format($item->price, 0, ',', '.') }}</p>
-                            <div class="flex gap-1">
+
+                            <div class="flex justify-between items-center mb-4">
+                                <p class="text-[10px] font-black text-blue-500 italic uppercase">
+                                    Rp {{ number_format($item->price, 0, ',', '.') }}
+                                </p>
+
+                                {{-- Indikator Stok --}}
+                                <div class="flex items-center gap-1.5">
+                                    <span
+                                        class="text-[8px] font-black uppercase {{ $item->stock <= 5 ? 'text-red-500' : 'text-slate-400' }}">
+                                        Stok: {{ $item->stock }}
+                                    </span>
+                                    <div
+                                        class="w-1.5 h-1.5 rounded-full {{ $item->stock <= 0 ? 'bg-red-500' : ($item->stock <= 5 ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-auto flex gap-1">
                                 <button wire:click="openItemEdit({{ $item->id }})"
-                                    class="flex-1 bg-slate-100 text-slate-600 py-2 rounded-xl text-[8px] font-black uppercase hover:bg-slate-900 hover:text-white transition-all">Edit</button>
-                                <button onclick="confirm('Hapus?') || event.stopImmediatePropagation()"
+                                    class="flex-1 bg-slate-100 text-slate-600 py-2 rounded-xl text-[8px] font-black uppercase hover:bg-slate-900 hover:text-white transition-all">
+                                    Edit
+                                </button>
+                                <button onclick="confirm('Hapus item ini?') || event.stopImmediatePropagation()"
                                     wire:click="deleteItem({{ $item->id }})"
-                                    class="px-2.5 bg-red-50 text-red-400 rounded-xl hover:bg-red-500 hover:text-white">×</button>
+                                    class="px-2.5 bg-red-50 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all">
+                                    ×
+                                </button>
                             </div>
                         </div>
                     @endforeach
