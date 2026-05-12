@@ -111,6 +111,7 @@ class Shop extends Component
 
         $items = Item::with('images')
             ->where('name', 'like', '%' . $this->search . '%')
+            ->orderByRaw('stock = 0 asc')
             ->latest()
             ->get();
 
