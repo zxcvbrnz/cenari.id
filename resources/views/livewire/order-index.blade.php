@@ -33,12 +33,17 @@
                                 class="text-[10px] font-black bg-blue-50 text-blue-600 px-3 py-1.5 rounded-xl uppercase tracking-wider">
                                 #{{ $order->order_number }}
                             </span>
+                            <!-- Label Metode Pengiriman -->
+                            <span
+                                class="text-[9px] font-black px-2 py-1 rounded-lg uppercase tracking-tighter {{ $order->shipping_method === 'cod' ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-600' }}">
+                                {{ $order->shipping_method ?? 'Send' }}
+                            </span>
                             <span class="text-[9px] font-bold text-slate-400 uppercase">
                                 {{ $order->created_at->translatedFormat('d F Y • H:i') }}
                             </span>
                         </div>
 
-                        <!-- Item Preview (Hanya tampilkan item pertama jika banyak) -->
+                        <!-- Item Preview -->
                         <div class="flex items-center gap-4">
                             <div class="relative">
                                 @if ($order->items->first()->image)
@@ -66,11 +71,20 @@
                                 <h3 class="text-xs font-black text-slate-800 uppercase truncate">
                                     {{ $order->items->first()->name }}
                                 </h3>
-                                <p class="text-[10px] text-slate-500 font-medium leading-relaxed mt-1 truncate">
-                                    Dikirim ke: <span
-                                        class="font-bold text-slate-700">{{ $order->recipient_name }}</span><br>
-                                    {{ $order->city }}
-                                </p>
+
+                                <div class="text-[10px] text-slate-500 font-medium leading-relaxed mt-1">
+                                    @if ($order->shipping_method === 'cod')
+                                        <p class="italic text-orange-600 font-bold uppercase tracking-tighter">
+                                            Ambil di Toko (Cash on Delivery)
+                                        </p>
+                                    @else
+                                        <p class="truncate">
+                                            Dikirim ke: <span
+                                                class="font-bold text-slate-700">{{ $order->recipient_name }}</span><br>
+                                            {{ $order->city }}
+                                        </p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

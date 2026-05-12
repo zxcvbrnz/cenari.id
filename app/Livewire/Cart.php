@@ -104,25 +104,29 @@ class Cart extends Component
             }
 
             // 3. Midtrans Setup
-            Config::$serverKey = config('midtrans.server_key');
-            Config::$isProduction = config('midtrans.is_production');
-            Config::$isSanitized = true;
-            Config::$is3ds = true;
+            if ($this->shipping_method !== 'cod') {
 
-            $params = [
-                'transaction_details' => [
-                    'order_id' => $order->order_number,
-                    'gross_amount' => (int) $order->total_amount,
-                ],
-                'customer_details' => [
-                    'first_name' => Auth::user()->name,
-                    'email' => Auth::user()->email,
-                    'phone' => $address ? $address->phone_number : '',
-                ],
-            ];
+                Config::$serverKey = config('midtrans.server_key');
+                Config::$isProduction = config('midtrans.is_production');
+                Config::$isSanitized = true;
+                Config::$is3ds = true;
 
-            $snapToken = Snap::getSnapToken($params);
-            $order->update(['snap_token' => $snapToken]);
+                $params = [
+                    'transaction_details' => [
+                        'order_id' => $order->order_number,
+                        'gross_amount' => (int) $order->total_amount,
+                    ],
+                    'customer_details' => [
+                        'first_name' => Auth::user()->name,
+                        'email' => Auth::user()->email,
+                        'phone' => $orderData['phone_number'],
+                    ],
+                ];
+
+                $snapToken = Snap::getSnapToken($params);
+                $order->update(['snap_token' => $snapToken]);
+            }
+
 
             DB::commit();
             session()->forget('cart');

@@ -9,7 +9,14 @@
                 </svg>
             </a>
             <div>
-                <h1 class="text-xl font-black text-slate-900 uppercase tracking-tighter">Detail Pesanan</h1>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-xl font-black text-slate-900 uppercase tracking-tighter">Detail Pesanan</h1>
+                    <!-- Badge Metode Pengiriman -->
+                    <span
+                        class="text-[8px] font-black px-2 py-0.5 rounded-md uppercase {{ $order->shipping_method === 'cod' ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-600' }}">
+                        {{ $order->shipping_method ?? 'Send' }}
+                    </span>
+                </div>
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">ID:
                     #{{ $order->order_number }}</p>
             </div>
@@ -97,29 +104,52 @@
 
         <!-- KOLOM KANAN: Alamat & Waktu -->
         <div class="space-y-6">
-            <!-- Info Alamat -->
-            <div class="bg-slate-900 text-white rounded-[2.5rem] p-8 shadow-xl shadow-slate-200">
+            <!-- Info Pengiriman (COD atau Alamat) -->
+            <div
+                class="{{ $order->shipping_method === 'cod' ? 'bg-orange-600' : 'bg-slate-900' }} text-white rounded-[2.5rem] p-8 shadow-xl shadow-slate-200">
                 <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mb-6">
-                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    </svg>
+                    @if ($order->shipping_method === 'cod')
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+                        </svg>
+                    @else
+                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                    @endif
                 </div>
 
-                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Alamat Pengiriman</h3>
+                <h3
+                    class="text-[10px] font-black uppercase tracking-[0.2em] {{ $order->shipping_method === 'cod' ? 'text-orange-200' : 'text-blue-400' }} mb-4">
+                    {{ $order->shipping_method === 'cod' ? 'Instruksi Pengambilan' : 'Alamat Pengiriman' }}
+                </h3>
 
                 <div class="space-y-4">
-                    <div>
-                        <p class="text-xs font-black uppercase">{{ $order->recipient_name }}</p>
-                        <p class="text-[10px] font-bold text-white/50">{{ $order->phone_number }}</p>
-                    </div>
+                    @if ($order->shipping_method === 'cod')
+                        <div class="space-y-2">
+                            <p class="text-xs font-black uppercase tracking-tight">Ambil di Toko</p>
+                            <p class="text-[10px] leading-relaxed text-white/80 font-medium">
+                                Pesanan Anda dipilih menggunakan metode COD/Ambil di Toko. Silahkan datang ke lokasi
+                                kami setelah status pesanan berubah menjadi <span
+                                    class="font-bold text-white">"Processing"</span> atau <span
+                                    class="font-bold text-white">"Ready"</span>.
+                            </p>
+                        </div>
+                    @else
+                        <div>
+                            <p class="text-xs font-black uppercase">{{ $order->recipient_name }}</p>
+                            <p class="text-[10px] font-bold text-white/50">{{ $order->phone_number }}</p>
+                        </div>
 
-                    <p class="text-[11px] leading-relaxed text-white/70 font-medium italic">
-                        {{ $order->full_address }}<br>
-                        {{ $order->village }}, {{ $order->district }}<br>
-                        {{ $order->city }}, {{ $order->province }}<br>
-                        {{ $order->postal_code }}
-                    </p>
+                        <p class="text-[11px] leading-relaxed text-white/70 font-medium italic">
+                            {{ $order->full_address }}<br>
+                            {{ $order->village }}, {{ $order->district }}<br>
+                            {{ $order->city }}, {{ $order->province }}<br>
+                            {{ $order->postal_code }}
+                        </p>
+                    @endif
                 </div>
             </div>
 
@@ -150,9 +180,9 @@
                 </div>
             </div>
 
-            <!-- Tombol Aksi (Opsional) -->
-            @if ($order->status == 'pending')
-                <button id="pay-button"
+            <!-- Tombol Aksi Pembayaran -->
+            @if ($order->status == 'pending' && $order->shipping_method !== 'cod')
+                <button wire:click="$dispatch('open-midtrans', [{ snap_token: '{{ $order->snap_token }}' }])"
                     class="w-full bg-blue-600 hover:bg-slate-900 text-white py-5 rounded-[2rem] text-[11px] font-black uppercase tracking-[0.2em] transition-all shadow-lg shadow-blue-200 active:scale-95">
                     Bayar Sekarang
                 </button>
@@ -161,12 +191,12 @@
 
     </div>
 </div>
+
 <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
     data-client-key="{{ config('midtrans.client_key') }}"></script>
 
 <script type="text/javascript">
     window.addEventListener('open-midtrans', event => {
-        // Mengambil snap_token dari detail event dispatch Livewire
         const snapToken = event.detail[0].snap_token;
 
         window.snap.pay(snapToken, {
@@ -177,7 +207,6 @@
                 location.reload();
             },
             onError: function(result) {
-                // Menggunakan SweetAlert jika pembayaran gagal
                 Swal.fire({
                     title: 'Gagal!',
                     text: 'Terjadi kesalahan pada pembayaran.',
