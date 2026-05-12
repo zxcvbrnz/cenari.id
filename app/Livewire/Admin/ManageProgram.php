@@ -166,7 +166,7 @@ class ManageProgram extends Component
         $data = [
             'program_id' => $this->selectedProgramId,
             'name' => $this->pkg_name,
-            'slug' => Str::slug($this->pkg_name) . '-' . rand(100, 999),
+            'slug' => Str::slug($this->pkg_name),
             'level' => $this->pkg_level,
             'description' => $this->pkg_description,
             'tool' => $this->pkg_tool,
