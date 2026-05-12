@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fcdb94913f41aecaebe5777f76004f50",
+    "content-hash": "0e65651a153cc1df4e7dc233d43c9e9f",
     "packages": [
         {
             "name": "archtechx/enums",
@@ -5488,6 +5488,37 @@
                 "source": "https://github.com/ramsey/uuid/tree/4.9.2"
             },
             "time": "2025-12-14T04:43:48+00:00"
+        },
+        {
+            "name": "silvanix/wablas",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silvanixdev/plugin-wablas.git",
+                "reference": "66605a7a59aed63a99593220d426c9ea2653e9bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silvanixdev/plugin-wablas/zipball/66605a7a59aed63a99593220d426c9ea2653e9bf",
+                "reference": "66605a7a59aed63a99593220d426c9ea2653e9bf",
+                "shasum": ""
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Silvanix\\Wablas\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Official Wablas Plugin",
+            "support": {
+                "issues": "https://github.com/silvanixdev/plugin-wablas/issues",
+                "source": "https://github.com/silvanixdev/plugin-wablas/tree/1.0.3"
+            },
+            "time": "2022-10-17T08:00:38+00:00"
         },
         {
             "name": "symfony/clock",
