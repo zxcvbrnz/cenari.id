@@ -80,8 +80,8 @@ class Cart extends Component
                 'status' => 'pending',
                 'shipping_method' => $this->shipping_method,
                 // Kolom alamat akan NULL jika COD
-                'recipient_name' => $address ? $address->recipient_name : null,
-                'phone_number' => $address ? $address->phone_number : null,
+                'recipient_name' => $address ? $address->recipient_name : Auth::user()->name,
+                'phone_number' => $address ? $address->phone_number : Auth::user()->whatsapp,
                 'full_address' => $address ? $address->full_address : null,
                 'province' => $address ? $address->province : null,
                 'city' => $address ? $address->city : null,
