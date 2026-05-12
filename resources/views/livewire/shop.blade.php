@@ -21,12 +21,12 @@
                         </svg>
 
                         <!-- Badge Angka -->
-                        @if ($orderCount > 0)
-                            <span
-                                class="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[8px] font-black text-white shadow-sm ring-2 ring-white">
-                                {{ $orderCount }}
-                            </span>
-                        @endif
+                        {{-- @if ($orderCount > 0) --}}
+                        <span
+                            class="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[8px] font-black text-white shadow-sm ring-2 ring-white">
+                            {{ $orderCount }}
+                        </span>
+                        {{-- @endif --}}
                     </div>
 
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-600">Pesanan Saya</span>
