@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Item;
 use App\Models\KitRobotic;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Shop extends Component
@@ -115,9 +117,14 @@ class Shop extends Component
             ->latest()
             ->get();
 
+        $orderCount = Order::where('user_id', Auth::id())
+            ->whereIn('status', ['pending', 'processing']) // Sesuaikan status yang ingin dihitung
+            ->count();
+
         return view('livewire.shop', [
             'kits' => $kits,
             'items' => $items,
+            'orderCount' => $orderCount
         ]);
     }
 }

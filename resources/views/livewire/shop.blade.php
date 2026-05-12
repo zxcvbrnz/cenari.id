@@ -11,12 +11,24 @@
 
             <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center">
                 <a href="{{ route('order.index') }}" wire:navigate
-                    class="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-slate-100 hover:bg-slate-50 transition-all shadow-sm group">
-                    <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
+                    class="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-slate-100 hover:bg-slate-50 transition-all shadow-sm group relative">
+
+                    <div class="relative">
+                        <svg class="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+
+                        <!-- Badge Angka -->
+                        @if ($orderCount > 0)
+                            <span
+                                class="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[8px] font-black text-white shadow-sm ring-2 ring-white">
+                                {{ $orderCount }}
+                            </span>
+                        @endif
+                    </div>
+
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-600">Pesanan Saya</span>
                 </a>
 
