@@ -243,9 +243,9 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-16 text-center">
                 <h2 class="text-xs font-black uppercase tracking-[0.5em] mb-4 italic"
-                    style="color: {{ $program->instansi->colour }}">Our Atmosphere</h2>
+                    style="color: {{ $program->instansi->colour }}">Suasana Kami</h2>
                 <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">
-                    Learning in <span class="text-outline" style="color: {{ $program->accent_color }}">Action.</span>
+                    Belajar dalam <span class="text-outline" style="color: {{ $program->accent_color }}">Aksi.</span>
                 </h3>
             </div>
 
@@ -276,8 +276,9 @@
             <div class="flex justify-between items-end mb-16">
                 <div>
                     <h2 class="text-xs font-black uppercase tracking-[0.5em] mb-4 italic"
-                        style="color: {{ $program->instansi->colour }}">Testimonials</h2>
-                    <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">Voice of Success.
+                        style="color: {{ $program->instansi->colour }}">Testimoni</h2>
+                    <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">
+                        Suara Keberhasilan.
                     </h3>
                 </div>
 
