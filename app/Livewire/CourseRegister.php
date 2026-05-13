@@ -23,6 +23,10 @@ class CourseRegister extends Component
     {
         $confirmationWord = "DAFTAR";
 
+        $this->dispatch('swal:confirm-registration', [
+            'word' => $confirmationWord
+        ]);
+        return;
         // $this->dispatch('swal:modal', [
         //     'icon' => 'error',
         //     'title' => 'Gagal!',
