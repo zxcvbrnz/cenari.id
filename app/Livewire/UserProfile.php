@@ -159,26 +159,35 @@ class UserProfile extends Component
     public function updateProfile()
     {
         $validated = $this->validate([
-            'name' => 'required',
-            'nik' => 'required',
-            'gender' => 'required',
-            'born_place' => 'required',
+            // Informasi Pribadi
+            'name' => 'required|string|max:255',
+            'nik' => 'required|numeric|digits:16',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'born_place' => 'required|string',
             'born_date' => 'required|date',
-            'whatsapp' => 'required',
+            'agama' => 'required',
+            'whatsapp' => 'required|numeric|digits_between:10,15',
+
+            // Pendidikan & Status
             'last_education' => 'required',
             'current_status' => 'required',
-            'nama_ayah' => 'required',
-            'nama_ibu' => 'required',
-            'nisn' => 'required',
-            'agama' => 'required',
-            'rt' => 'required',
-            'rw' => 'required',
-            'kodepos' => 'required',
-            'address' => 'required',
+            'nisn' => 'required|numeric|digits:10',
+
+            // Orang Tua
+            'nama_ayah' => 'required|string|max:255',
+            'nama_ibu' => 'required|string|max:255',
+
+            // Alamat Lengkap
+            'address' => 'required|string',
+            'rt' => 'required|numeric|digits_between:1,3',
+            'rw' => 'required|numeric|digits_between:1,3',
+            'kodepos' => 'required|numeric|digits:5',
             'provinsi' => 'required',
             'kab_kota' => 'required',
             'kecamatan' => 'required',
             'kelurahan' => 'required',
+
+            // Tambahan Informasi Tinggal
             'jenis_tinggal' => 'required',
             'alat_transportasi' => 'required',
         ]);

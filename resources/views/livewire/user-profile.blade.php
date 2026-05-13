@@ -101,7 +101,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                                     d="M5 13l4 4L19 7" />
                             </svg>
-                            Update Account Settings
+                            Update Account
                         </button>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                             <label
                                 class="required text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">NIK
                                 (KTP)</label>
-                            <input type="text" wire:model="nik" class="w-full border-slate-200 rounded-2xl">
+                            <input type="number" wire:model="nik" class="w-full border-slate-200 rounded-2xl">
                             @error('nik')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -150,7 +150,7 @@
                         <div>
                             <label
                                 class="required text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">WhatsApp</label>
-                            <input type="text" wire:model="whatsapp" class="w-full border-slate-200 rounded-2xl">
+                            <input type="number" wire:model="whatsapp" class="w-full border-slate-200 rounded-2xl">
                             @error('whatsapp')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -159,7 +159,7 @@
                         <div>
                             <label
                                 class="required text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">NISN</label>
-                            <input type="text" wire:model="nisn" class="w-full border-slate-200 rounded-2xl">
+                            <input type="number" wire:model="nisn" class="w-full border-slate-200 rounded-2xl">
                             @error('nisn')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -212,8 +212,16 @@
                             <label
                                 class="required text-[10px] font-black text-slate-400 uppercase block mb-2">Pendidikan
                                 Terakhir</label>
-                            <input type="text" wire:model="last_education"
-                                class="w-full border-slate-200 rounded-2xl">
+                            <select wire:model="last_education" class="w-full border-slate-200 rounded-2xl font-bold">
+                                <option value="">Pilih</option>
+                                <option value="SD">SD</option>
+                                <option value="SMP">SMP</option>
+                                <option value="SMA/SMK">SMA/SMK</option>
+                                <option value="Diplomat I-IV">Diplomat I-IV</option>
+                                <option value="S1">S1</option>
+                                <option value="S2">S2</option>
+                                <option value="S3">S3</option>
+                            </select>
                             @error('last_education')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -221,9 +229,15 @@
                         </div>
                         <div>
                             <label class="required text-[10px] font-black text-slate-400 uppercase block mb-2">Status
-                                Pekerjaan</label>
-                            <input type="text" wire:model="current_status"
-                                class="w-full border-slate-200 rounded-2xl">
+                                Saat Ini</label>
+                            <select wire:model="current_status" class="w-full border-slate-200 rounded-2xl font-bold">
+                                <option value="">Pilih</option>
+                                <option value="Pelajar">Pelajar</option>
+                                <option value="Mahasiswa">Mahasiswa</option>
+                                <option value="Bekerja">Bekerja</option>
+                                <option value="Pengusaha">Pengusaha</option>
+                                <option value="Belum Bekerja">Belum Bekerja</option>
+                            </select>
                             @error('current_status')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -232,7 +246,15 @@
                         <div>
                             <label
                                 class="required text-[10px] font-black text-slate-400 uppercase block mb-2">Agama</label>
-                            <input type="text" wire:model="agama" class="w-full border-slate-200 rounded-2xl">
+                            <select wire:model="agama" class="w-full border-slate-200 rounded-2xl font-bold">
+                                <option value="">Pilih</option>
+                                <option value="Islam">Islam</option>
+                                <option value="Kristen">Kristen</option>
+                                <option value="Katolik">Katolik</option>
+                                <option value="Hindu">Hindu</option>
+                                <option value="Buddha">Buddha</option>
+                                <option value="Memilih Untuk Tidak Menjawab">Memilih Untuk Tidak Menjawab</option>
+                            </select>
                             @error('agama')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -241,8 +263,16 @@
                         <div>
                             <label class="required text-[10px] font-black text-slate-400 uppercase block mb-2">Jenis
                                 Tinggal</label>
-                            <input type="text" wire:model="jenis_tinggal"
-                                class="w-full border-slate-200 rounded-2xl">
+                            <select wire:model="jenis_tinggal" class="w-full border-slate-200 rounded-2xl font-bold">
+                                <option value="">Pilih</option>
+                                <option value="Asrama">Asrama</option>
+                                <option value="Bersama orang tua">Bersama orang tua</option>
+                                <option value="Kost">Kost</option>
+                                <option value="Lainnya">Lainnya</option>
+                                <option value="Panti asuhan">Panti asuhan</option>
+                                <option value="Pesantren">Pesantren</option>
+                                <option value="Wali">Wali</option>
+                            </select>
                             @error('jenis_tinggal')
                                 <span
                                     class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
@@ -381,7 +411,7 @@
                             <div>
                                 <label
                                     class="required text-[10px] font-black text-slate-400 uppercase block mb-2 text-center">RT</label>
-                                <input type="text" wire:model="rt"
+                                <input type="number" wire:model="rt"
                                     class="w-full border-slate-200 rounded-2xl text-center font-bold">
                                 @error('rt')
                                     <span
@@ -391,7 +421,7 @@
                             <div>
                                 <label
                                     class="required text-[10px] font-black text-slate-400 uppercase block mb-2 text-center">RW</label>
-                                <input type="text" wire:model="rw"
+                                <input type="number" wire:model="rw"
                                     class="w-full border-slate-200 rounded-2xl text-center font-bold">
                                 @error('rw')
                                     <span
@@ -402,7 +432,7 @@
                         <div>
                             <label
                                 class="required text-[10px] font-black text-slate-400 uppercase block mb-2 text-center">Kodepos</label>
-                            <input type="text" wire:model="kodepos"
+                            <input type="number" wire:model="kodepos"
                                 class="w-full border-slate-200 rounded-2xl text-center font-bold">
                             @error('kodepos')
                                 <span
@@ -419,8 +449,22 @@
                         <label
                             class="required text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">Alat
                             Transportasi</label>
-                        <input type="text" wire:model="alat_transportasi" placeholder="Contoh: Sepeda Motor"
-                            class="w-full border-slate-200 rounded-2xl">
+                        <select wire:model="alat_transportasi" class="w-full border-slate-200 rounded-2xl font-bold">
+                            <option value="">Pilih</option>
+                            <option value="Andong/bendi/sado/dokar/delman/becak">Andong/bendi/sado/dokar/delman/becak
+                            </option>
+                            <option value="Angkutan umum/bus/pete-pete">Angkutan umum/bus/pete-pete</option>
+                            <option value="Jalan kaki">Jalan kaki</option>
+                            <option value="Kereta api">Kereta api</option>
+                            <option value="Kuda">Kuda</option>
+                            <option value="Lainnya">Lainnya</option>
+                            <option value="Mobil pribadi">Mobil pribadi</option>
+                            <option value="Mobil/bus antar jemput">Mobil/bus antar jemput</option>
+                            <option value="Ojek">Ojek</option>
+                            <option value="Perahu penyeberangan/rakit/getek">Perahu penyeberangan/rakit/getek</option>
+                            <option value="Sepeda">Sepeda</option>
+                            <option value="Sepeda Motor">Sepeda Motor</option>
+                        </select>
                         @error('alat_transportasi')
                             <span
                                 class="text-red-600 text-[9px] font-bold mt-1 block uppercase italic">{{ $message }}</span>
