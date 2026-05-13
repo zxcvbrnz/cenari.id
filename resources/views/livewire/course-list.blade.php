@@ -78,7 +78,7 @@
                                         <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
-                                    <span class="text-xs font-bold">{{ $package->course_during }} Menit</span>
+                                    <span class="text-xs font-bold">{{ $package->course_during }} Jam</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-slate-500 col-span-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

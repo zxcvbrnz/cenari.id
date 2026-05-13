@@ -6,6 +6,7 @@ use App\Models\CoursePackage;
 use App\Models\CoursePackageUser;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class CourseRegister extends Component
 {
@@ -18,8 +19,24 @@ class CourseRegister extends Component
         $this->package = CoursePackage::where('slug', $course_slug)->firstOrFail();
     }
 
-    public function register()
+    public function register($userInput = null)
     {
+        $confirmationWord = "DAFTAR";
+
+        if (!$userInput) {
+            // Kirim event ke browser
+            $this->dispatch('swal:confirm-registration', word: $confirmationWord);
+            return;
+        }
+        if (strtoupper($userInput) !== $confirmationWord) {
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Gagal!',
+                'text' => 'Kata kunci konfirmasi salah.'
+            ]);
+            return;
+        }
+
         // Pastikan user sudah login
         if (!Auth::check()) {
             return redirect()->route('login');
@@ -52,5 +69,11 @@ class CourseRegister extends Component
     public function render()
     {
         return view('livewire.course-register');
+    }
+
+    #[On('confirmed-registration')]
+    public function confirmedRegistration($value)
+    {
+        $this->register($value);
     }
 }
