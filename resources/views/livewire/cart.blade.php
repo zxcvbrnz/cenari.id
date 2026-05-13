@@ -256,12 +256,13 @@
                     @endif
 
                     <button {{ $shipping_method === 'send' && !$selectedAddressId ? 'disabled' : '' }}
-                        wire:click="processCheckout"
+                        wire:click="processCheckout" wire:loading.attr="disabled"
                         class="w-full py-5 rounded-[1.5rem] text-[11px] font-black uppercase tracking-[0.2em] transition-all shadow-xl active:scale-95
                             {{ $shipping_method === 'send' && !$selectedAddressId
                                 ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
                                 : 'bg-[#3B82F6] text-white hover:bg-slate-900 shadow-blue-500/20' }}">
-                        Lanjutkan Checkout
+                        <span wire:loading.remove>Lanjutkan Checkout</span>
+                        <span wire:loading>Memproses...</span>
                     </button>
                 </div>
             @endif

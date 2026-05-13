@@ -11,7 +11,7 @@ class OrderIndex extends Component
 {
     use WithPagination;
 
-    public $status = 'all'; // Filter status: all, pending, processing, completed, cancelled
+    public $status = 'pending'; // Filter status: all, pending, processing, completed, cancelled
 
     public function setStatus($newStatus)
     {
