@@ -134,7 +134,7 @@ class Cart extends Component
             $this->dispatch('swal:modal-redirect', [
                 'title' => 'Berhasil!',
                 'icon' => 'success',
-                'text' => 'Pesanan berhasil ditambahkan.',
+                'text' => 'Pesanan berhasil dibuat.',
                 'redirectUrl' => route('order.show', $order->id)
             ]);
 
