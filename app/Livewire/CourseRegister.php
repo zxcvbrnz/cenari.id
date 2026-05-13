@@ -63,9 +63,9 @@ class CourseRegister extends Component
             'status' => 'Diproses',
             // username & password dibiarkan null sesuai instruksi
         ]);
-        $this->dispatch('swal:modal', ['title' => 'Berhasil!', 'icon' => 'success', 'text' => 'Anda sudah terdaftar di kelas ini.']);
+        session()->flash('swal', ['title' => 'Berhasil!', 'icon' => 'success', 'text' => 'Anda sudah terdaftar di kelas ini.']);
 
-        return redirect()->route('home'); // Sesuaikan dengan route dashboard Anda
+        return redirect()->route('course.packages.user.list');
     }
 
     public function render()
