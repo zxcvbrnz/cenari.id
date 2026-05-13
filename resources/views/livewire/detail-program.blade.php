@@ -105,20 +105,20 @@
                         <span class="h-[1px] flex-grow bg-slate-200"></span>
                     </h2>
 
-                    <div class="space-y-6" x-data="{ activeAccordion: 1 }">
+                    <div class="space-y-6" x-data="{ activeAccordion: 0 }">
                         @foreach ($program->coursePackages as $index => $package)
                             <div class="group p-8 rounded-[2rem] border transition-all duration-500 bg-white"
-                                :style="activeAccordion === {{ $package->level }} ?
+                                :style="activeAccordion === {{ $index }} ?
                                     'border-color: {{ $program->accent_color }}; box-shadow: 0 20px 25px -5px {{ $program->accent_color }}15' :
                                     'border-color: #f1f5f9'">
 
                                 <div class="flex gap-8 cursor-pointer"
-                                    @click="activeAccordion = (activeAccordion === {{ $package->level }} ? null : {{ $package->level }})">
+                                    @click="activeAccordion = (activeAccordion === {{ $index }} ? null : {{ $index }})">
 
                                     <span class="text-5xl font-black transition-colors duration-500"
-                                        :style="activeAccordion === {{ $package->level }} ?
+                                        :style="activeAccordion === {{ $index }} ?
                                             'color: {{ $program->accent_color }}' : ''"
-                                        :class="activeAccordion === {{ $package->level }} ? '' :
+                                        :class="activeAccordion === {{ $index }} ? '' :
                                             'text-slate-100 group-hover:text-slate-300'">
                                         0{{ $package->level }}
                                     </span>
@@ -131,9 +131,9 @@
                                                 <p class="text-slate-500 mb-4">{{ $package->description }}</p>
                                             </div>
                                             <svg class="w-6 h-6 text-slate-300 transition-transform duration-300"
-                                                :style="activeAccordion === {{ $package->level }} ?
+                                                :style="activeAccordion === {{ $index }} ?
                                                     'color: {{ $program->accent_color }}' : ''"
-                                                :class="activeAccordion === {{ $package->level }} ? 'rotate-180' : ''"
+                                                :class="activeAccordion === {{ $index }} ? 'rotate-180' : ''"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 9l-7 7-7-7" />
@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
 
-                                <div x-show="activeAccordion === {{ $package->level }}" x-collapse x-cloak>
+                                <div x-show="activeAccordion === {{ $index }}" x-collapse x-cloak>
                                     <div class="mt-8 pt-8 border-t border-slate-50">
                                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
                                             <div>
