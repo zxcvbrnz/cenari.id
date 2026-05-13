@@ -14,6 +14,21 @@ window.addEventListener('swal:modal', event => {
     });
 });
 
+window.addEventListener('swal:modal-redirect', event => {
+    Swal.fire({
+        title: event.detail[0].title,
+        text: event.detail[0].text,
+        icon: event.detail[0].icon,
+        confirmButtonColor: '#3B82F6',
+        borderRadius: '1.5rem'
+    }).then((result) => {
+        // Cek apakah ada URL redirect yang dikirim dari backend
+        if (result.isConfirmed && event.detail[0].redirectUrl) {
+            window.location.href = event.detail[0].redirectUrl;
+        }
+    });
+});
+
 window.addEventListener('swal:confirm-registration', event => {
     const word = event.detail[0].word;
 
