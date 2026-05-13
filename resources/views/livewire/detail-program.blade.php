@@ -120,7 +120,7 @@
                                             'color: {{ $program->accent_color }}' : ''"
                                         :class="activeAccordion === {{ $index }} ? '' :
                                             'text-slate-100 group-hover:text-slate-300'">
-                                        0{{ $package->level }}
+                                        0{{ $index + 1 }}
                                     </span>
 
                                     <div class="flex-grow">
