@@ -23,6 +23,12 @@ class CourseRegister extends Component
     {
         $confirmationWord = "DAFTAR";
 
+        $this->dispatch('swal:modal', [
+            'icon' => 'error',
+            'title' => 'Gagal!',
+            'text' => 'Kata kunci konfirmasi salah.'
+        ]);
+        return;
         if (!$userInput) {
             // Kirim event ke browser
             $this->dispatch('swal:confirm-registration', word: $confirmationWord);
@@ -70,6 +76,7 @@ class CourseRegister extends Component
     {
         return view('livewire.course-register');
     }
+
 
     #[On('confirmed-registration')]
     public function confirmedRegistration($value)
