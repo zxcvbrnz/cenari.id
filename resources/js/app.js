@@ -14,8 +14,8 @@ window.addEventListener('swal:modal', event => {
     });
 });
 
-window.addEventListener('swal:confirm-registration', (event) => {
-    const word = event.word;
+window.addEventListener('swal:confirm-registration', event => {
+    const word = event.detail[0].word;
 
     Swal.fire({
         title: 'Konfirmasi Pendaftaran',
