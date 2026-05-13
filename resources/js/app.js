@@ -14,32 +14,30 @@ window.addEventListener('swal:modal', event => {
     });
 });
 
-document.addEventListener('livewire:init', () => {
-    Livewire.on('swal:confirm-registration', (event) => {
-        const word = event.word;
+window.addEventListener('swal:confirm-registration', (event) => {
+    const word = event.word;
 
-        Swal.fire({
-            title: 'Konfirmasi Pendaftaran',
-            text: `Silahkan ketik "${word}" untuk melanjutkan.`,
-            input: 'text',
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Daftar Sekarang',
-            confirmButtonColor: '#3B82F6',
-            cancelButtonText: 'Batal',
-            preConfirm: (value) => {
-                if (value.toUpperCase() !== word) {
-                    Swal.showValidationMessage('Kata kunci salah!');
-                }
-                return value;
+    Swal.fire({
+        title: 'Konfirmasi Pendaftaran',
+        text: `Silahkan ketik "${word}" untuk melanjutkan.`,
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Daftar Sekarang',
+        confirmButtonColor: '#3B82F6',
+        cancelButtonText: 'Batal',
+        preConfirm: (value) => {
+            if (value.toUpperCase() !== word) {
+                Swal.showValidationMessage('Kata kunci salah!');
             }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Kirim event balik ke Livewire Component
-                Livewire.dispatch('confirmed-registration', { value: result.value });
-            }
-        });
+            return value;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Kirim event balik ke Livewire Component
+            Livewire.dispatch('confirmed-registration', { value: result.value });
+        }
     });
 });
