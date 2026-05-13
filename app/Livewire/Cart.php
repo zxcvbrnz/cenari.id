@@ -131,7 +131,14 @@ class Cart extends Component
             DB::commit();
             session()->forget('cart');
 
-            return redirect()->route('order.show', $order->id);
+            $this->dispatch('swal:modal-redirect', [
+                'title' => 'Berhasil!',
+                'icon' => 'success',
+                'text' => 'Pesanan berhasil ditambahkan.',
+                'redirectUrl' => route('order.show', $order->id)
+            ]);
+
+            // return redirect()->route('order.show', $order->id);
         } catch (\Exception $e) {
             DB::rollBack();
             $this->dispatch('swal:modal', ['icon' => 'error', 'title' => 'Gagal!', 'text' => $e->getMessage()]);
