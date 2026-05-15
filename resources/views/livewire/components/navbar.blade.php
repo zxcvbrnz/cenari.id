@@ -296,9 +296,25 @@
                 class="text-xs font-black uppercase tracking-widest text-slate-600">Toko</a>
             <a href="{{ route('blog.index') }}" wire:navigate @click="mobileMenu = false"
                 class="text-xs font-black uppercase tracking-widest text-slate-600">Blog</a>
-            <a href="{{ route('b2b.solution') }}" wire:navigate @click="mobileMenu = false"
-                class="text-xs font-black uppercase tracking-widest text-slate-600">Mitra Sekolah</a>
+            {{-- <a href="{{ route('b2b.solution') }}" wire:navigate @click="mobileMenu = false"
+                class="text-xs font-black uppercase tracking-widest text-slate-600">Mitra Sekolah</a> --}}
 
+            <div x-data="{ subOpen: false }">
+                <button @click="subOpen = !subOpen"
+                    class="w-full flex justify-between items-center text-xs font-black uppercase tracking-widest text-slate-600">
+                    Mitra
+                    <svg class="w-4 h-4 transition-transform" :class="subOpen ? 'rotate-180' : ''" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 9l-7 7-7-7" stroke-width="2" />
+                    </svg>
+                </button>
+                <div x-show="subOpen" x-transition class="mt-4 ml-4 space-y-4 border-l-2 border-slate-100 pl-4">
+                    <a href="{{ route('b2b.solution') }}"
+                        class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Mirta Sekolah</a>
+                    <a href="{{ route('b2b.institution') }}"
+                        class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Mitra Instansi</a>
+                </div>
+            </div>
             <div x-data="{ subOpen: false }">
                 <button @click="subOpen = !subOpen"
                     class="w-full flex justify-between items-center text-xs font-black uppercase tracking-widest text-slate-600">
