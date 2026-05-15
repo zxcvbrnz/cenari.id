@@ -6,6 +6,8 @@ use App\Models\SchoolPartner as ModelsSchoolPartner;
 use Livewire\Component;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Request;
+use Silvanix\Wablas\Message;
+
 
 class SchoolPartner extends Component
 {

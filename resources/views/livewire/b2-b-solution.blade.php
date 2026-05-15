@@ -91,7 +91,7 @@
             <div class="mt-12 text-center">
                 <a href="{{ route('b2b.solution.form') }}" wire:navigate
                     class="bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold hover:bg-blue-600 transition-colors shadow-xl">
-                    Dapatkan Proposal Penawaran Sekolah Anda
+                    Dapatkan Proposal Kerjasama
                 </a>
             </div>
         </div>
