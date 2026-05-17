@@ -16,6 +16,7 @@ new class extends Component {
         class="fixed top-0 left-0 z-50 w-64 h-screen transition-all duration-300 ease-in-out bg-slate-900 lg:translate-x-0 border-r border-slate-800 shadow-xl"
         aria-label="Sidebar">
 
+        <!-- Logo Section -->
         <div class="flex items-center px-6 h-20 border-b border-slate-800">
             <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center space-x-3">
                 <x-application-logo class="block h-8 w-auto fill-current text-indigo-500" />
@@ -23,81 +24,107 @@ new class extends Component {
             </a>
         </div>
 
-        <nav class="mt-6 px-3 space-y-1">
-            <p class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Main Menu</p>
+        <!-- Navigation Menu -->
+        <nav class="mt-6 px-3 space-y-6 h-[calc(100vh-5rem)] overflow-y-auto pb-6">
 
             @php
-                $menus = [
-                    [
-                        'route' => 'dashboard',
-                        'label' => 'Instansi',
-                        'icon' =>
-                            'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+                // Menu dikelompokkan berdasarkan kategori agar lebih terstruktur
+                $menuGroups = [
+                    'Main Menu' => [
+                        [
+                            'route' => 'dashboard',
+                            'label' => 'Instansi',
+                            'icon' =>
+                                'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+                        ],
                     ],
-                    [
-                        'route' => 'manage.program',
-                        'label' => 'Program',
-                        'icon' =>
-                            'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+                    'Konten & Acara' => [
+                        [
+                            'route' => 'manage.program',
+                            'label' => 'Program',
+                            'icon' =>
+                                'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+                        ],
+                        [
+                            'route' => 'manage.portfolio',
+                            'label' => 'Portfolio',
+                            'icon' =>
+                                'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+                        ],
+                        [
+                            'route' => 'manage.blog',
+                            'label' => 'Blog',
+                            'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l5 5v11a2 2 0 01-2 2z',
+                        ],
+                        [
+                            'route' => 'manage.workshop',
+                            'label' => 'Workshop',
+                            'icon' =>
+                                'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4',
+                        ],
+                        [
+                            'route' => 'manage.agenda',
+                            'label' => 'Agenda',
+                            'icon' =>
+                                'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+                        ],
                     ],
-                    [
-                        'route' => 'manage.portfolio',
-                        'label' => 'Portfolio',
-                        'icon' =>
-                            'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+                    'E-Commerce & Bisnis' => [
+                        [
+                            'route' => 'manage.shop',
+                            'label' => 'Toko',
+                            'icon' => 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z',
+                        ],
+                        [
+                            'route' => 'manage.order',
+                            'label' => 'Pesanan',
+                            'icon' =>
+                                'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01',
+                        ],
+                        [
+                            'route' => 'manage.partner',
+                            'label' => 'Partner',
+                            'icon' =>
+                                'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+                        ],
+                        [
+                            'route' => 'manage.enrollment',
+                            'label' => 'Pendaftaran Kursus',
+                            'icon' =>
+                                'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+                        ],
                     ],
-                    [
-                        'route' => 'manage.blog',
-                        'label' => 'Blog',
-                        'icon' => 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l5 5v11a2 2 0 01-2 2z',
-                    ],
-                    [
-                        'route' => 'manage.workshop',
-                        'label' => 'Workshop',
-                        'icon' =>
-                            'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4',
-                    ],
-                    [
-                        'route' => 'manage.agenda',
-                        'label' => 'Agenda',
-                        'icon' =>
-                            'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
-                    ],
-                    [
-                        'route' => 'manage.shop',
-                        'label' => 'Toko',
-                        'icon' => 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z',
-                    ],
-                    [
-                        'route' => 'manage.order',
-                        'label' => 'Pesanan',
-                        'icon' => 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z',
-                    ],
-                    [
-                        'route' => 'manage.partner',
-                        'label' => 'Partner',
-                        'icon' => 'M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z',
-                    ],
-                    [
-                        'route' => 'manage.enrollment',
-                        'label' => 'Pendaftaran Kursus',
-                        'icon' =>
-                            'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+                    'Utilitas & Sistem' => [
+                        [
+                            'route' => 'manage.missing.link',
+                            'label' => 'Missing Link',
+                            'icon' =>
+                                'M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1',
+                        ],
                     ],
                 ];
             @endphp
 
-            @foreach ($menus as $menu)
-                <x-nav-link :href="route($menu['route'])" :active="request()->routeIs($menu['route'])" wire:navigate>
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $menu['icon'] }}">
-                        </path>
-                    </svg>
-                    {{ __($menu['label']) }}
-                </x-nav-link>
+            <!-- Loop Grouping Menu -->
+            @foreach ($menuGroups as $groupLabel => $items)
+                <div class="space-y-1">
+                    <p class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        {{ $groupLabel }}</p>
+                    @foreach ($items as $menu)
+                        <x-nav-link :href="route($menu['route'])" :active="request()->routeIs($menu['route'])" wire:navigate>
+                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="{{ $menu['icon'] }}">
+                                </path>
+                            </svg>
+                            {{ __($menu['label']) }}
+                        </x-nav-link>
+                    @endforeach
+                </div>
             @endforeach
 
-            <div class="pt-4 mt-4 border-t border-slate-800">
+            <!-- System Settings (Static) -->
+            <div class="pt-4 border-t border-slate-800 space-y-1">
                 <p class="px-3 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">System</p>
                 <x-nav-link :href="route('manage.settings')" :active="request()->routeIs('manage.settings')" wire:navigate>
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,6 +140,7 @@ new class extends Component {
         </nav>
     </aside>
 
+    <!-- Header Section -->
     <header
         class="fixed top-0 right-0 left-0 z-40 flex items-center justify-between px-8 h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 lg:ml-64 transition-all">
         <button @click="sidebarOpen = !sidebarOpen"
@@ -129,6 +157,7 @@ new class extends Component {
             {{ date('l, d F Y') }}
         </div>
 
+        <!-- User Dropdown Menu -->
         <div class="flex items-center space-x-4">
             <x-dropdown align="right" width="48">
                 <x-slot name="trigger">
@@ -178,6 +207,7 @@ new class extends Component {
         </div>
     </header>
 
+    <!-- Overlay Background Mobile -->
     <div x-show="sidebarOpen" @click="sidebarOpen = false"
         class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm lg:hidden" x-cloak
         x-transition:enter="transition opacity-0" x-transition:enter-end="opacity-100"

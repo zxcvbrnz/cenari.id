@@ -106,6 +106,10 @@ Route::view('manage-enrollment', 'manage-enrollment')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.enrollment');
 
+Route::view('manage-missing-link', 'manage-missing-link')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('manage.missing.link');
+
 Route::view('manage-partner', 'manage-partner')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.partner');
