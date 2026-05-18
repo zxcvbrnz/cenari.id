@@ -482,43 +482,48 @@
                 </h3>
             </div>
 
-            <div class="relative w-full overflow-hidden bg-transparent py-4">
-                <!-- Kontainer Utama Bergerak -->
-                <div class="flex w-max items-center gap-12 animate-marquee whitespace-nowrap logo-slider">
+            <div class="relative w-full overflow-hidden bg-transparent py-6">
+                <!-- Jalur Utama Marquee -->
+                <div class="flex logo-slider w-max">
 
-                    @forelse($partners as $partner)
-                        <!-- Loop Pertama -->
-                        <div
-                            class="inline-flex h-16 w-32 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 items-center justify-center mx-4">
-                            <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
-                                class="max-h-full max-w-full object-contain filter drop-shadow-sm"
-                                title="{{ $partner->name }}">
-                        </div>
-                    @empty
-                        <div class="w-full text-center">
-                            <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest">Partner data is
-                                being updated</p>
-                        </div>
-                    @endforelse
-
-                    @if ($partners->isNotEmpty())
-                        <!-- Loop Kedua (Duplikasi untuk menyambung animasi tanpa jeda kosong) -->
-                        @foreach ($partners as $partner)
+                    <!-- JALUR 1: Loop Utama -->
+                    <div class="flex items-center gap-16 animate-marquee whitespace-nowrap pr-16 flex-shrink-0">
+                        @forelse($partners as $partner)
                             <div
-                                class="inline-flex h-16 w-32 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 items-center justify-center mx-4">
+                                class="inline-flex h-16 w-32 items-center justify-center transition-transform duration-300 hover:scale-105">
                                 <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
                                     class="max-h-full max-w-full object-contain filter drop-shadow-sm"
                                     title="{{ $partner->name }}">
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="w-full text-center">
+                                <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest">Partner data
+                                    is being updated</p>
+                            </div>
+                        @endforelse
+                    </div>
+
+                    <!-- JALUR 2: Duplikasi Sempurna (Hanya muncul jika data ada) -->
+                    @if ($partners->isNotEmpty())
+                        <div class="flex items-center gap-16 animate-marquee whitespace-nowrap pr-16 flex-shrink-0"
+                            aria-hidden="true">
+                            @foreach ($partners as $partner)
+                                <div
+                                    class="inline-flex h-16 w-32 items-center justify-center transition-transform duration-300 hover:scale-105">
+                                    <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
+                                        class="max-h-full max-w-full object-contain filter drop-shadow-sm"
+                                        title="{{ $partner->name }}">
+                                </div>
+                            @endforeach
+                        </div>
                     @endif
 
                 </div>
             </div>
 
             <style>
-                /* Opsional: Efek pause saat logo diarahkan kursor mouse */
-                .logo-slider:hover {
+                /* Efek Berhenti Berjalan Saat Kursor Mouse Diatas Logo */
+                .logo-slider:hover .animate-marquee {
                     animation-play-state: paused;
                 }
             </style>
