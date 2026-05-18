@@ -221,7 +221,7 @@
                                     <p class="text-2xl font-medium leading-relaxed mb-12 italic">
                                         "{{ $missingLink->text }}"</p>
 
-                                    <a href="{{ url('programs/' . $missingLink->program->slug) }}"
+                                    <a href="{{ $missingLink->program ? url('programs/' . $missingLink->program->slug) : '#' }}"
                                         style="color: #0F172A"
                                         class="group flex items-center justify-between p-6 bg-white rounded-2xl font-bold transition-all hover:scale-[1.02]">
                                         <span class="uppercase tracking-widest text-xs">{{ $missingLink->cta }}</span>
