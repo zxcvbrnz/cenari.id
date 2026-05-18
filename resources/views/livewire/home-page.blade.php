@@ -72,17 +72,19 @@
                             AI</span> pertama di Banjarmasin sejak 2018.
                     </p>
 
-                    <div class="flex gap-3 justify-center">
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center items-center px-4">
                         <a href="{{ route('course.packages') }}" wire:navigate
-                            class="bg-[#3B82F6] text-white px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:scale-105 hover:bg-blue-600 active:scale-95 shadow-lg shadow-blue-500/20 whitespace-nowrap">
+                            class="w-full sm:w-auto text-center bg-[#3B82F6] text-white px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:scale-105 hover:bg-blue-600 active:scale-95 shadow-lg shadow-blue-500/20 whitespace-nowrap">
                             Cari Kelas
                         </a>
+
                         <a href="{{ route('b2b.solution') }}" wire:navigate
-                            class="bg-white/5 text-white border border-white/10 px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 whitespace-nowrap">
+                            class="w-full sm:w-auto text-center bg-white/5 text-white border border-white/10 px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 whitespace-nowrap">
                             Solusi Sekolah
                         </a>
+
                         <a href="{{ route('b2b.institution') }}" wire:navigate
-                            class="bg-white/5 text-white border border-white/10 px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 whitespace-nowrap">
+                            class="w-full sm:w-auto text-center bg-white/5 text-white border border-white/10 px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 whitespace-nowrap">
                             Solusi Instansi
                         </a>
                     </div>
