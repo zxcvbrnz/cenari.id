@@ -490,7 +490,7 @@
                     <div class="flex items-center gap-16 animate-marquee whitespace-nowrap pr-16 flex-shrink-0">
                         @forelse($partners as $partner)
                             <div
-                                class="inline-flex h-16 w-32 items-center justify-center transition-transform duration-300 hover:scale-105">
+                                class="inline-flex h-16 w-36 items-center justify-center transition-transform duration-300 hover:scale-105">
                                 <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
                                     class="max-h-full max-w-full object-contain filter drop-shadow-sm"
                                     title="{{ $partner->name }}">
@@ -509,7 +509,7 @@
                             aria-hidden="true">
                             @foreach ($partners as $partner)
                                 <div
-                                    class="inline-flex h-16 w-32 items-center justify-center transition-transform duration-300 hover:scale-105">
+                                    class="inline-flex h-16 w-36 items-center justify-center transition-transform duration-300 hover:scale-105">
                                     <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
                                         class="max-h-full max-w-full object-contain filter drop-shadow-sm"
                                         title="{{ $partner->name }}">
