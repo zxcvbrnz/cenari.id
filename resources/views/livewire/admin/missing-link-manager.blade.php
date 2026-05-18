@@ -48,9 +48,10 @@
                             <div class="bg-slate-50 rounded-2xl p-4 border border-slate-50 break-all">
                                 <p class="text-[8px] font-black uppercase text-slate-400 mb-1 tracking-widest">Target
                                     URL</p>
-                                <a href="{{ $link->url }}" target="_blank"
+                                <a href="{{ $link->program ? url('programs/' . $link->program->slug) : '#' }}"
+                                    target="_blank"
                                     class="text-[11px] text-blue-500 font-bold hover:underline italic flex items-center gap-1">
-                                    {{ $link->url }}
+                                    {{ $link->program ? $link->program->slug : 'No Program Assigned' }}
                                     <span class="text-[9px]">↗</span>
                                 </a>
                             </div>
