@@ -67,9 +67,9 @@
                     </h1>
 
                     <p
-                        class="text-slate-400 text-[9px] md:text-[11px] mb-4 max-w-md mx-auto opacity-80 leading-relaxed font-light whitespace-nowrap px-4">
-                        Pusat Edukasi <span class="text-white/80">Coding</span> & <span
-                            class="text-white/80">Robotik</span> Terpadu di Banjarmasin.
+                        class="text-slate-400 text-[9px] md:text-[11px] mb-4 max-w-md mx-auto opacity-80 leading-relaxed font-light px-4">
+                        Pusat Edukasi <span class="text-white/80">Desain, Bisnis dan Administrasi, Robotik, Coding dan
+                            AI</span> pertama di Banjarmasin sejak 2018.
                     </p>
 
                     <div class="flex gap-3 justify-center">
@@ -80,6 +80,10 @@
                         <a href="{{ route('b2b.solution') }}" wire:navigate
                             class="bg-white/5 text-white border border-white/10 px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 whitespace-nowrap">
                             Solusi Sekolah
+                        </a>
+                        <a href="{{ route('b2b.institution') }}" wire:navigate
+                            class="bg-white/5 text-white border border-white/10 px-6 py-2 rounded-full font-bold text-[8px] uppercase tracking-[0.2em] transition-all hover:bg-white/10 active:scale-95 whitespace-nowrap">
+                            Solusi Instansi
                         </a>
                     </div>
                 </div>

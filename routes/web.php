@@ -36,11 +36,11 @@ Route::get('/programs/{slug}', DetailProgram::class)->name('program.detail');
 Route::get('/programs/{slug}/{course_slug}', CoursePackageDetail::class)->name('program.course.detail');
 Route::get('/programs/{slug}/{course_slug}/register', CourseRegister::class)->middleware(['auth', 'check.profile'])->name('program.course.detail.register');
 
-Route::get('/b2b-solution', B2BSolution::class)->name('b2b.solution');
-Route::get('/b2b-solution/form', SchoolPartner::class)->name('b2b.solution.form');
+Route::get('/mitra-sekolah', B2BSolution::class)->name('b2b.solution');
+Route::get('/mitra-sekolah/form', SchoolPartner::class)->name('b2b.solution.form');
 
-Route::get('/mitra-instanasi', MitraInstansi::class)->name('b2b.institution');
-Route::get('/mitra-instanasi/form', InstitutionPartner::class)->name('b2b.institution.form');
+Route::get('/mitra-instansi', MitraInstansi::class)->name('b2b.institution');
+Route::get('/mitra-instansi/form', InstitutionPartner::class)->name('b2b.institution.form');
 
 Route::get('/portfolio-gallery', PortfolioGallery::class)->name('portfolio.gallery');
 
