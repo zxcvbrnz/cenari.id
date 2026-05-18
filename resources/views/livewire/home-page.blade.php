@@ -482,27 +482,46 @@
                 </h3>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12 items-center justify-center">
+            <div class="relative w-full overflow-hidden bg-transparent py-4">
+                <!-- Kontainer Utama Bergerak -->
+                <div class="flex w-max items-center gap-12 animate-marquee whitespace-nowrap logo-slider">
 
-                @forelse($partners as $partner)
-                    <div class="group flex justify-center">
+                    @forelse($partners as $partner)
+                        <!-- Loop Pertama -->
                         <div
-                            class="h-16 w-32 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                            {{-- Menampilkan Gambar dari Database --}}
+                            class="inline-flex h-16 w-32 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 items-center justify-center mx-4">
                             <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
                                 class="max-h-full max-w-full object-contain filter drop-shadow-sm"
                                 title="{{ $partner->name }}">
                         </div>
-                    </div>
-                @empty
-                    {{-- Tampilan jika database kosong (Opsional) --}}
-                    <div class="col-span-full text-center">
-                        <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest">Partner data is
-                            being updated</p>
-                    </div>
-                @endforelse
+                    @empty
+                        <div class="w-full text-center">
+                            <p class="text-slate-300 text-[10px] font-black uppercase tracking-widest">Partner data is
+                                being updated</p>
+                        </div>
+                    @endforelse
 
+                    @if ($partners->isNotEmpty())
+                        <!-- Loop Kedua (Duplikasi untuk menyambung animasi tanpa jeda kosong) -->
+                        @foreach ($partners as $partner)
+                            <div
+                                class="inline-flex h-16 w-32 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500 items-center justify-center mx-4">
+                                <img src="{{ asset('storage/' . $partner->image) }}" alt="{{ $partner->name }}"
+                                    class="max-h-full max-w-full object-contain filter drop-shadow-sm"
+                                    title="{{ $partner->name }}">
+                            </div>
+                        @endforeach
+                    @endif
+
+                </div>
             </div>
+
+            <style>
+                /* Opsional: Efek pause saat logo diarahkan kursor mouse */
+                .logo-slider:hover {
+                    animation-play-state: paused;
+                }
+            </style>
 
             <div class="mt-16 pt-8 border-t border-slate-50 text-center">
                 <p class="text-slate-400 text-xs font-medium italic">
