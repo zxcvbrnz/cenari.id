@@ -63,7 +63,7 @@
 
                     <h1
                         class="text-center font-heading text-[10px] md:text-xl font-bold text-white mb-2 uppercase tracking-widest whitespace-nowrap">
-                        Kuasai Teknologi. <span class="text-[#84CC16]">Kendalikan Masa Depan.</span>
+                        Kuasai Keahlianmu. <span class="text-[#84CC16]">Kendalikan Masa Depan.</span>
                     </h1>
 
                     <p
