@@ -134,14 +134,24 @@
                 {{-- Input URL --}}
                 <div class="space-y-2">
                     <label class="text-[10px] font-black uppercase text-slate-400 ml-2 tracking-widest">
-                        URL Target / Destination Link
+                        Pilih Program Tujuan
                     </label>
-                    <input type="url" wire:model="url"
-                        class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs focus:ring-2 focus:ring-blue-500 transition-all text-blue-600 placeholder-slate-300"
-                        placeholder="https://wa.me/your-number atau https://...">
-                    @error('url')
+
+                    <select wire:model="program_id"
+                        class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs focus:ring-2 focus:ring-blue-500 transition-all text-blue-600 appearance-none cursor-pointer">
+
+                        <option value="">-- Pilih Program --</option>
+
+                        @foreach ($programs as $program)
+                            <option value="{{ $program->id }}">{{ $program->title }}</option>
+                        @endforeach
+
+                    </select>
+
+                    @error('program_id')
                         <p class="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-2 mt-1">
-                            {{ $message }}</p>
+                            {{ $message }}
+                        </p>
                     @enderror
                 </div>
 

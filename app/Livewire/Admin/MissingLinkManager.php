@@ -4,6 +4,7 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\MissingLink;
+use App\Models\Program;
 use Livewire\WithPagination;
 
 class MissingLinkManager extends Component
@@ -17,12 +18,18 @@ class MissingLinkManager extends Component
     public $missingLinkId;
     public $text;
     public $cta;
-    public $url;
+    public $program_id; // Menggantikan $url
 
     protected $rules = [
         'text' => 'required|string|max:255',
         'cta' => 'required|string|max:255',
-        'url' => 'required|url|max:255',
+        'program_id' => 'required|exists:programs,id', // Validasi relasi ke tabel programs
+    ];
+
+    // Mengubah pesan validasi kustom (Opsional, agar user-friendly)
+    protected $messages = [
+        'program_id.required' => 'Kolom program tujuan wajib dipilih.',
+        'program_id.exists' => 'Program yang dipilih tidak valid.',
     ];
 
     // Fungsi untuk reset form input
@@ -31,7 +38,7 @@ class MissingLinkManager extends Component
         $this->missingLinkId = null;
         $this->text = '';
         $this->cta = '';
-        $this->url = '';
+        $this->program_id = ''; // Di-reset ke string kosong agar placeholder select aktif
         $this->resetErrorBag();
     }
 
@@ -51,7 +58,7 @@ class MissingLinkManager extends Component
         $this->missingLinkId = $missingLink->id;
         $this->text = $missingLink->text;
         $this->cta = $missingLink->cta;
-        $this->url = $missingLink->url;
+        $this->program_id = $missingLink->program_id; // Mengambil data foreign id lama
 
         $this->viewState = 'edit';
     }
@@ -71,7 +78,7 @@ class MissingLinkManager extends Component
             MissingLink::create([
                 'text' => $this->text,
                 'cta' => $this->cta,
-                'url' => $this->url,
+                'program_id' => $this->program_id,
             ]);
             $message = 'Data berhasil ditambahkan!';
         } else {
@@ -79,7 +86,7 @@ class MissingLinkManager extends Component
             $missingLink->update([
                 'text' => $this->text,
                 'cta' => $this->cta,
-                'url' => $this->url,
+                'program_id' => $this->program_id,
             ]);
             $message = 'Data berhasil diperbarui!';
         }
@@ -108,8 +115,10 @@ class MissingLinkManager extends Component
 
     public function render()
     {
+        // $programs dikirim ke view agar select-option bisa melakukan loop data
         return view('livewire.admin.missing-link-manager', [
-            'missingLinks' => MissingLink::latest()->paginate(10)
+            'missingLinks' => MissingLink::with('program')->latest()->paginate(10),
+            'programs' => Program::orderBy('title', 'asc')->get()
         ]);
     }
 }

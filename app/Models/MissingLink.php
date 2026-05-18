@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class MissingLink extends Model
 {
-    protected $fillable = ['text', 'cta', 'url'];
+    protected $fillable = ['text', 'cta', 'program_id'];
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
 }
