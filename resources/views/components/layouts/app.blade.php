@@ -40,7 +40,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div class="col-span-1">
                     {{-- logo --}}
-                    <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="w-32 mb-4">
+                    <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="w-16 mb-4">
                     <p class="text-slate-500 text-[11px] leading-relaxed mb-6 max-w-[240px]">
                         Menghubungkan imajinasi dan realitas melalui pendidikan teknologi terapan di Banjarmasin.
                     </p>
