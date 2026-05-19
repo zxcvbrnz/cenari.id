@@ -1,6 +1,9 @@
 <footer class="bg-white pt-20 pb-10 border-t border-slate-100">
     <div class="max-w-7xl mx-auto px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+        <!-- Mengubah grid menjadi md:grid-cols-3 karena kolom newsletter dihapus -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+
+            <!-- KOLOM 1: Logo & Deskripsi -->
             <div class="col-span-1">
                 {{-- logo --}}
                 <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="w-16 mb-4">
@@ -15,7 +18,7 @@
                 </div>
             </div>
 
-            <!-- KOLOM PROGRAM (PERBAIKAN DI SINI) -->
+            <!-- KOLOM 2: Program Dinamis -->
             <div>
                 <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Program</h4>
                 <div class="space-y-4">
@@ -42,29 +45,34 @@
                 </div>
             </div>
 
+            <!-- KOLOM 3: Layanan (Perbaikan Route & Title Baru) -->
             <div>
-                <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Lembaga</h4>
+                <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Layanan</h4>
                 <ul class="space-y-3 text-slate-500 text-[11px] font-semibold">
-                    <li><a href="https://cenari.sch.id/profil" class="hover:text-[#3B82F6] transition-colors">Tentang
-                            Kami</a></li>
-                    <li><a href="{{ route('b2b.solution') }}" class="hover:text-[#3B82F6] transition-colors">Mitra
-                            Sekolah</a></li>
-                    <li><a href="{{ route('contact.us') }}" class="hover:text-[#3B82F6] transition-colors">Kontak
-                            Kami</a></li>
+                    <li>
+                        <a href="{{ route('course.packages') }}" wire:navigate
+                            class="hover:text-[#3B82F6] transition-colors block">
+                            Pilihan Kelas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('b2b.solution') }}" wire:navigate
+                            class="hover:text-[#3B82F6] transition-colors block">
+                            Mitra Sekolah
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('b2b.institution') }}" wire:navigate
+                            class="hover:text-[#3B82F6] transition-colors block">
+                            Mitra Instansi
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            <div>
-                <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Newsletter</h4>
-                <div class="flex flex-col gap-3">
-                    <input type="email" placeholder="Email Anda"
-                        class="bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-[11px] focus:outline-none focus:border-[#3B82F6] transition-all">
-                    <button
-                        class="bg-slate-100 text-slate-600 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-widest hover:bg-[#3B82F6] hover:text-white transition-all">Berlangganan</button>
-                </div>
-            </div>
         </div>
 
+        <!-- Bagian Copyright & Bottom Links -->
         <div class="pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.15em]">
                 &copy; 2026 CENARI ID.
