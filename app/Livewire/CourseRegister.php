@@ -82,6 +82,7 @@ class CourseRegister extends Component
                     "Anda sudah melakukan pendaftaran untuk\n" .
                     "```\n" .
                     "Kursus        : " . $this->package->name . "\n" .
+                    "Biaya         : " . 'Rp ' . number_format($this->package->price, 0, ',', '.') . "\n" .
                     "```\n" .
                     "Mohon tunggu kofirmasi dari kami untuk selanjutnya.\n" .
                     "*Cenari Education Center*\n" .
@@ -94,6 +95,7 @@ class CourseRegister extends Component
                     "```\n" .
                     "Nama      : " . Auth::user()->name . "\n" .
                     "Kursus    : " . $this->package->name . "\n" .
+                    "Biaya     : " . 'Rp ' . number_format($this->package->price, 0, ',', '.') . "\n" .
                     "Whatsapp  : " . Auth::user()->whatsapp . "\n" .
                     "```\n" .
                     "```\n" .
@@ -106,6 +108,7 @@ class CourseRegister extends Component
                     "```\n" .
                     "Nama      : " . Auth::user()->name . "\n" .
                     "Kursus    : " . $this->package->name . "\n" .
+                    "Biaya     : " . 'Rp ' . number_format($this->package->price, 0, ',', '.') . "\n" .
                     "Whatsapp  : " . Auth::user()->whatsapp . "\n" .
                     "```\n" .
                     "```\n" .
