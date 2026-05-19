@@ -104,7 +104,20 @@
         </div>
     </footer>
     <div class="fixed bottom-8 right-8 z-[100]">
-        <button
+
+        {{-- floating button whatsapp dengan link langsung ke wa --}}
+        <a href="https://wa.me/6285103326061" target="_blank"
+            class="w-16 h-16 bg-[#25D366] rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition group">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 10h1l1.664-3.332c.11-.221.319-.334.533-.334h2.773a2 2 0 011.631.879l3.417 4.166a2 2 0 010 2.222l-3.417 4.166A2 2 0 018.773 21H6a2 2 0 01-1.664-.879L3 17H2a1 1 0 010-2z">
+                </path>
+            </svg>
+            <span
+                class="absolute right-20 bg-white text-[#0F172A] px-4 py-2 rounded-xl text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition whitespace-nowrap">Chat
+                WhatsApp</span>
+        </a>
+        {{-- <button
             class="w-16 h-16 bg-[#3B82F6] rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition group">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -114,7 +127,7 @@
             <span
                 class="absolute right-20 bg-white text-[#0F172A] px-4 py-2 rounded-xl text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition whitespace-nowrap">Cenari
                 Bot</span>
-        </button>
+        </button> --}}
     </div>
 
     @livewireScripts

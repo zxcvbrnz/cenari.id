@@ -18,7 +18,7 @@
             </div>
 
             <h1
-                class="text-6xl md:text-8xl font-heading font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
+                class="text-3xl md:text-8xl font-heading font-black text-white mb-6 leading-[0.9] italic uppercase tracking-tighter">
                 {{ $program->title }}
             </h1>
 
