@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\SchoolPartner;
 use App\Models\InstitutionPartner;
 use Livewire\WithPagination;
+use Silvanix\Wablas\Message;
 
 class PartnerManager extends Component
 {
@@ -54,6 +55,24 @@ class PartnerManager extends Component
             'icon'  => 'success',
             'text'  => 'Status partner "' . $partner->nama_lengkap . '" telah diubah.'
         ]);
+        $send = new Message();
+        $queue = [
+            [
+                'phone' => $partner->whatsapp,
+                'message' => "Halo *" . $partner->nama_lengkap . ' - ' . ($this->type === 'school' ? $partner->nama_sekolah : $partner->nama_institusi) . "*\n" .
+                    "Penawaran terkait '.$partner->penawaran.'.\n" .
+                    "Sudah kami kirimkan lewat email '.$partner->email.'.\n" .
+                    "*Cenari ID*\n" .
+                    "www.cenari.id",
+            ],
+        ];
+        foreach ($queue as $index => $item) {
+            $send->multiple_text([$item]);
+
+            if ($index < count($queue) - 1) {
+                sleep(rand(10, 20));
+            }
+        }
     }
 
     public function render()

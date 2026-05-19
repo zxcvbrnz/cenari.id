@@ -70,7 +70,7 @@
                                 @if ($item->status)
                                     <span
                                         class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-green-100 text-green-600">
-                                        Telah Diterima
+                                        Telah Dikirim
                                     </span>
                                 @else
                                     <span
@@ -79,14 +79,6 @@
                                     </span>
                                 @endif
                             <td class="p-6 text-right">
-                                <button onclick="confirm('Hapus data partner ini?') || event.stopImmediatePropagation()"
-                                    wire:click="deletePartner({{ $item->id }})"
-                                    class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all transform active:scale-90">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                </button>
                                 @if (!$item->status)
                                     <button wire:click="toggleStatus({{ $item->id }})"
                                         class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-green-50 text-green-400 hover:bg-green-500 hover:text-white transition-all transform active:scale-90 ml-2">
@@ -96,6 +88,14 @@
                                         </svg>
                                     </button>
                                 @endif
+                                <button onclick="confirm('Hapus data partner ini?') || event.stopImmediatePropagation()"
+                                    wire:click="deletePartner({{ $item->id }})"
+                                    class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-red-50 text-red-400 hover:bg-red-500 hover:text-white transition-all transform active:scale-90">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
                             </td>
                         </tr>
                     @empty
