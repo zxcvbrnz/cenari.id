@@ -61,7 +61,7 @@
                 <h2 class="text-xs font-black uppercase tracking-[0.5em] italic"
                     style="color: {{ $program->accent_color }}">The Core Profile</h2>
 
-                <h3 class="text-5xl font-black text-slate-900 leading-tight uppercase italic tracking-tighter">
+                <h3 class="text-4xl font-black text-slate-900 leading-tight uppercase italic tracking-tighter">
                     {{ $program->instansi->name }}.
                 </h3>
 
@@ -89,7 +89,7 @@
     <section id="packages" class="py-32 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
-                <h2 class="text-4xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">
+                <h2 class="text-3xl md:text-6xl font-black text-slate-900 uppercase italic tracking-tighter mb-4">
                     Pilih Jalur Belajarmu
                 </h2>
                 <p class="text-slate-600 font-medium tracking-widest uppercase text-sm inline-block pb-2"
@@ -245,7 +245,7 @@
             <div class="mb-16 text-center">
                 <h2 class="text-xs font-black uppercase tracking-[0.5em] mb-4 italic"
                     style="color: {{ $program->instansi->colour }}">Suasana Kami</h2>
-                <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">
+                <h3 class="text-3xl font-black text-slate-900 italic uppercase tracking-tighter">
                     Belajar dalam <span class="text-outline" style="color: {{ $program->accent_color }}">Aksi.</span>
                 </h3>
             </div>
@@ -278,7 +278,7 @@
                 <div>
                     <h2 class="text-xs font-black uppercase tracking-[0.5em] mb-4 italic"
                         style="color: {{ $program->instansi->colour }}">Testimoni</h2>
-                    <h3 class="text-5xl font-black text-slate-900 italic uppercase tracking-tighter">
+                    <h3 class="text-3xl font-black text-slate-900 italic uppercase tracking-tighter">
                         Suara Keberhasilan.
                     </h3>
                 </div>
