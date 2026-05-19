@@ -63,7 +63,7 @@
             <div class="bg-white rounded-[3rem] p-12 shadow-sm border border-slate-100 relative overflow-hidden">
                 @if ($data)
                     <div class="grid md:grid-cols-2 gap-12 relative z-10">
-                        <div class="space-y-8">
+                        <div class="space-y-8 items-start">
                             <div>
                                 <span
                                     class="text-[10px] font-black text-blue-600 uppercase tracking-widest block mb-2">Materi
@@ -74,7 +74,8 @@
                             </div>
                         </div>
 
-                        <div class="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col justify-center">
+                        <div
+                            class="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col justify-center items-start">
                             <span
                                 class="text-[10px] font-black text-blue-400 uppercase tracking-widest block mb-4">Expected
                                 Learning Outcome</span>
