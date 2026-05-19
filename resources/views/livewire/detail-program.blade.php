@@ -69,7 +69,8 @@
                 <div class="h-1.5 w-24 rounded-full" style="background-color: {{ $program->instansi->colour }}"></div>
 
                 <p class="text-slate-500 text-lg leading-relaxed font-medium">
-                    {{ $program->instansi->profile }}
+                    {{-- {{ $program->instansi->profile }} --}}
+                    {!! \Illuminate\Support\Str::markdown($program->instansi->profile) !!}
                 </p>
 
                 {{-- <div class="grid grid-cols-2 gap-8 pt-6">
