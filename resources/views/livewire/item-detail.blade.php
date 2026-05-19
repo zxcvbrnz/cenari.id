@@ -45,13 +45,15 @@
                         </div>
                         <div>
                             <p class="text-[10px] font-black uppercase text-slate-400">Status Stok</p>
-                            <p class="text-sm font-bold text-emerald-500">Tersedia / Ready</p>
+                            @if ($item->stock == 0)
+                                <p class="text-sm font-bold text-red-500">Habis / Out of Stock</p>
+                            @else
+                                <p class="text-sm font-bold text-emerald-500">Tersedia / Ready</p>
+                            @endif
                         </div>
                     </div>
 
-                    @if ($item->stock == 0)
-                        <span class="text-sm font-bold text-red-500">Stok Habis</span>
-                    @else
+                    @if (!$item->stock == 0)
                         <button wire:click="addToCart" wire:loading.attr="disabled"
                             class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-slate-900 transition-all flex items-center gap-2">
 
