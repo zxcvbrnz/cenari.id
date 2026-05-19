@@ -92,8 +92,9 @@ class CourseRegister extends Component
                 'message' => "Halo *Admin*\n" .
                     "Terdapat pendaftaran kursus dari web Cenari ID\n" .
                     "```\n" .
-                    "Nama    : " . Auth::user()->name . "\n" .
-                    "Kursus  : " . $this->package->name . "\n" .
+                    "Nama      : " . Auth::user()->name . "\n" .
+                    "Kursus    : " . $this->package->name . "\n" .
+                    "Whatsapp  : " . Auth::user()->whatsapp . "\n" .
                     "```\n" .
                     "```\n" .
                     "www.cenari.id",
@@ -103,8 +104,9 @@ class CourseRegister extends Component
                 'message' => "Halo *Admin*\n" .
                     "Terdapat pendaftaran kursus dari web Cenari ID\n" .
                     "```\n" .
-                    "Nama    : " . Auth::user()->name . "\n" .
-                    "Kursus  : " . $this->package->name . "\n" .
+                    "Nama      : " . Auth::user()->name . "\n" .
+                    "Kursus    : " . $this->package->name . "\n" .
+                    "Whatsapp  : " . Auth::user()->whatsapp . "\n" .
                     "```\n" .
                     "```\n" .
                     "www.cenari.id",
