@@ -68,7 +68,7 @@
                 {{-- Garis dekoratif menggunakan warna Instansi --}}
                 <div class="h-1.5 w-24 rounded-full" style="background-color: {{ $program->instansi->colour }}"></div>
 
-                <p class="text-slate-500 text-lg leading-relaxed font-medium">
+                <p class="text-slate-500 text-lg  whitespace-pre-line leading-relaxed font-medium">
                     {{-- {{ $program->instansi->profile }} --}}
                     {!! \Illuminate\Support\Str::markdown($program->instansi->profile) !!}
                 </p>
