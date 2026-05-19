@@ -39,20 +39,15 @@
         <div class="max-w-7xl mx-auto px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                 <div class="col-span-1">
-                    <div class="font-heading font-extrabold text-xl tracking-tighter text-[#0F172A] mb-5">
-                        CENARI<span class="text-[#3B82F6]">ID</span>
-                    </div>
+                    {{-- logo --}}
+                    <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="w-32 mb-4">
                     <p class="text-slate-500 text-[11px] leading-relaxed mb-6 max-w-[240px]">
                         Menghubungkan imajinasi dan realitas melalui pendidikan teknologi terapan di Banjarmasin.
                     </p>
                     <div class="flex gap-3">
-                        <a href="#"
+                        <a href="https://www.instagram.com/cenari.academy/" target="_blank"
                             class="w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center hover:bg-slate-50 transition-colors">
                             <span class="text-[10px] font-bold text-slate-400">IG</span>
-                        </a>
-                        <a href="#"
-                            class="w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center hover:bg-slate-50 transition-colors">
-                            <span class="text-[10px] font-bold text-slate-400">YT</span>
                         </a>
                     </div>
                 </div>
