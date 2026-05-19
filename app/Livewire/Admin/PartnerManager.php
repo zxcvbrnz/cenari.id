@@ -59,9 +59,9 @@ class PartnerManager extends Component
         $queue = [
             [
                 'phone' => $partner->whatsapp,
-                'message' => "Halo *" . $partner->nama_lengkap . ' - ' . ($this->type === 'school' ? $partner->nama_sekolah : $partner->nama_institusi) . "*\n" .
-                    "Penawaran terkait '.$partner->penawaran.'.\n" .
-                    "Sudah kami kirimkan lewat email '.$partner->email.'.\n" .
+                'message' => "Halo " . $partner->nama_lengkap . " - " . ($this->type === 'school' ? $partner->nama_sekolah : $partner->nama_institusi) . "*\n" .
+                    "Penawaran terkait " . $partner->penawaran . ".\n" .
+                    "Sudah kami kirimkan lewat email " . $partner->email . ".\n" .
                     "*Cenari ID*\n" .
                     "www.cenari.id",
             ],
