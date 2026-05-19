@@ -62,15 +62,26 @@
                                 {{ number_format($totalPrice, 0, ',', '.') }}</span>
                         </div>
                     </div>
-
-                    <button wire:click="addToCart"
-                        class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                        </svg>
-                        Tambah ke Keranjang
-                    </button>
+                    @php
+                        $kitStock = $kit->items->isEmpty()
+                            ? 0
+                            : $kit->items->min(fn($i) => floor($i->stock / ($i->pivot->quantity ?: 1)));
+                    @endphp
+                    @if ($kitStock < 1)
+                        <div
+                            class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-[2.5rem] flex items-center justify-center z-10">
+                            <span class="text-sm font-bold text-red-500">Stok Habis</span>
+                        </div>
+                    @else
+                        <button wire:click="addToCart"
+                            class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            Tambah ke Keranjang
+                        </button>
+                    @endif
                 </div>
 
                 <div class="space-y-4">
