@@ -1,5 +1,5 @@
 <div>
-    <div class="h-[85vh] w-full bg-[#080C15] relative overflow-hidden flex flex-col">
+    <div class="h-[95vh] w-full bg-[#080C15] relative overflow-hidden flex flex-col">
 
         <section class="relative h-full w-full bg-[#0F172A] overflow-hidden group/hero font-inter"
             style="--split: 50%; --gap: 150px;">
