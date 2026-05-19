@@ -48,7 +48,7 @@
                     <div class="space-y-2">
                         <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest block ml-2">No. HP
                             / WhatsApp</label>
-                        <input type="text" wire:model="whatsapp" placeholder="62812..."
+                        <input type="text" wire:model="whatsapp" placeholder="0812..."
                             class="w-full border-slate-200 rounded-2xl focus:ring-blue-600 font-bold text-slate-700 py-3">
                         @error('whatsapp')
                             <span class="text-red-500 text-[10px] font-bold ml-2 italic">{{ $message }}</span>

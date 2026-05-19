@@ -85,7 +85,7 @@ class CourseRegister extends Component
                     "Biaya         : " . 'Rp ' . number_format($this->package->price, 0, ',', '.') . "\n" .
                     "```\n" .
                     "Mohon tunggu kofirmasi dari kami untuk selanjutnya.\n" .
-                    "*Cenari Education Center*\n" .
+                    "*Cenari ID*\n" .
                     "www.cenari.id",
             ],
             [
