@@ -54,14 +54,25 @@
 
                 <div>
                     <h4 class="text-[#0F172A] text-[10px] font-black uppercase tracking-[0.2em] mb-6">Program</h4>
-                    <ul class="space-y-3 text-slate-500 text-[11px] font-semibold">
+                    @foreach ($instansi as $inst)
+                        <div class="px-6 py-2 text-[9px] font-black text-slate-400 uppercase tracking-tighter">
+                            {{ $inst->name }}
+                        </div>
+                        @foreach ($inst->programs as $program)
+                            <a href="{{ route('program.detail', $program->slug) }}" wire:navigate
+                                class="hover:text-[#3B82F6] transition-colors">
+                                {{ $program->navigation }}
+                            </a>
+                        @endforeach
+                    @endforeach
+                    {{-- <ul class="space-y-3 text-slate-500 text-[11px] font-semibold">
                         <li><a href="{{ route('program.detail', 'software-control') }}"
                                 class="hover:text-[#3B82F6] transition-colors">Coding Academy</a></li>
                         <li><a href="{{ route('program.detail', 'creative-design') }}"
                                 class="hover:text-[#3B82F6] transition-colors">Robotik Pro</a></li>
                         <li><a href="{{ route('program.detail', 'business-intel') }}"
                                 class="hover:text-[#3B82F6] transition-colors">Digital Bisnis</a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
 
                 <div>
