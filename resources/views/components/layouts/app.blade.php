@@ -93,7 +93,7 @@
 
             <div class="pt-8 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-4">
                 <p class="text-[9px] text-slate-400 font-bold uppercase tracking-[0.15em]">
-                    &copy; 2026 CENARI EDUCATION CENTER.
+                    &copy; 2026 CENARI ID.
                 </p>
                 <div class="flex gap-6 text-[9px] text-slate-400 font-bold uppercase tracking-[0.15em]">
                     <a href="#" class="hover:text-slate-900 transition-colors">Privasi</a>
