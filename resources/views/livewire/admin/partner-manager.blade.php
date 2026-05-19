@@ -36,6 +36,8 @@
                         <th class="p-6 text-[10px] font-black uppercase text-slate-400 tracking-widest">Kontak</th>
                         <th class="p-6 text-[10px] font-black uppercase text-slate-400 tracking-widest">Isi Penawaran
                         </th>
+                        <th class="p-6 text-[10px] font-black uppercase text-slate-400 tracking-widest">Status
+                        </th>
                         <th class="p-6 text-[10px] font-black uppercase text-slate-400 tracking-widest text-right">Aksi
                         </th>
                     </tr>
@@ -64,6 +66,18 @@
                                     {{ $item->tujuan_surat }}</p>
                                 <p class="text-xs text-slate-600 line-clamp-2 max-w-xs">{{ $item->penawaran }}</p>
                             </td>
+                            <td class="p-6">
+                                @if ($item->status)
+                                    <span
+                                        class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-green-100 text-green-600">
+                                        Telah Diterima
+                                    </span>
+                                @else
+                                    <span
+                                        class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest bg-orange-100 text-orange-600">
+                                        Menunggu
+                                    </span>
+                                @endif
                             <td class="p-6 text-right">
                                 <button onclick="confirm('Hapus data partner ini?') || event.stopImmediatePropagation()"
                                     wire:click="deletePartner({{ $item->id }})"
