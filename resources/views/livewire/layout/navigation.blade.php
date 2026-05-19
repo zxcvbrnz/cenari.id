@@ -19,7 +19,7 @@ new class extends Component {
         <!-- Logo Section -->
         <div class="flex items-center px-6 h-20 border-b border-slate-800">
             <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center space-x-3">
-                <x-application-logo class="block h-8 w-auto fill-current text-indigo-500" />
+                <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="h-8">
                 <span class="text-lg font-bold tracking-tight text-white">Admin Panel</span>
             </a>
         </div>
