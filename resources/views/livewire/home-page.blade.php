@@ -18,7 +18,7 @@
                 </div>
 
                 <div
-                    class="relative z-30 flex h-full flex-col justify-end pr-20 text-right text-white pointer-events-none transition-transform duration-700 group-hover/right:-translate-x-12">
+                    class="relative z-30 flex h-full flex-col justify-center items-end pr-20 text-right text-white pointer-events-none transition-transform duration-700 group-hover/right:-translate-x-12">
                     <p class="text-[#84CC16] text-[10px] font-black tracking-[0.4em] uppercase mb-2">Hardware</p>
                     <h2 class="font-heading text-4xl md:text-5xl font-black tracking-tighter opacity-80">
                         PHYSICAL<br />RESPONSE</h2>
@@ -39,7 +39,7 @@
                 </div>
 
                 <div
-                    class="relative z-30 flex h-full flex-col justify-start pl-20 text-white pointer-events-none transition-transform duration-700 group-hover/left:translate-x-12">
+                    class="relative z-30 flex h-full flex-col justify-center items-start pl-20 text-white pointer-events-none transition-transform duration-700 group-hover/left:translate-x-12">
                     <p class="text-[#3B82F6] text-[10px] font-black tracking-[0.4em] uppercase mb-2">Software</p>
                     <h2 class="font-heading text-4xl md:text-5xl font-black tracking-tighter opacity-80">THE
                         LIVING<br />CODE</h2>
