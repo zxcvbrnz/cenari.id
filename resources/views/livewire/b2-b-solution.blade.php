@@ -69,7 +69,7 @@
                                     class="text-[10px] font-black text-blue-600 uppercase tracking-widest block mb-2">Materi
                                     Pembelajaran</span>
                                 <div class="text-lg font-medium text-slate-900 whitespace-pre-line leading-relaxed">
-                                    {{ $data->materi }}
+                                    {!! \Illuminate\Support\Str::markdown($data->materi) !!}
                                 </div>
                             </div>
                         </div>
