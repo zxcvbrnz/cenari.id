@@ -17,7 +17,7 @@ new class extends Component {
         aria-label="Sidebar">
 
         <!-- Logo Section -->
-        <div class="flex items-center px-6 h-20 border-b border-slate-800">
+        <div class="flex items-end px-6 h-20 border-b border-slate-800">
             <a href="{{ route('dashboard') }}" wire:navigate class="flex items-center space-x-3">
                 <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="h-8">
                 <span class="text-lg font-bold tracking-tight text-white">Admin Panel</span>
