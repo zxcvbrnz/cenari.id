@@ -7,6 +7,7 @@
     <title>Cenari Education Center - Konvergensi Teknologi 2026</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="shortcut icon" href="{{ asset('logoCenari2020 PATEN.png') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@400;600&display=swap"

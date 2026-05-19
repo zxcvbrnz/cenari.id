@@ -2,12 +2,15 @@
     class="sticky top-0 z-[100] bg-white/80 backdrop-blur-xl border-b border-slate-100 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 h-20 flex justify-between items-center">
 
-        <a href="/" wire:navigate
-            class="font-heading font-extrabold text-xl tracking-tighter flex items-center gap-1 cursor-pointer shrink-0">
-            <span class="bg-[#3B82F6] w-2 h-2 rounded-full mb-1"></span>
-            CENARI<span class="text-slate-400 font-light">ID</span>
+        {{-- <a href="/" wire:navigate
+                class="font-heading font-extrabold text-xl tracking-tighter flex items-center gap-1 cursor-pointer shrink-0">
+                <span class="bg-[#3B82F6] w-2 h-2 rounded-full mb-1"></span>
+                CENARI<span class="text-slate-400 font-light">ID</span>
+            </a> --}}
+        {{-- logo --}}
+        <a href="/" wire:navigate class="shrink-0">
+            <img src="{{ asset('logoCenari2020 PATEN.png') }}" alt="Cenari ID Logo" class="w-32">
         </a>
-
         <div class="hidden lg:flex items-center space-x-8 h-full">
             <a href="/" wire:navigate
                 class="group text-[11px] font-bold uppercase tracking-widest {{ request()->is('/') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6] transition-colors relative h-full flex items-center">
