@@ -6,6 +6,7 @@ use App\Models\InstitutionPartner as ModelsInstitutionPartner;
 use Livewire\Component;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Request;
+use Silvanix\Wablas\Message;
 
 class InstitutionPartner extends Component
 {
@@ -33,7 +34,7 @@ class InstitutionPartner extends Component
 
         // 2. Laravel Native Rate Limiting
         // Membuat kunci unik berdasarkan IP pengunjung
-        $throttleKey = 'submit-school-partner:' . Request::ip();
+        $throttleKey = 'submit-institution-partner:' . Request::ip();
 
         // Batasi: Maksimal 2 kali (maxAttempts) dalam 3600 detik (1 jam)
         if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts = 2)) {
@@ -64,6 +65,48 @@ class InstitutionPartner extends Component
             'icon' => 'success',
             'text' => 'Penawaran Anda telah kami terima!'
         ]);
+
+        $send = new Message();
+
+        $queue = [
+            [
+                'phone' => '089691884833', // Nomor admin
+                'message' => "Halo *Admin*\n" .
+                    "Terdapat penawaran kerjasama dari web Cenari ID\n" .
+                    "```\n" .
+                    "Nama Lengkap   : " . $validated['nama_lengkap'] . "\n" .
+                    "Nama Institusi : " . $validated['nama_institusi'] . "\n" .
+                    "WhatsApp       : " . $validated['whatsapp'] . "\n" .
+                    "Email          : " . $validated['email'] . "\n" .
+                    "Tujuan Surat   : " . $validated['tujuan_surat'] . "\n" .
+                    "Penawaran      : " . $validated['penawaran'] . "\n" .
+                    "```\n" .
+                    "www.cenari.id",
+            ],
+            [
+                'phone' => '085103326061', // Nomor admin
+                'message' => "Halo *Admin*\n" .
+                    "Terdapat penawaran kerjasama dari web Cenari ID\n" .
+                    "```\n" .
+                    "Nama Lengkap   : " . $validated['nama_lengkap'] . "\n" .
+                    "Nama Institusi : " . $validated['nama_institusi'] . "\n" .
+                    "WhatsApp       : " . $validated['whatsapp'] . "\n" .
+                    "Email          : " . $validated['email'] . "\n" .
+                    "Tujuan Surat   : " . $validated['tujuan_surat'] . "\n" .
+                    "Penawaran      : " . $validated['penawaran'] . "\n" .
+                    "```\n" .
+                    "www.cenari.id",
+            ],
+        ];
+
+        foreach ($queue as $index => $item) {
+            $send->multiple_text([$item]);
+
+            // Beri jeda 5-9 detik kecuali setelah pesan terakhir
+            if ($index < count($queue) - 1) {
+                sleep(rand(10, 20));
+            }
+        }
     }
 
     public function render()

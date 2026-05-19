@@ -66,6 +66,48 @@ class SchoolPartner extends Component
             'icon' => 'success',
             'text' => 'Penawaran Anda telah kami terima!'
         ]);
+
+        $send = new Message();
+
+        $queue = [
+            [
+                'phone' => '089691884833', // Nomor admin
+                'message' => "Halo *Admin*\n" .
+                    "Terdapat penawaran kerjasama dari web Cenari ID\n" .
+                    "```\n" .
+                    "Nama Lengkap : " . $validated['nama_lengkap'] . "\n" .
+                    "Nama Sekolah : " . $validated['nama_sekolah'] . "\n" .
+                    "WhatsApp     : " . $validated['whatsapp'] . "\n" .
+                    "Email        : " . $validated['email'] . "\n" .
+                    "Tujuan Surat : " . $validated['tujuan_surat'] . "\n" .
+                    "Penawaran    : " . $validated['penawaran'] . "\n" .
+                    "```\n" .
+                    "www.cenari.id",
+            ],
+            [
+                'phone' => '085103326061', // Nomor admin
+                'message' => "Halo *Admin*\n" .
+                    "Terdapat penawaran kerjasama dari web Cenari ID\n" .
+                    "```\n" .
+                    "Nama Lengkap : " . $validated['nama_lengkap'] . "\n" .
+                    "Nama Sekolah : " . $validated['nama_sekolah'] . "\n" .
+                    "WhatsApp     : " . $validated['whatsapp'] . "\n" .
+                    "Email        : " . $validated['email'] . "\n" .
+                    "Tujuan Surat : " . $validated['tujuan_surat'] . "\n" .
+                    "Penawaran    : " . $validated['penawaran'] . "\n" .
+                    "```\n" .
+                    "www.cenari.id",
+            ],
+        ];
+
+        foreach ($queue as $index => $item) {
+            $send->multiple_text([$item]);
+
+            // Beri jeda 5-9 detik kecuali setelah pesan terakhir
+            if ($index < count($queue) - 1) {
+                sleep(rand(10, 20));
+            }
+        }
     }
 
     public function render()

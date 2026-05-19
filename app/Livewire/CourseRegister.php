@@ -7,6 +7,8 @@ use App\Models\CoursePackageUser;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Silvanix\Wablas\Message;
+
 
 class CourseRegister extends Component
 {
@@ -50,6 +52,7 @@ class CourseRegister extends Component
             ->exists();
 
         if ($exists) {
+
             session()->flash('error', 'Anda sudah terdaftar di kelas ini.');
             $this->dispatch('swal:modal', ['title' => 'Gagal!', 'icon' => 'error', 'text' => 'Anda sudah terdaftar di kelas ini.']);
             return;
@@ -69,6 +72,53 @@ class CourseRegister extends Component
             'text' => 'Anda sudah terdaftar di kelas ini.',
             'redirectUrl' => route('course.packages.user.list')
         ]);
+
+        $send = new Message();
+
+        $queue = [
+            [
+                'phone' => Auth::user()->whatsapp,
+                'message' => "Halo *" . Auth::user()->name . "*\n" .
+                    "Anda sudah melakukan pendaftaran untuk\n" .
+                    "```\n" .
+                    "Kursus        : " . $this->package->name . "\n" .
+                    "```\n" .
+                    "Mohon tunggu kofirmasi dari kami untuk selanjutnya.\n" .
+                    "*Cenari Education Center*\n" .
+                    "www.cenari.id",
+            ],
+            [
+                'phone' => '089691884833', // Nomor admin
+                'message' => "Halo *Admin*\n" .
+                    "Terdapat pendaftaran kursus dari web Cenari ID\n" .
+                    "```\n" .
+                    "Nama    : " . Auth::user()->name . "\n" .
+                    "Kursus  : " . $this->package->name . "\n" .
+                    "```\n" .
+                    "```\n" .
+                    "www.cenari.id",
+            ],
+            [
+                'phone' => '085103326061', // Nomor admin
+                'message' => "Halo *Admin*\n" .
+                    "Terdapat pendaftaran kursus dari web Cenari ID\n" .
+                    "```\n" .
+                    "Nama    : " . Auth::user()->name . "\n" .
+                    "Kursus  : " . $this->package->name . "\n" .
+                    "```\n" .
+                    "```\n" .
+                    "www.cenari.id",
+            ],
+        ];
+
+        foreach ($queue as $index => $item) {
+            $send->multiple_text([$item]);
+
+            // Beri jeda 5-9 detik kecuali setelah pesan terakhir
+            if ($index < count($queue) - 1) {
+                sleep(rand(10, 20));
+            }
+        }
 
         // return redirect()->route('course.packages.user.list');
     }

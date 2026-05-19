@@ -12,6 +12,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Midtrans\Snap;
 use Midtrans\Config;
+use Silvanix\Wablas\Message;
 
 class Cart extends Component
 {
@@ -138,6 +139,55 @@ class Cart extends Component
                 'redirectUrl' => route('order.show', $order->id)
             ]);
 
+            $send = new Message();
+
+            $queue = [
+                [
+                    'phone' => $orderData['phone_number'],
+                    'message' => "Halo *" . $orderData['recipient_name'] . "*\n" .
+                        "Terima kasih telah melakukan pemesanan di Cenari ID\n" .
+                        "```\n" .
+                        "Order Number : " . $order->order_number . "\n" .
+                        "Total Amount : Rp " . number_format($order->total_amount, 0, ',', '.') . "\n" .
+                        "Status       : " . ucfirst($order->status) . "\n" .
+                        "```\n" .
+                        "Silakan cek informasi lengkap di website kami:\n" .
+                        "www.cenari.id",
+                ],
+                [
+                    'phone' => '089691884833', // Nomor admin
+                    'message' => "Halo *Admin*\n" .
+                        "Terdapat pesanan baru dari web Cenari ID\n" .
+                        "```\n" .
+                        "Order Number : " . $order->order_number . "\n" .
+                        "Nama        : " . Auth::user()->name . "\n" .
+                        "Total Amount : Rp " . number_format($order->total_amount, 0, ',', '.') . "\n" .
+                        "Status       : " . ucfirst($order->status) . "\n" .
+                        "```\n" .
+                        "www.cenari.id",
+                ],
+                [
+                    'phone' => '085103326061', // Nomor admin
+                    'message' => "Halo *Admin*\n" .
+                        "Terdapat pesanan baru dari web Cenari ID\n" .
+                        "```\n" .
+                        "Order Number : " . $order->order_number . "\n" .
+                        "Nama        : " . Auth::user()->name . "\n" .
+                        "Total Amount : Rp " . number_format($order->total_amount, 0, ',', '.') . "\n" .
+                        "Status       : " . ucfirst($order->status) . "\n" .
+                        "```\n" .
+                        "www.cenari.id",
+                ],
+            ];
+
+            foreach ($queue as $index => $item) {
+                $send->multiple_text([$item]);
+
+                // Beri jeda 5-9 detik kecuali setelah pesan terakhir
+                if ($index < count($queue) - 1) {
+                    sleep(rand(10, 20));
+                }
+            }
             // return redirect()->route('order.show', $order->id);
         } catch (\Exception $e) {
             DB::rollBack();
