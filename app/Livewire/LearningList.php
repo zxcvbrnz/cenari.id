@@ -9,8 +9,8 @@ class LearningList extends Component
 {
     public function render()
     {
-        // Mengambil semua paket kursus milik user melalui relasi pivot
-        $myCourses = Auth::user()->coursePackages;
+        // Mengambil semua paket kursus milik user melalui relasi pivot dengan yang terbaru paling atas
+        $myCourses = Auth::user()->coursePackages()->latest()->get();
 
         return view('livewire.learning-list', [
             'myCourses' => $myCourses
