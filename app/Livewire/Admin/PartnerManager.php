@@ -38,6 +38,24 @@ class PartnerManager extends Component
         ]);
     }
 
+    public function toggleStatus($id)
+    {
+        if ($this->type === 'school') {
+            $partner = SchoolPartner::findOrFail($id);
+        } else {
+            $partner = InstitutionPartner::findOrFail($id);
+        }
+
+        $partner->status = !$partner->status;
+        $partner->save();
+
+        $this->dispatch('swal:modal', [
+            'title' => 'Status Diubah',
+            'icon'  => 'success',
+            'text'  => 'Status partner "' . $partner->nama_lengkap . '" telah diubah.'
+        ]);
+    }
+
     public function render()
     {
         $partners = $this->type === 'school'
