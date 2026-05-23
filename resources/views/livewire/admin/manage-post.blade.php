@@ -41,8 +41,7 @@
                     </div>
                     <div class="p-5 space-y-4">
                         <div>
-                            <h3
-                                class="font-black italic uppercase text-lg text-slate-800 leading-tight mb-2 line-clamp-1">
+                            <h3 class="font-black italic text-lg text-slate-800 leading-tight mb-2 line-clamp-1">
                                 {{ $post->title }}</h3>
                             <p class="text-[10px] text-slate-400 font-medium line-clamp-2 italic leading-relaxed">
                                 {{ $post->excerpt }}</p>
@@ -84,7 +83,7 @@
                             <label class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Post
                                 Title</label>
                             <input type="text" wire:model="title"
-                                class="w-full bg-slate-50 border-none rounded-2xl p-5 text-base font-black uppercase italic text-slate-700 focus:ring-2 focus:ring-blue-500 shadow-inner">
+                                class="w-full bg-slate-50 border-none rounded-2xl p-5 text-base font-black italic text-slate-700 focus:ring-2 focus:ring-blue-500 shadow-inner">
                         </div>
 
                         <div class="space-y-2">
