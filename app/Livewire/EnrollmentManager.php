@@ -149,8 +149,9 @@ class EnrollmentManager extends Component
                 'message' => 'Halo *' . $user->name . '*<br><br>' .
                     'Pendaftaranmu Telah Terverifikasi, Berikut Username Dan Passwordmu' .
                     '<br><br>' . 'Username : ' . $username .
-                    '<br>' . 'Password : cenarikursus' .
-                    '<br><br>' . 'www.cenari.id',
+                    '<br>' . 'Password : cenarikursus' . '<br><br>' .
+                    'Cek Kursusmu lainnya di' . "<br>" .
+                    'www.cenari.id/course-packages-user/list',
             ],
             [
                 'phone' => '085103326061',
