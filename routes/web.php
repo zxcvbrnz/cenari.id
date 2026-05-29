@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Livewire\AddressManager;
 use App\Livewire\Admin\ManageInstansi;
 use App\Livewire\B2BSolution;
@@ -69,6 +70,8 @@ Route::get('/shop/order/{id}', OrderShow::class)->name('order.show')->middleware
 Route::get('/payment-finish', PaymentFinish::class)->name('payment.finish')->middleware(['auth']);
 
 Route::post('/api/midtrans-callback', [MidtransCallbackController::class, 'handle']);
+
+Route::get('/course-autologin/{course}', [LoginController::class, 'redirectToPlatform'])->name('course.autologin')->middleware(['auth']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'admin'])

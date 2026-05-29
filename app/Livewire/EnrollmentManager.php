@@ -143,40 +143,27 @@ class EnrollmentManager extends Component
         $this->password = $enrollment->password;
 
         $send = new Message();
+        $wa = [
+            [
+                'phone' => $user->whatsapp,
+                'message' => 'Halo *' . $user->name . '*<br><br>' .
+                    'Pendaftaranmu Telah Terverifikasi, Berikut Username Dan Passwordmu' .
+                    '<br><br>' . 'Username : ' . $username .
+                    '<br>' . 'Password : cenarikursus' .
+                    '<br><br>' . 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+            ],
+            [
+                'phone' => env('ADMIN_NUMBER'),
+                'message' => 'Halo *Admin*' . '<br>' . 'Peserta Bernama *' . $user->name . '* Telah Didaftarkan Pada Aplikasi Dengan Akun Seperti Berikut' .
+                    '<br><br>' . 'Username : ' . $username .
+                    '<br>' . 'Password : cenarikursus' .
+                    '<br><br>' . 'Untuk Lebih Lanjut' .
+                    "<br>" . 'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
+                    'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+            ],
 
-        // $nomor_ins = $data->id_group ? Group::findOrFail($data->id_group)->instruktur : Instruktur::findOrFail($id_instruktur);
-
-        // $nomor_ins = Instruktur::findOrFail($id_instruktur)->nomor_telepon;
-        // $wa = [
-        //     [
-        //         'phone' => $request->nomor_telepon,
-        //         'message' => 'Halo *' . $request->name . '*<br><br>' .
-        //             'Pendaftaranmu Telah Terverifikasi, Berikut Username Dan Passwordmu' .
-        //             '<br><br>' . 'Username : ' . $username .
-        //             '<br>' . 'Password : cenarikursus' .
-        //             '<br><br>' . 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-        //     ],
-        //     [
-        //         'phone' => $nomor_ins->nomor_telepon,
-        //         'message' => 'Halo *' . $nomor_ins->user->name . '*<br><br>' .
-        //             'Murid Bernama *' . $request->name . '* Telah Menjadi Murid Didik Anda, Untuk Lebih Lanjut' . "<br><br>" .
-        //             'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
-        //             'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-        //     ],
-        //     [
-        //         'phone' => env('ADMIN_NUMBER'),
-        //         'message' => 'Halo *Admin*' . '<br>' . 'Peserta Bernama *' . $request->name . '* Telah Didaftarkan Pada Aplikasi Dengan Akun Seperti Berikut' .
-        //             '<br><br>' . 'Username : ' . $username .
-        //             '<br>' . 'Password : cenarikursus' .
-        //             '<br><br>' . 'Untuk Lebih Lanjut' .
-        //             "<br>" . 'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
-        //             'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-        //     ],
-
-        // ];
-        // $send->multiple_text($wa);
-
-        // return redirect()->route('admin.data.peserta');
+        ];
+        $send->multiple_text($wa);
 
         $this->dispatch('swal:modal', [
             'title' => 'Sukses!',

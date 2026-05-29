@@ -169,11 +169,19 @@
                             Simpan Perubahan
                         </button>
 
-                        <button type="button" wire:click="destroy"
-                            wire:confirm="Apakah Anda yakin ingin menghapus data pendaftaran ini secara permanen?"
-                            class="w-full bg-rose-50 text-rose-600 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:bg-rose-600 hover:text-white transition-all">
-                            Hapus Pendaftaran
-                        </button>
+                        {{-- tombol hilang saat username dan password sudah ada --}}
+                        @if ($username && $password)
+                            <button disabled
+                                class="w-full bg-rose-50 text-rose-300 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] cursor-not-allowed">
+                                Hapus Pendaftaran
+                            </button>
+                        @else
+                            <button type="button" wire:click="destroy"
+                                wire:confirm="Apakah Anda yakin ingin menghapus data pendaftaran ini secara permanen?"
+                                class="w-full bg-rose-50 text-rose-600 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:bg-rose-600 hover:text-white transition-all">
+                                Hapus Pendaftaran
+                            </button>
+                        @endif
                     </div>
                 </form>
             </div>

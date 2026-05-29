@@ -81,7 +81,11 @@
 
                                 <td class="px-8 py-6 text-right">
                                     @if ($course->pivot->username)
-                                        <a href ="https://kursus.cenari.sch.id/login"
+                                        {{-- <a href ="https://kursus.cenari.sch.id/login"
+                                            class="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#3B82F6] transition-all active:scale-95">
+                                            Login Platform
+                                        </a> --}}
+                                        <a href="{{ route('course.autologin', $course->id) }}" target="_blank"
                                             class="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#3B82F6] transition-all active:scale-95">
                                             Login Platform
                                         </a>
