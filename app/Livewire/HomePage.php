@@ -29,7 +29,7 @@ class HomePage extends Component
         $this->posts = \App\Models\Post::with('featuredImage')
             ->where('is_published', true)
             ->latest()
-            ->take(5)
+            ->take(3)
             ->get();
         $this->partners = Collaboration::where('is_active', true)->orderBy('sort_order')->get();
         $this->featuredQuote = Quote::where('is_featured', true)->first()
