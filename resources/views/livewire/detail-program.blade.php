@@ -180,7 +180,39 @@
                                             </div>
                                         </div>
 
-                                        <div class="mt-8 flex justify-end">
+                                        <div class="mt-8 flex justify-end items-center gap-4" x-data="{
+                                            copied: false,
+                                            link: '{{ route('program.course.detail', ['slug' => $program->slug, 'course_slug' => $package->slug]) }}'
+                                        }">
+                                            <button
+                                                @click="
+                                                        navigator.clipboard.writeText(link); 
+                                                        copied = true; 
+                                                        setTimeout(() => copied = false, 2000)
+                                                    "
+                                                type="button"
+                                                class="px-5 py-3 text-[11px] font-bold uppercase tracking-widest rounded-xl transition-all border flex items-center gap-2 group/btn"
+                                                :class="copied ? 'bg-emerald-50 text-emerald-600 border-emerald-200' :
+                                                    'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'">
+
+                                                <template x-if="!copied">
+                                                    <svg class="w-4 h-4 text-slate-400 group-hover/btn:text-slate-600"
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                                                    </svg>
+                                                </template>
+                                                <template x-if="copied">
+                                                    <svg class="w-4 h-4 text-emerald-600" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                </template>
+
+                                                <span x-text="copied ? 'Tersalin!' : 'Salin Link'"></span>
+                                            </button>
                                             <a href="{{ route('program.course.detail', ['slug' => $program->slug, 'course_slug' => $package->slug]) }}"
                                                 style="background-color: #0F172A"
                                                 onmouseover="this.style.backgroundColor='{{ $program->accent_color }}'"
