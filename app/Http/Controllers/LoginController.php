@@ -12,24 +12,22 @@ class LoginController extends Controller
 
     public function redirectToPlatform($courseId)
     {
-        // 1. Ambil data pivot course user yang sedang login
+        // 1. Ambil data dari pivot
         $userCourse = Auth::user()->coursePackages()->findOrFail($courseId);
-
         $username = $userCourse->pivot->username;
-        $password = $userCourse->pivot->password; // Pastikan ini plain-text/bisa dibaca jika dikirim, atau gunakan ID unik sistem target
 
-        // 2. Buat query data yang ingin dikirim (bisa username, email, atau ID eksternal)
-        $payload = [
-            'username' => $username,
-            'expires' => Carbon::now()->addMinute(1)->timestamp, // Berlaku 1 menit saja
-        ];
+        // 2. Tentukan waktu kedaluwarsa (1 menit dari sekarang)
+        $expires = Carbon::now()->addMinute(1)->timestamp;
 
-        // 3. Buat signature/hash pengaman menggunakan APP_KEY bersama agar tidak bisa dimanipulasi
-        // Anda bisa menggunakan enkripsi bawaan Laravel
-        $encryptedPayload = encrypt($payload);
+        // 3. Gabungkan data yang akan dikirim menjadi satu string bertipe plain text
+        $dataToSign = "username=" . $username . "&expires=" . $expires;
 
-        // 4. Alihkan user ke web target beserta payload aman tersebut
-        $targetUrl = "https://kursus.cenari.sch.id/auto-login?token=" . urlencode($encryptedPayload);
+        // 4. Buat signature/tanda tangan digital unik menggunakan Secret Key di .env
+        $secretKey = env('PORTAL_SECRET_KEY');
+        $signature = hash_hmac('sha256', $dataToSign, $secretKey);
+
+        // 5. Susun URL akhir dengan aman
+        $targetUrl = "https://kursus.cenari.sch.id/auto-login?" . $dataToSign . "&signature=" . $signature;
 
         return redirect()->away($targetUrl);
     }

@@ -150,16 +150,16 @@ class EnrollmentManager extends Component
                     'Pendaftaranmu Telah Terverifikasi, Berikut Username Dan Passwordmu' .
                     '<br><br>' . 'Username : ' . $username .
                     '<br>' . 'Password : cenarikursus' .
-                    '<br><br>' . 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+                    '<br><br>' . 'www.cenari.id',
             ],
             [
-                'phone' => env('ADMIN_NUMBER'),
+                'phone' => '085103326061',
                 'message' => 'Halo *Admin*' . '<br>' . 'Peserta Bernama *' . $user->name . '* Telah Didaftarkan Pada Aplikasi Dengan Akun Seperti Berikut' .
                     '<br><br>' . 'Username : ' . $username .
                     '<br>' . 'Password : cenarikursus' .
                     '<br><br>' . 'Untuk Lebih Lanjut' .
                     "<br>" . 'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
-                    'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+                    'www.cenari.id',
             ],
 
         ];
