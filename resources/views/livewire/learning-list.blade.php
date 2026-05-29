@@ -81,10 +81,10 @@
 
                                 <td class="px-8 py-6 text-right">
                                     @if ($course->pivot->username)
-                                        <button
+                                        <a href ="https://kursus.cenari.sch.id/login"
                                             class="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#3B82F6] transition-all active:scale-95">
                                             Login Platform
-                                        </button>
+                                        </a>
                                     @else
                                         <button disabled
                                             class="bg-slate-100 text-slate-400 px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest cursor-not-allowed">

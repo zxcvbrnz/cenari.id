@@ -48,27 +48,35 @@ class EnrollmentManager extends Component
         $this->status = $enrollment->status;
     }
 
-    public function creating_peserta($id)
+    public function creating_peserta()
     {
-        $enrollment = CoursePackageUser::findOrFail($id);
+        $enrollment = CoursePackageUser::findOrFail($this->selectedId);
+        if ($enrollment->username || $enrollment->password) {
+            $this->dispatch('swal:modal', [
+                'title' => 'Gagal!',
+                'icon' => 'error',
+                'text' => 'Peserta sudah memiliki akun.'
+            ]);
+            return;
+        }
         $user = $enrollment->user;
 
         $str = Str::random(30) . Carbon::now()->getTimestamp();
 
-        $id_instruktur = 20;
-        $id_mapel = 5;
+        $id_instruktur = 1;
+        $id_mapel = 1;
         // if ($request->instruktur) {
         //     $insmap = explode('-', $request->instruktur);
         //     $id_instruktur = $insmap[0];
         //     $id_mapel = $insmap[1];
         // }
-        $status_pembayaran = 'Belum Bayar';
+        $status_pembayaran = $enrollment->payment_status === 'Paid' ? 'Lunas' : 'Belum Lunas';
         $data = Peserta::create([
             'id_instruktur' => $id_instruktur,
             'id_group' => null,
             'id_mapel' => $id_mapel,
             'tempat_lahir' => $user->born_place,
-            'tanggal_lahir' => $user->born_date,
+            'tanggal_lahir' => Str::before($user->born_date, ' '),
             'nama_ibu' => $user->nama_ibu,
             'nama_ayah' => $user->nama_ayah,
             'nisn' => $user->nisn,
@@ -77,21 +85,21 @@ class EnrollmentManager extends Component
             'pendidikan' => $user->last_education,
             'agama' => $user->agama,
             'kewarganegaraan' => 'WNI',
-            'penerima_kps' => '',
+            'penerima_kps' => 'Tidak',
             'no_kps' => '',
-            'layak_pip' => '',
+            'layak_pip' => 'Tidak',
             'alasan_pip' => '',
-            'penerima_kip' => '',
+            'penerima_kip' => 'Tidak',
             'no_kip' => '',
             'alamat' => $user->address,
             'rt' => $user->rt,
             'rw' => $user->rw,
             'kode_pos' => $user->kodepos,
-            'nama_desa_kelurahan' => $user->kelurahan,
-            'provinsi' => $user->provinsi,
-            'kab_kota' => $user->kab_kota,
-            'kecamatan' => $user->kecamatan,
-            'kelurahan' => $user->kelurahan,
+            'nama_desa_kelurahan' => Str::after($user->kelurahan, '-'),
+            'provinsi' => Str::after($user->provinsi, '-'),
+            'kab_kota' => Str::after($user->kab_kota, '-'),
+            'kecamatan' => Str::after($user->kecamatan, '-'),
+            'kelurahan' => Str::after($user->kelurahan, '-'),
             'jenis_tinggal' => $user->jenis_tinggal,
             'alat_transportasi' => $user->alat_transportasi,
             'nomor_telepon' => $user->whatsapp,
@@ -125,6 +133,14 @@ class EnrollmentManager extends Component
         ];
         $akun['password'] = Hash::make($akun['password']);
         event(new Registered((UserKedua::create($akun))));
+
+        $enrollment->update([
+            'username' => $username,
+            'password' => 'cenarikursus',
+        ]);
+
+        $this->username = $enrollment->username;
+        $this->password = $enrollment->password;
 
         $send = new Message();
 
@@ -192,6 +208,18 @@ class EnrollmentManager extends Component
             'icon' => 'success',
             'text' => 'Data pendaftaran telah diperbarui.'
         ]);
+    }
+
+    public function destroy()
+    {
+        // Ganti $this->enrollmentId dengan nama properti ID yang Anda gunakan untuk mengikat model pas di-edit
+        $enrollment = CoursePackageUser::find($this->selectedId);
+        if ($enrollment) {
+            $enrollment->delete();
+            session()->flash('message', 'Pendaftaran berhasil dihapus.');
+        }
+
+        $this->cancel(); // Kembali ke halaman list data pendaftaran
     }
 
     public function cancel()

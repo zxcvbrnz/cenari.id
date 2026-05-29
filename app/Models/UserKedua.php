@@ -2,12 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+// Menggunakan Authenticatable, bukan Model biasa
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class UserKedua extends Model
+// Tambahkan "implements MustVerifyEmail" jika ingin otomatis kirim email verifikasi
+class UserKedua extends Authenticatable
 {
-    protected $connection = 'mysql_kedua';
+    use Notifiable;
 
-    protected $table = 'user';
+    // Tetap pertahankan koneksi dan tabel khusus Anda
+    protected $connection = 'mysql_kedua';
+    protected $table = 'users';
+
     protected $guarded = ['id'];
+
+    /**
+     * Menyembunyikan atribut sensitif saat model diubah menjadi array/JSON
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Memastikan password di-hash otomatis (Laravel 11 / 12)
+     */
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
 }
