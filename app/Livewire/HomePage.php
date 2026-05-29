@@ -19,12 +19,18 @@ class HomePage extends Component
     public $simulatorResult = null;
     public $partners;
     public $featuredQuote;
+    public $posts;
 
     public function mount()
     {
         $this->programs = Program::all();
         $this->seminars = Workshop::all();
         $this->events = Agenda::all();
+        $this->posts = \App\Models\Post::with('featuredImage')
+            ->where('is_published', true)
+            ->latest()
+            ->take(5)
+            ->get();
         $this->partners = Collaboration::where('is_active', true)->orderBy('sort_order')->get();
         $this->featuredQuote = Quote::where('is_featured', true)->first()
             ?? Quote::latest()->first();

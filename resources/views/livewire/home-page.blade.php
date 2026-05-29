@@ -365,6 +365,146 @@
         </template>
     </section>
 
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+                <div>
+                    <h2 class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600 mb-4">Warta & Artikel
+                        Terbaru</h2>
+                    <h3 class="text-4xl font-black text-slate-900 tracking-tighter italic">CENARI<span
+                            class="text-blue-600">JOURNAL</span></h3>
+                </div>
+
+                @if ($posts->count() > 0)
+                    <a href="{{ route('blog.index') }}" wire:navigate
+                        class="hidden md:inline-flex items-center gap-3 px-6 py-3 border border-slate-200 hover:border-blue-600 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-all group">
+                        Lihat Semua Artikel
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                @endif
+            </div>
+
+            @if ($posts->count() > 0)
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+                    @if ($posts->first())
+                        @php $featured = $posts->first(); @endphp
+                        <div class="lg:col-span-5 flex flex-col justify-between group">
+                            <article class="h-full flex flex-col">
+                                <div
+                                    class="relative aspect-[16/11] overflow-hidden rounded-[2.5rem] bg-slate-100 mb-6 shadow-2xl shadow-slate-200/50">
+                                    @if ($featured->featuredImage)
+                                        <img src="{{ asset('storage/' . $featured->featuredImage->filename) }}"
+                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            alt="{{ $featured->title }}">
+                                    @else
+                                        <div class="flex items-center justify-center h-full text-slate-300">
+                                            <svg class="w-12 h-12" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                    stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="px-2 flex-grow flex flex-col justify-between">
+                                    <div>
+                                        <span
+                                            class="text-[10px] font-black text-blue-600 uppercase tracking-widest block mb-3">{{ $featured->created_at->format('d M Y') }}</span>
+                                        <h4
+                                            class="text-2xl font-black text-slate-900 mb-4 group-hover:text-blue-600 transition-colors leading-tight">
+                                            {{ $featured->title }}
+                                        </h4>
+                                        <p class="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3">
+                                            {{ $featured->excerpt }}
+                                        </p>
+                                    </div>
+                                    <a href="{{ route('blog.show', [$featured->slug]) }}" wire:navigate
+                                        class="inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors">
+                                        Baca Selengkapnya
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </article>
+                        </div>
+                    @endif
+
+                    <div class="lg:col-span-7 space-y-8">
+                        @foreach ($posts->skip(1) as $post)
+                            <article
+                                class="group flex flex-col sm:flex-row items-start gap-6 p-4 rounded-[2rem] hover:bg-slate-50 transition-colors duration-300">
+                                <div
+                                    class="relative w-full sm:w-44 aspect-[16/10] sm:aspect-square overflow-hidden rounded-2xl bg-slate-100 flex-shrink-0 shadow-xl shadow-slate-200/30">
+                                    @if ($post->featuredImage)
+                                        <img src="{{ asset('storage/' . $post->featuredImage->filename) }}"
+                                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            alt="{{ $post->title }}">
+                                    @else
+                                        <div class="flex items-center justify-center h-full text-slate-300">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                    stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="flex-grow pt-1">
+                                    <span
+                                        class="text-[9px] font-black text-blue-600 uppercase tracking-widest block mb-2">{{ $post->created_at->format('d M Y') }}</span>
+                                    <h4
+                                        class="text-lg font-black text-slate-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
+                                        {{ $post->title }}
+                                    </h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed mb-4 line-clamp-2">
+                                        {{ $post->excerpt }}
+                                    </p>
+                                    <a href="{{ route('blog.show', [$post->slug]) }}" wire:navigate
+                                        class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-slate-900 hover:text-blue-600 transition-colors">
+                                        Baca Selengkapnya
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+
+                </div>
+            @else
+                <div class="text-center py-20 bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-100">
+                    <p class="text-slate-400 font-bold uppercase tracking-widest text-xs">Belum ada artikel yang
+                        diterbitkan.</p>
+                </div>
+            @endif
+
+            @if ($posts->count() > 0)
+                <div class="mt-12 text-center md:hidden">
+                    <a href="{{ route('blog.index') }}" wire:navigate
+                        class="inline-flex items-center justify-center w-full gap-3 px-6 py-4 border border-slate-200 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-900">
+                        Lihat Semua Artikel
+                    </a>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <section class="py-24 bg-[#F8FAFC]">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
