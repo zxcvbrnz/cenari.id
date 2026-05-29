@@ -58,7 +58,7 @@
                 class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('shop*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6]">Toko</a>
 
             <a href="{{ route('blog.index') }}" wire:navigate
-                class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('blog*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6]">Blog</a>
+                class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('blog*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-[#3B82F6]">Artikel</a>
 
             {{-- <a href="{{ route('b2b.solution') }}" wire:navigate
                 class="text-[11px] font-bold uppercase tracking-widest {{ request()->routeIs('b2b.*') ? 'text-[#3B82F6]' : 'text-slate-500' }} hover:text-slate-900">Mitra
@@ -298,7 +298,7 @@
             <a href="{{ route('shop') }}" wire:navigate @click="mobileMenu = false"
                 class="text-xs font-black uppercase tracking-widest text-slate-600">Toko</a>
             <a href="{{ route('blog.index') }}" wire:navigate @click="mobileMenu = false"
-                class="text-xs font-black uppercase tracking-widest text-slate-600">Blog</a>
+                class="text-xs font-black uppercase tracking-widest text-slate-600">Artikel</a>
             {{-- <a href="{{ route('b2b.solution') }}" wire:navigate @click="mobileMenu = false"
                 class="text-xs font-black uppercase tracking-widest text-slate-600">Mitra Sekolah</a> --}}
 

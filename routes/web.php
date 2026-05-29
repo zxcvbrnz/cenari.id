@@ -49,8 +49,8 @@ Route::get('/shop', Shop::class)->name('shop');
 Route::get('/shop/kit/{id}', KitDetail::class)->name('kit.detail');
 Route::get('/shop/item/{id}', ItemDetail::class)->name('item.detail');
 
-Route::get('/blog', Blog::class)->name('blog.index');
-Route::get('/blog/{slug}', BlogShow::class)->name('blog.show');
+Route::get('/artikel', Blog::class)->name('blog.index');
+Route::get('/artikel/{slug}', BlogShow::class)->name('blog.show');
 
 Route::get('/course-packages', CourseList::class)->name('course.packages');
 
