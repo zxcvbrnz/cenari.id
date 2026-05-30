@@ -58,7 +58,7 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-6 border-b border-gray-100">
             <h3 class="text-lg font-semibold text-gray-900">Log Aktivitas Real-Time</h3>
-            <p class="text-xs text-gray-400 mt-1">Menampilkan 5 lalu lintas data kunjungan terbaru</p>
+            <p class="text-xs text-gray-400 mt-1">Menampilkan catatan data kunjungan sistem</p>
         </div>
 
         <div class="overflow-x-auto">
@@ -120,6 +120,10 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="p-4 bg-gray-50 border-t border-gray-100">
+            {{ $recentVisits->links() }}
+        </div>
     </div>
 
     @assets
@@ -128,50 +132,74 @@
 
     @script
         <script>
-            const ctx = document.getElementById('visitorChart');
+            let chartInstance = null;
 
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: @js($chartLabels),
-                    datasets: [{
-                        label: 'Klik Harian',
-                        data: @js($chartValues),
-                        borderColor: 'rgba(59, 130, 246, 1)',
-                        backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.35,
-                        pointBackgroundColor: 'rgba(59, 130, 246, 1)',
-                        pointRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
+            function initChart() {
+                const ctx = document.getElementById('visitorChart');
+                if (!ctx) return;
+
+                // Jika instance chart sudah ada, hancurkan (destroy) dulu agar tidak tumpang tindih saat dirender ulang oleh poller
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+
+                chartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: @js($chartLabels),
+                        datasets: [{
+                            label: 'Klik Harian',
+                            data: @js($chartValues),
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.35,
+                            pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                            pointRadius: 4
+                        }]
                     },
-                    scales: {
-                        x: {
-                            grid: {
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
                                 display: false
                             }
                         },
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1,
-                                color: '#9ca3af'
+                        scales: {
+                            x: {
+                                grid: {
+                                    display: false
+                                }
                             },
-                            grid: {
-                                color: '#f3f4f6'
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                    color: '#9ca3af'
+                                },
+                                grid: {
+                                    color: '#f3f4f6'
+                                }
                             }
                         }
                     }
-                }
+                });
+            }
+
+            // Jalankan inisialisasi pertama kali halaman di-load
+            initChart();
+
+            // Dengarkan perubahan data (karena polling wire:poll) agar chart ikut diperbarui datanya
+            $wire.on('echo:*', () => {
+                initChart();
+            });
+
+            // Mengatasi siklus hidup render ulang komponen Livewire v3 harian
+            document.addEventListener('livewire:update', () => {
+                // Pastikan canvas tetap menggambar ulang datanya pasca manipulasi DOM dari pagination
+                initChart();
             });
         </script>
     @endscript
