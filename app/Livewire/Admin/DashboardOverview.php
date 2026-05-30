@@ -11,24 +11,24 @@ class DashboardOverview extends Component
     public function render()
     {
         // Total Pengunjung Hari Ini
-        $todayCount = Visitor::where('visit_date', now()->toDateString())->count();
+        $todayCount = Visitor::where('created_at', now()->toDateString())->count();
 
         // Total Pengunjung Unik Hari Ini (Berdasarkan IP)
-        $uniqueTodayCount = Visitor::where('visit_date', now()->toDateString())
+        $uniqueTodayCount = Visitor::where('created_at', now()->toDateString())
             ->distinct('ip_address')
             ->count();
 
         // Data 7 Hari Terakhir untuk Grafik
-        $chartData = Visitor::select('visit_date', DB::raw('count(*) as total'))
-            ->where('visit_date', '>=', now()->subDays(6)->toDateString())
-            ->groupBy('visit_date')
-            ->orderBy('visit_date', 'asc')
+        $chartData = Visitor::select('created_at', DB::raw('count(*) as total'))
+            ->where('created_at', '>=', now()->subDays(6)->toDateString())
+            ->groupBy('created_at')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return view('livewire.admin.dashboard-overview', [
             'todayCount' => $todayCount,
             'uniqueTodayCount' => $uniqueTodayCount,
-            'chartLabels' => $chartData->pluck('visit_date')->map(fn($date) => date('d M', strtotime($date))),
+            'chartLabels' => $chartData->pluck('created_at')->map(fn($date) => date('d M', strtotime($date))),
             'chartValues' => $chartData->pluck('total'),
         ]);
     }
