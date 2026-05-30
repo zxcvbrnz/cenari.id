@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cenari Education Center - Konvergensi Teknologi 2026</title>
+    <title>Cenari ID - Rancang Masa Depanmu</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="shortcut icon" href="{{ asset('logoCenari2020 PATEN.png') }}" type="image/x-icon">
