@@ -1,4 +1,4 @@
-<div class="p-6 space-y-6">
+<div wire:poll.30s class="p-6 space-y-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
             <p class="text-sm font-medium text-gray-500">Total Pengunjung Hari Ini</p>
