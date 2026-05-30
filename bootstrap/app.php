@@ -5,6 +5,8 @@ use App\Http\Middleware\CheckProfileCompletion;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+// use Shetabit\Visitor\Middlewares\LogVisitor;
+use Shetabit\Visitor\Middlewares\LogVisits;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(except: [
             'api/midtrans-callback'
+        ]);
+        $middleware->web(append: [
+            LogVisits::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

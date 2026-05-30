@@ -77,6 +77,10 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('dashboard');
 
+Route::view('manage-instansi', 'manage-instansi')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('manage.instansi');
+
 Route::view('manage-program', 'manage-program')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.program');
