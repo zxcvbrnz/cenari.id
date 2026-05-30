@@ -15,7 +15,7 @@ class DashboardOverview extends Component
 
         // Total Pengunjung Unik Hari Ini (Berdasarkan IP)
         $uniqueTodayCount = Visitor::where('created_at', now()->toDateString())
-            ->distinct('ip_address')
+            ->distinct('ip')
             ->count();
 
         // Data 7 Hari Terakhir untuk Grafik
