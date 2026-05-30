@@ -12,7 +12,7 @@ return [
     'default' => 'jenssegers',
 
     //except save request or route names
-    'except' =>  ['/dashboard', 'livewire/update', 'login', 'register'],
+    'except' =>  ['dashboard', 'livewire/update', 'login', 'register'],
 
 
     //name of the table which visit records should save in
