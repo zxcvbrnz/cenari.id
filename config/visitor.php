@@ -12,7 +12,7 @@ return [
     'default' => 'jenssegers',
 
     //except save request or route names
-    'except' =>  ['login', 'register'],
+    'except' =>  ['livewire/update', 'login', 'register'],
 
 
     //name of the table which visit records should save in
@@ -34,8 +34,8 @@ return [
         'jenssegers' => \Shetabit\Visitor\Drivers\JenssegersAgent::class,
         'UAParser' => \Shetabit\Visitor\Drivers\UAParser::class,
     ],
-	
-	/*
+
+    /*
 	|--------------------------------------------------------------------------
 	| GeoIP Enrichment
 	|--------------------------------------------------------------------------
@@ -47,10 +47,10 @@ return [
 	| Shetabit\Visitor\Contracts\GeoIpResolver.
 	|
 	*/
-	'geoip'   => false,           // disable enrichment by default
-	'resolver'=> 'stevebauman',   // default resolver
-	'resolvers' => [
-		'stevebauman' => \Shetabit\Visitor\Resolvers\GeoIp\SteveBaumanResolver::class,
-		'null'        => \Shetabit\Visitor\Resolvers\GeoIp\NullResolver::class,
-	],	
+    'geoip'   => false,           // disable enrichment by default
+    'resolver' => 'stevebauman',   // default resolver
+    'resolvers' => [
+        'stevebauman' => \Shetabit\Visitor\Resolvers\GeoIp\SteveBaumanResolver::class,
+        'null'        => \Shetabit\Visitor\Resolvers\GeoIp\NullResolver::class,
+    ],
 ];
