@@ -15,6 +15,24 @@ class ManagePost extends Component
     public $title, $excerpt, $body, $is_published = false;
     public $images = [], $oldImages = [];
 
+    // Validasi Real-Time saat user mengetik Judul
+    public function updatedTitle($value)
+    {
+        $this->validateOnly('title', [
+            'title' => [
+                'required',
+                'min:3',
+                'max:255',
+                // Regex ini hanya mengizinkan: Huruf, Angka, Spasi, Strip (-), dan Titik (.)
+                // Jika ada karakter di luar itu (seperti ?, #, /, @, dll), validasi akan gagal.
+                'regex:/^[a-zA-Z0-9\s\-\.]+$/u'
+            ],
+        ], [
+            // Pesan error kustom bahasa Indonesia
+            'title.regex' => 'Judul tidak boleh mengandung karakter khusus atau simbol (seperti ?, #, /, @, %, dll).',
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.admin.manage-post', [
@@ -24,9 +42,7 @@ class ManagePost extends Component
 
     public function updatedImages()
     {
-        $this->validate([
-            'images.*' => 'image|max:2048', // Validasi file gambar
-        ]);
+        $this->validate(['images.*' => 'image|max:2048']);
     }
 
     public function showForm($id = null)
@@ -54,16 +70,29 @@ class ManagePost extends Component
 
     public function save()
     {
+        // Pastikan aturan validasi yang sama juga terkunci saat tombol Save ditekan
         $this->validate([
-            'title' => 'required',
+            'title' => ['required', 'max:255', 'regex:/^[a-zA-Z0-9\s\-\.]+$/u'],
             'excerpt' => 'required',
             'body' => 'required',
             'images.*' => 'nullable|image|max:2048',
+        ], [
+            'title.regex' => 'Judul tidak boleh mengandung karakter khusus atau simbol.',
         ]);
 
+        $slug = Str::slug($this->title);
+
+        // Cek duplikasi slug
+        if (!$this->selectedId) {
+            $count = Post::where('slug', 'LIKE', $slug . '%')->count();
+            if ($count > 0) {
+                $slug = $slug . '-' . ($count + 1);
+            }
+        }
+
         $post = Post::updateOrCreate(['id' => $this->selectedId], [
-            'title' => $this->title,
-            'slug' => Str::slug($this->title),
+            'title' => trim($this->title),
+            'slug' => $slug,
             'excerpt' => $this->excerpt,
             'body' => $this->body,
             'is_published' => $this->is_published,

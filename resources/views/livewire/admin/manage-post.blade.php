@@ -82,16 +82,24 @@
                         <div class="space-y-2">
                             <label class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Post
                                 Title</label>
-                            <input type="text" wire:model="title"
-                                class="w-full bg-slate-50 border-none rounded-2xl p-5 text-base font-black italic text-slate-700 focus:ring-2 focus:ring-blue-500 shadow-inner">
+                            <input type="text" wire:model.live.debounce.500ms="title"
+                                class="w-full bg-slate-50 border-none rounded-2xl p-5 text-base font-black italic text-slate-700 focus:ring-2 focus:ring-blue-500 shadow-inner @error('title') ring-2 ring-red-500 bg-red-50/50 @enderror">
+                            @error('title')
+                                <p class="text-xs text-red-600 font-semibold mt-1 px-1 flex items-center gap-1">⚠
+                                    {{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="space-y-2">
                             <label class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Main
                                 Content (Body)</label>
                             <textarea wire:model="body" rows="15"
-                                class="w-full bg-slate-50 border-none rounded-3xl p-6 text-sm font-medium leading-relaxed text-slate-600 focus:ring-2 focus:ring-blue-500 shadow-inner"
+                                class="w-full bg-slate-50 border-none rounded-3xl p-6 text-sm font-medium leading-relaxed text-slate-600 focus:ring-2 focus:ring-blue-500 shadow-inner @error('body') ring-2 ring-red-500 bg-red-50/50 @enderror"
                                 placeholder="Tulis artikel lengkap di sini..."></textarea>
+                            @error('body')
+                                <p class="text-xs text-red-600 font-semibold mt-1 px-1 flex items-center gap-1">⚠
+                                    {{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -117,8 +125,12 @@
                                     class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Excerpt
                                     (Ringkasan)</label>
                                 <textarea wire:model="excerpt"
-                                    class="w-full bg-white border-none rounded-xl p-4 text-[11px] font-bold italic text-slate-500 leading-normal shadow-sm"
+                                    class="w-full bg-white border-none rounded-xl p-4 text-[11px] font-bold italic text-slate-500 leading-normal shadow-sm @error('excerpt') ring-2 ring-red-500 bg-red-50/50 @enderror"
                                     rows="4" placeholder="Brief summary of the article..."></textarea>
+                                @error('excerpt')
+                                    <p class="text-xs text-red-600 font-semibold mt-1 px-1 flex items-center gap-1">⚠
+                                        {{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -126,6 +138,14 @@
                             <label
                                 class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest italic">Images
                                 Gallery</label>
+
+                            @error('images.*')
+                                <div
+                                    class="p-3 bg-red-50 border border-red-100 rounded-xl text-xs text-red-600 font-semibold mb-2">
+                                    ⚠ {{ $message }}
+                                </div>
+                            @enderror
+
                             <div class="grid grid-cols-2 gap-3">
                                 @foreach ($oldImages as $img)
                                     <div
@@ -147,8 +167,14 @@
                                 @foreach ($images as $index => $image)
                                     <div
                                         class="aspect-square rounded-2xl overflow-hidden relative border-2 border-dashed border-blue-400 animate-pulse">
-                                        <img src="{{ $image->temporaryUrl() }}"
-                                            class="w-full h-full object-cover opacity-60">
+                                        @if (!$errors->has("images.$index"))
+                                            <img src="{{ $image->temporaryUrl() }}"
+                                                class="w-full h-full object-cover opacity-60">
+                                        @else
+                                            <div
+                                                class="w-full h-full bg-red-50 flex items-center justify-center text-red-400 text-[10px] font-bold p-2 text-center">
+                                                Gagal Upload</div>
+                                        @endif
                                         <button type="button" wire:click="removeUpload({{ $index }})"
                                             class="absolute top-1 right-1 bg-red-500 text-white w-5 h-5 rounded-full text-xs font-black">×</button>
                                     </div>
@@ -180,6 +206,7 @@
                                 </label>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
