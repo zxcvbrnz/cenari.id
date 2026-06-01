@@ -70,7 +70,7 @@ class EnrollmentManager extends Component
         //     $id_instruktur = $insmap[0];
         //     $id_mapel = $insmap[1];
         // }
-        $status_pembayaran = $enrollment->payment_status === 'Paid' ? 'Lunas' : 'Belum Lunas';
+        $status_pembayaran = 'Belum Bayar';
         $data = Peserta::create([
             'id_instruktur' => $id_instruktur,
             'id_group' => null,
