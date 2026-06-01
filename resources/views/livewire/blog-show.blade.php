@@ -86,21 +86,23 @@
                     </div>
                 @endif
 
-                @if ($post->excerpt)
+                {{-- @if ($post->excerpt)
                     <figcaption class="mt-6 text-center text-sm italic text-slate-400 font-medium px-10">
                         "{{ $post->excerpt }}"
                     </figcaption>
-                @endif
+                @endif --}}
             </figure>
 
             <!-- Isi Body Artikel -->
             <div
                 class="prose prose-slate prose-lg max-w-none 
-                        prose-headings:font-black prose-headings:tracking-tighter prose-headings:italic 
-                        prose-p:text-slate-600 prose-p:leading-relaxed 
-                        prose-strong:text-slate-900 prose-a:text-blue-600 
-                        prose-img:rounded-[2rem] prose-img:shadow-lg">
-                {!! nl2br($post->body) !!}
+            prose-headings:font-black prose-headings:tracking-tighter prose-headings:italic 
+            prose-p:text-slate-600 prose-p:leading-relaxed 
+            prose-strong:text-slate-900 prose-a:text-blue-600 
+            prose-img:rounded-[2rem] prose-img:shadow-lg">
+
+                {!! Str::inlineMarkdown($post->body) !!}
+
             </div>
 
             <footer
