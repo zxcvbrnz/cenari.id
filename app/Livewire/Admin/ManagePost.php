@@ -12,7 +12,7 @@ class ManagePost extends Component
     use WithFileUploads;
 
     public $view = 'list', $selectedId;
-    public $title, $excerpt, $body, $is_published = false;
+    public $title, $excerpt, $body, $is_published;
     public $images = [], $oldImages = [];
 
     // Menggunakan aturan validasi terpusat agar Livewire tahu apa yang harus divalidasi
