@@ -60,8 +60,5 @@
             @endforelse
         </div>
 
-        <div class="mt-20">
-            {{ $posts->links() }}
-        </div>
     </div>
 </section>

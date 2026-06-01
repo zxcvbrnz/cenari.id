@@ -4,20 +4,17 @@ namespace App\Livewire;
 
 use App\Models\Post;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class Blog extends Component
 {
-
-    use WithPagination;
-
+    // Mengurangi trait pagination yang tidak lagi digunakan
     public function render()
     {
         return view('livewire.blog', [
             'posts' => Post::with('featuredImage')
                 ->where('is_published', true)
                 ->latest()
-                ->paginate(6)
+                ->get() // Mengubah paginate menjadi get untuk menarik seluruh data
         ]);
     }
 }
