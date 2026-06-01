@@ -212,7 +212,7 @@
                     </div>
 
                     <!-- LinkedIn Logo Button -->
-                    <a href="https://www.linkedin.com/in/feridcenari" target="_blank" rel="noopener noreferrer"
+                    <a href="https://www.linkedin.com/in/faridcenari" target="_blank" rel="noopener noreferrer"
                         class="text-gray-400 hover:text-blue-500 transition-colors duration-200" title="LinkedIn Profile">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                             <path
