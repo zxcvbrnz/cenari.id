@@ -15,22 +15,38 @@ class ManagePost extends Component
     public $title, $excerpt, $body, $is_published = false;
     public $images = [], $oldImages = [];
 
-    // Validasi Real-Time saat user mengetik Judul
-    public function updatedTitle($value)
+    // Menggunakan aturan validasi terpusat agar Livewire tahu apa yang harus divalidasi
+    protected function rules()
     {
-        $this->validateOnly('title', [
+        return [
             'title' => [
                 'required',
-                'min:3',
                 'max:255',
-                // Regex ini hanya mengizinkan: Huruf, Angka, Spasi, Strip (-), dan Titik (.)
-                // Jika ada karakter di luar itu (seperti ?, #, /, @, dll), validasi akan gagal.
+                // Mengizinkan Huruf, Angka, Spasi, Strip, dan Titik.
                 'regex:/^[a-zA-Z0-9\s\-\.]+$/u'
             ],
-        ], [
-            // Pesan error kustom bahasa Indonesia
-            'title.regex' => 'Judul tidak boleh mengandung karakter khusus atau simbol (seperti ?, #, /, @, %, dll).',
-        ]);
+            'excerpt' => 'required',
+            'body' => 'required',
+            'images.*' => 'nullable|image|max:2048',
+        ];
+    }
+
+    protected function messages()
+    {
+        return [
+            'title.required' => 'Judul wajib diisi.',
+            'title.regex' => 'Judul tidak boleh mengandung karakter khusus/simbol (seperti ?, #, /, @, %, dll).',
+            'excerpt.required' => 'Ringkasan wajib diisi.',
+            'body.required' => 'Konten utama wajib diisi.',
+            'images.*.image' => 'File harus berupa gambar.',
+            'images.*.max' => 'Ukuran gambar maksimal 2MB.',
+        ];
+    }
+
+    // Validasi real-time yang aman (tidak mengunci properti lain)
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
     }
 
     public function render()
@@ -38,11 +54,6 @@ class ManagePost extends Component
         return view('livewire.admin.manage-post', [
             'posts' => Post::with('featuredImage')->latest()->get()
         ]);
-    }
-
-    public function updatedImages()
-    {
-        $this->validate(['images.*' => 'image|max:2048']);
     }
 
     public function showForm($id = null)
@@ -56,7 +67,8 @@ class ManagePost extends Component
             $this->title = $p->title;
             $this->excerpt = $p->excerpt;
             $this->body = $p->body;
-            $this->is_published = $p->is_published;
+            // Pastikan casting boolean aman untuk toggle
+            $this->is_published = (bool) $p->is_published;
             $this->oldImages = $p->images;
         }
         $this->view = 'form';
@@ -70,15 +82,8 @@ class ManagePost extends Component
 
     public function save()
     {
-        // Pastikan aturan validasi yang sama juga terkunci saat tombol Save ditekan
-        $this->validate([
-            'title' => ['required', 'max:255', 'regex:/^[a-zA-Z0-9\s\-\.]+$/u'],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'images.*' => 'nullable|image|max:2048',
-        ], [
-            'title.regex' => 'Judul tidak boleh mengandung karakter khusus atau simbol.',
-        ]);
+        // Jalankan validasi menyeluruh saat form di-submit
+        $this->validate();
 
         $slug = Str::slug($this->title);
 
@@ -95,7 +100,8 @@ class ManagePost extends Component
             'slug' => $slug,
             'excerpt' => $this->excerpt,
             'body' => $this->body,
-            'is_published' => $this->is_published,
+            // Paksa simpan sebagai boolean true/false (1/0)
+            'is_published' => $this->is_published ? true : false,
         ]);
 
         if (!empty($this->images)) {

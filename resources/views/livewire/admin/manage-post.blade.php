@@ -109,11 +109,12 @@
                                 <div class="flex flex-col">
                                     <span
                                         class="text-[10px] font-black uppercase text-slate-800 tracking-widest">Visibility</span>
-                                    <span
-                                        class="text-[8px] font-bold text-slate-400 uppercase italic">{{ $is_published ? 'Post is Live' : 'Post is Hidden' }}</span>
+                                    <span class="text-[8px] font-bold text-slate-400 uppercase italic">
+                                        {{ $is_published ? 'Post is Live' : 'Post is Hidden' }}
+                                    </span>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" wire:model="is_published" class="sr-only peer">
+                                    <input type="checkbox" wire:model.live="is_published" class="sr-only peer">
                                     <div
                                         class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600">
                                     </div>
