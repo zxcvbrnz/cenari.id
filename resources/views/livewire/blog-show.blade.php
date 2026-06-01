@@ -96,16 +96,11 @@
             <!-- Isi Body Artikel -->
             <div
                 class="prose prose-slate prose-lg max-w-none 
-            prose-headings:font-black prose-headings:tracking-tighter prose-headings:italic 
-            prose-p:text-slate-600 prose-p:leading-relaxed 
-            prose-strong:text-slate-900 prose-a:text-blue-600 
-            prose-img:rounded-[2rem] prose-img:shadow-lg">
-
-                {!! Str::markdown($post->body, [
-                    'html_input' => 'strip',
-                    'allow_unsafe_links' => false,
-                ]) !!}
-
+                        prose-headings:font-black prose-headings:tracking-tighter prose-headings:italic 
+                        prose-p:text-slate-600 prose-p:leading-relaxed 
+                        prose-strong:text-slate-900 prose-a:text-blue-600 
+                        prose-img:rounded-[2rem] prose-img:shadow-lg">
+                {!! $post->formatted_body !!}
             </div>
 
             <footer
