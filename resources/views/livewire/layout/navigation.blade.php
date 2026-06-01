@@ -59,7 +59,7 @@ new class extends Component {
                         ],
                         [
                             'route' => 'manage.blog',
-                            'label' => 'Blog',
+                            'label' => 'Artikel',
                             'icon' =>
                                 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l5 5v11a2 2 0 01-2 2zM12 11h4m-4 4h4m-6-4h.01M9 15h.01', // Document Text
                         ],
