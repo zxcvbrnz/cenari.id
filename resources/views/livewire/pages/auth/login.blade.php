@@ -43,7 +43,7 @@ new class extends Component {
                 $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
             } else {
                 // Jika bukan admin, arahkan ke home ("/")
-                $this->redirect('/', navigate: true);
+                $this->redirect('/course-packages-user/list', navigate: true);
             }
             // -----------------------
         } catch (\Illuminate\Validation\ValidationException $e) {
