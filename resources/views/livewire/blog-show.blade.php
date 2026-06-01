@@ -101,7 +101,10 @@
             prose-strong:text-slate-900 prose-a:text-blue-600 
             prose-img:rounded-[2rem] prose-img:shadow-lg">
 
-                {!! Str::inlineMarkdown($post->body) !!}
+                {!! Str::markdown($post->body, [
+                    'html_input' => 'strip',
+                    'allow_unsafe_links' => false,
+                ]) !!}
 
             </div>
 
