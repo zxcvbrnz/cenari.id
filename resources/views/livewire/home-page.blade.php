@@ -516,7 +516,7 @@
         </div>
     </section>
 
-    <section class="py-24 bg-[#F8FAFC]">
+    {{-- <section class="py-24 bg-[#F8FAFC]">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div class="max-w-xl">
@@ -622,7 +622,7 @@
                 @endforelse
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
