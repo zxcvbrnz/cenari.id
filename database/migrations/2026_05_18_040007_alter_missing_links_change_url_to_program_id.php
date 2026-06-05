@@ -18,7 +18,7 @@ return new class extends Migration
             // 2. Tambahkan foreignId baru yang terhubung ke tabel programs
             // constrained() otomatis mendeteksi nama tabel 'programs' dari prefix nama kolomnya
             // onDelete('cascade') opsional: jika program dihapus, missing_link terkait juga akan terhapus
-            $table->foreignId('program_id')->default(0)->after('cta')->constrained();
+            $table->foreignId('program_id')->after('cta')->constrained();
         });
     }
 
