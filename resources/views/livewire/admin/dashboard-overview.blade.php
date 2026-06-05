@@ -1,4 +1,4 @@
-<div class="space-y-6 min-h-screen bg-gray-50/50 p-4 sm:p-6" @if (isset($poll) && $poll) wire:poll.30s @endif>
+<div class="space-y-6 min-h-screen" @if (isset($poll) && $poll) wire:poll.30s @endif>
 
     <div
         class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
