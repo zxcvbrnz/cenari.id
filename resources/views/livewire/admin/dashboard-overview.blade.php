@@ -1,159 +1,233 @@
-<div class="space-y-6 min-h-screen p-1" @if (isset($poll) && $poll) wire:poll.30s @endif>
+<div class="space-y-6 min-h-screen bg-gray-50/50 p-4 sm:p-6" @if (isset($poll) && $poll) wire:poll.30s @endif>
 
     <div
-        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+        class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
         <div>
-            <h1 class="text-xl font-bold text-gray-900">Ringkasan Analitik</h1>
-            <p class="text-xs text-gray-500">Pantau performa trafik dan statistik kunjungan situs Anda.</p>
+            <h1 class="text-xl font-bold text-gray-900 tracking-tight">Pusat Analitik Kontrol</h1>
+            <p class="text-xs text-gray-500 mt-0.5">Metrik real-time lalu lintas data, performa server, dan log
+                aktivitas.</p>
         </div>
-        <div class="flex items-center space-x-2 w-full sm:w-auto">
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <select wire:model.live="period"
-                class="w-full sm:w-44 text-sm bg-gray-50 border border-gray-200 rounded-lg p-2 text-gray-700 focus:ring-blue-500 focus:border-blue-500">
-                <option value="today">Hari Ini</option>
+                class="text-sm bg-gray-50 border border-gray-200 rounded-xl p-2.5 text-gray-700 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all">
+                <option value="today">Hari Ini (Per Jam)</option>
+                <option value="yesterday">Kemarin</option>
                 <option value="7_days">7 Hari Terakhir</option>
                 <option value="30_days">30 Hari Terakhir</option>
                 <option value="this_month">Bulan Ini</option>
             </select>
+
+            <button wire:click="exportCSV"
+                class="inline-flex items-center space-x-1.5 px-3.5 py-2.5 bg-gray-900 hover:bg-gray-800 text-white rounded-xl text-xs font-semibold shadow-sm transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <span>Ekspor CSV</span>
+            </button>
+
             <button wire:click="$toggle('poll')"
-                class="p-2 border rounded-lg text-xs font-medium whitespace-nowrap {{ $poll ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-600 border-gray-200' }}">
-                {{ $poll ? '● Live Polling' : '○ Polling Mati' }}
+                class="p-2.5 border rounded-xl text-xs font-bold transition-all {{ $poll ? 'bg-green-50 text-green-700 border-green-200 animate-pulse' : 'bg-gray-50 text-gray-500 border-gray-200' }}">
+                {{ $poll ? '● Live Tracker ON' : '○ Tracker Paused' }}
             </button>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="p-3 bg-blue-50 text-blue-600 rounded-lg">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-sm font-medium text-gray-500">Total Hits Hari Ini</p>
-                    <p class="text-2xl font-bold text-gray-900 mt-1">{{ number_format($todayCount) }}</p>
-                </div>
-            </div>
-            <div class="text-right">
-                <span
-                    class="text-xs px-2 py-1 rounded-full font-semibold {{ $growthRate >= 0 ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600' }}">
-                    {{ $growthRate >= 0 ? '+' : '' }}{{ $growthRate }}%
-                </span>
-                <p class="text-[10px] text-gray-400 mt-1">vs kemarin</p>
-            </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
-            <div class="p-3 bg-green-50 text-green-600 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-sm font-medium text-gray-500">Pengunjung Unik (IP)</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">{{ number_format($uniqueTodayCount) }}</p>
-            </div>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center space-x-4">
-            <div class="p-3 bg-purple-50 text-purple-600 rounded-lg">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-sm font-medium text-gray-500">Kunjungan Terakhir Melalui</p>
-                <p class="text-xl font-bold text-gray-900 mt-1 capitalize">
-                    {{ $recentVisits->first()->device ?? 'Desktop' }}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+            <div class="space-y-2">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Hits (Periode)</p>
+                <p class="text-2xl font-bold text-gray-900">{{ number_format($periodTotalHits) }}</p>
+                <p class="text-xs text-gray-400 flex items-center">
+                    <span class="font-bold {{ $growthRate >= 0 ? 'text-green-500' : 'text-red-500' }} mr-1">
+                        {{ $growthRate >= 0 ? '▲' : '▼' }} {{ abs($growthRate) }}%
+                    </span>
+                    vs Hari Kemarin
                 </p>
+            </div>
+            <div class="p-3.5 bg-blue-50 text-blue-600 rounded-2xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm-10.542 7C5.732 16.057 9.523 13 14 13c4.478 0 8.268 3.057 9.542 7" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+            <div class="space-y-2">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Pengunjung Unik (IP)</p>
+                <p class="text-2xl font-bold text-gray-900">{{ number_format($periodUniqueUsers) }}</p>
+                <p class="text-xs text-gray-400">Total alamat IP terdaftar</p>
+            </div>
+            <div class="p-3.5 bg-emerald-50 text-emerald-600 rounded-2xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+            <div class="space-y-2">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Rasio Interaksi</p>
+                <p class="text-2xl font-bold text-gray-900">{{ $bounceRateEstimate }} <span
+                        class="text-xs text-gray-400 font-normal">X / User</span></p>
+                <p class="text-xs text-gray-400">Rata-rata halaman dibuka/user</p>
+            </div>
+            <div class="p-3.5 bg-amber-50 text-amber-600 rounded-2xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+            <div class="space-y-2">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Sesi Terakhir</p>
+                <p class="text-xl font-bold text-gray-900 truncate max-w-[160px] capitalize">
+                    {{ $recentVisits->first()->platform ?? 'Desktop OS' }}</p>
+                <p class="text-xs text-gray-400 truncate">{{ $recentVisits->first()->browser ?? 'Unknown Browser' }}</p>
+            </div>
+            <div class="p-3.5 bg-purple-50 text-purple-600 rounded-2xl">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
             </div>
         </div>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-md font-semibold text-gray-900">Grafik Tren Kunjungan</h3>
-            <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-md font-medium uppercase tracking-wider">
-                Periode: {{ str_replace('_', ' ', $period) }}
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h3 class="text-sm font-bold text-gray-900">Grafik Laju Interaksi Pengunjung</h3>
+                <p class="text-xs text-gray-400">Statistik visual fluktuasi grafik kunjungan database.</p>
+            </div>
+            <span class="text-[11px] bg-blue-50 text-blue-600 px-3 py-1 rounded-xl font-bold uppercase tracking-wider">
+                Mode: {{ str_replace('_', ' ', $period) }}
             </span>
         </div>
-        <div class="h-72" wire:ignore>
+        <div class="h-80" wire:ignore>
             <canvas id="visitorChart"></canvas>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 class="text-md font-semibold text-gray-900 mb-3">5 Halaman Terpopuler</h3>
-            <div class="space-y-3">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="text-sm font-bold text-gray-900 mb-4">Akses Peramban (Browsers)</h3>
+            <div class="space-y-4">
+                @forelse($topBrowsers as $browser)
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold text-gray-600 mb-1.5">
+                            <span>{{ $browser->browser ?: 'Unknown Browser' }}</span>
+                            <span>{{ number_format($browser->total) }} Hits</span>
+                        </div>
+                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                            <div class="bg-blue-500 h-2 rounded-full"
+                                style="width: {{ ($browser->total / max($periodTotalHits, 1)) * 100 }}%"></div>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-xs text-gray-400 text-center py-6">Tidak ada statistik browser.</p>
+                @endforelse
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="text-sm font-bold text-gray-900 mb-4">Sistem Operasi (Platforms)</h3>
+            <div class="space-y-4">
+                @forelse($topPlatforms as $plat)
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold text-gray-600 mb-1.5">
+                            <span>{{ $plat->platform ?: 'Unknown OS' }}</span>
+                            <span>{{ number_format($plat->total) }} Hits</span>
+                        </div>
+                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                            <div class="bg-purple-500 h-2 rounded-full"
+                                style="width: {{ ($plat->total / max($periodTotalHits, 1)) * 100 }}%"></div>
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-xs text-gray-400 text-center py-6">Tidak ada statistik platform.</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="text-sm font-bold text-gray-900 mb-3">5 Konten / URL Terlaris</h3>
+            <div class="divide-y divide-gray-100">
                 @forelse($topPages as $page)
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-600 truncate max-w-xs bg-gray-50 px-2 py-1 rounded font-mono text-xs">
+                    <div class="flex justify-between items-center py-3 text-xs">
+                        <span class="text-gray-600 truncate max-w-xs bg-gray-50 px-2 py-1 rounded font-mono">
                             {{ Str::replaceFirst(url('/'), '', $page->url) ?: '/' }}
                         </span>
                         <span class="font-bold text-gray-800">{{ number_format($page->total) }} <span
-                                class="text-xs font-normal text-gray-400">klik</span></span>
+                                class="text-gray-400 font-normal">views</span></span>
                     </div>
                 @empty
-                    <p class="text-xs text-gray-400 text-center py-4">Belum ada data halaman teridentifikasi.</p>
+                    <p class="text-xs text-gray-400 text-center py-4">Belum ada rekaman lalu lintas halaman.</p>
                 @endif
             </div>
         </div>
 
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 class="text-md font-semibold text-gray-900 mb-3">Sumber Rujukan Teratas (Referers)</h3>
-            <div class="space-y-3">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="text-sm font-bold text-gray-900 mb-3">5 Sumber Rujukan Eksternal</h3>
+            <div class="divide-y divide-gray-100">
                 @forelse($topReferers as $ref)
-                    <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-600 truncate max-w-xs text-xs" title="{{ $ref->referer }}">
-                            {{ Str::limit($ref->referer, 45) }}
+                    <div class="flex justify-between items-center py-3 text-xs">
+                        <span class="text-gray-600 truncate max-w-xs font-medium" title="{{ $ref->referer }}">
+                            {{ Str::limit($ref->referer, 50) }}
                         </span>
-                        <span class="font-semibold text-gray-700">{{ number_format($ref->total) }} <span
-                                class="text-xs font-normal text-gray-400">asal</span></span>
+                        <span class="font-bold text-gray-800">{{ number_format($ref->total) }} <span
+                                class="text-gray-400 font-normal">asal</span></span>
                     </div>
                 @empty
-                    <p class="text-xs text-gray-400 text-center py-4">Semua trafik bersifat Direct / Langsung.</p>
+                    <p class="text-xs text-gray-400 text-center py-4">Semua akses sejauh ini masuk secara langsung
+                        (Direct).</p>
                 @endif
             </div>
         </div>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="p-6 border-b border-gray-100">
-            <h3 class="text-md font-semibold text-gray-900">Log Aktivitas Real-Time</h3>
-            <p class="text-xs text-gray-400 mt-1">Menampilkan catatan log aktivitas sistem masuk</p>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div
+            class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+            <div>
+                <h3 class="text-sm font-bold text-gray-900">Aliran Log Aktivitas Sistem (Live)</h3>
+                <p class="text-xs text-gray-400 mt-0.5">Urutan data mentah entri audit hit yang masuk ke repositori.
+                </p>
+            </div>
         </div>
 
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse whitespace-nowrap">
                 <thead>
                     <tr
-                        class="bg-gray-50 text-gray-500 text-xs font-semibold uppercase tracking-wider border-b border-gray-100">
-                        <th class="px-6 py-3">Waktu</th>
-                        <th class="px-6 py-3">Method & URL</th>
-                        <th class="px-6 py-3">IP Address</th>
-                        <th class="px-6 py-3">Platform / Browser</th>
-                        <th class="px-6 py-3">Referer</th>
+                        class="bg-gray-50/70 text-gray-400 text-[11px] font-bold uppercase tracking-wider border-b border-gray-100">
+                        <th class="px-6 py-3.5">Waktu Ambil</th>
+                        <th class="px-6 py-3.5">Metode & Endpoint Path</th>
+                        <th class="px-6 py-3.5">IP Address</th>
+                        <th class="px-6 py-3.5">User Agent Detail</th>
+                        <th class="px-6 py-3.5">Rujukan (Referer)</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
+                <tbody class="divide-y divide-gray-100 text-xs text-gray-600">
                     @forelse($recentVisits as $visit)
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 text-xs text-gray-500">
-                                {{ $visit->created_at->diffForHumans() }}
+                        <tr class="hover:bg-gray-50/80 transition-colors">
+                            <td class="px-6 py-4">
                                 <span
-                                    class="block text-[10px] text-gray-400 mt-0.5">{{ $visit->created_at->format('d/m H:i') }}</span>
+                                    class="font-semibold text-gray-700">{{ $visit->created_at->diffForHumans() }}</span>
+                                <span
+                                    class="block text-[10px] text-gray-400 mt-0.5">{{ $visit->created_at->format('d M, H:i:s') }}</span>
                             </td>
 
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-2">
                                     <span
-                                        class="px-2 py-0.5 text-[10px] font-bold rounded {{ $visit->method === 'GET' ? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600' }}">
+                                        class="px-2 py-0.5 text-[10px] font-bold rounded-md {{ $visit->method === 'GET' ? 'bg-blue-50 text-blue-600 border border-blue-100' : 'bg-green-50 text-green-600 border border-green-100' }}">
                                         {{ $visit->method ?? 'GET' }}
                                     </span>
                                     <span class="font-medium text-gray-800 max-w-xs truncate block"
@@ -163,25 +237,25 @@
                                 </div>
                             </td>
 
-                            <td class="px-6 py-4 font-mono text-xs text-gray-600">
-                                {{ $visit->ip ?? '0.0.0.0' }}
+                            <td class="px-6 py-4 font-mono text-xs text-gray-500">
+                                {{ $visit->ip ?? '127.0.0.1' }}
                             </td>
 
-                            <td class="px-6 py-4 text-xs">
+                            <td class="px-6 py-4">
                                 <span
-                                    class="text-gray-800 font-medium block">{{ $visit->platform ?? 'Unknown OS' }}</span>
+                                    class="text-gray-800 font-semibold block">{{ $visit->platform ?? 'Unknown OS' }}</span>
                                 <span
-                                    class="text-gray-400 block mt-0.5">{{ $visit->browser ?? 'Unknown Browser' }}</span>
+                                    class="text-gray-400 text-[11px] block mt-0.5">{{ $visit->browser ?? 'Unknown Browser' }}</span>
                             </td>
 
-                            <td class="px-6 py-4 text-xs text-gray-400 max-w-xs truncate">
-                                {{ $visit->referer ? Str::limit($visit->referer, 40) : 'Direct / Langsung' }}
+                            <td class="px-6 py-4 text-gray-400 max-w-xs truncate">
+                                {{ $visit->referer ? Str::limit($visit->referer, 45) : 'Direct / Langsung' }}
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-10 text-center text-gray-400 text-sm">
-                                Belum ada data kunjungan yang terekam.
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-400 text-sm">
+                                Tidak ditemukan berkas data entri log.
                             </td>
                         </tr>
                     @endforelse
@@ -189,7 +263,7 @@
             </table>
         </div>
 
-        <div class="p-4 bg-gray-50 border-t border-gray-100">
+        <div class="p-4 bg-gray-50/70 border-t border-gray-100">
             {{ $recentVisits->links() }}
         </div>
     </div>
@@ -215,15 +289,17 @@
                     data: {
                         labels: @js($chartLabels),
                         datasets: [{
-                            label: 'Klik / Hits',
+                            label: 'Laju Klik',
                             data: @js($chartValues),
-                            borderColor: 'rgba(59, 130, 246, 1)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.04)',
-                            borderWidth: 2,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.03)',
+                            borderWidth: 2.5,
                             fill: true,
-                            tension: 0.2,
-                            pointBackgroundColor: 'rgba(59, 130, 246, 1)',
-                            pointRadius: 3
+                            tension: 0.25,
+                            pointBackgroundColor: '#3b82f6',
+                            pointHoverBackgroundColor: '#1d4ed8',
+                            pointRadius: 3,
+                            pointHoverRadius: 5
                         }]
                     },
                     options: {
@@ -238,13 +314,22 @@
                             x: {
                                 grid: {
                                     display: false
+                                },
+                                ticks: {
+                                    color: '#9ca3af',
+                                    font: {
+                                        size: 11
+                                    }
                                 }
                             },
                             y: {
                                 beginAtZero: true,
                                 ticks: {
-                                    stepSize: 5,
-                                    color: '#9ca3af'
+                                    color: '#9ca3af',
+                                    font: {
+                                        size: 11
+                                    },
+                                    precision: 0
                                 },
                                 grid: {
                                     color: '#f3f4f6'
@@ -255,17 +340,16 @@
                 });
             }
 
-            // Jalankan inisialisasi awal
             initChart();
 
-            // Hook siklus hidup request Livewire v3 yang lebih stabil daripada window listener biasa
+            // Interseptor Request Livewire v3 (Sangat Halus Tanpa Flicker Saat Mengganti Halaman/Filter)
             Livewire.hook('request', ({
                 respond
             }) => {
                 respond(() => {
                     setTimeout(() => {
                         initChart();
-                    }, 50);
+                    }, 40);
                 });
             });
         </script>
