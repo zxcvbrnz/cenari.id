@@ -93,6 +93,7 @@
         </section>
     </div>
 
+    {{-- section ini dipindah ke bawah section quote --}}
     <section class="max-w-7xl mx-auto px-6 py-24 bg-[#F8FAFC]">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             @foreach ($programs as $item)

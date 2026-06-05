@@ -33,4 +33,9 @@ class Program extends Model
     {
         return $this->belongsTo(Instansi::class);
     }
+
+    public function missingLinks()
+    {
+        return $this->hasMany(MissingLink::class);
+    }
 }
