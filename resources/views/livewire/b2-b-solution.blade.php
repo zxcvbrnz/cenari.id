@@ -74,11 +74,13 @@
                             </div>
                         </div>
 
-                        <div class="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col items-start">
-                            <span
-                                class="text-[10px] font-black text-blue-400 uppercase tracking-widest block mb-4">Expected
-                                Learning Outcome</span>
-                            <p class="text-lg leading-relaxed italic">"{{ $data->outcome }}"</p>
+                        <div>
+                            <div class="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col items-start">
+                                <span
+                                    class="text-[10px] font-black text-blue-400 uppercase tracking-widest block mb-4">Expected
+                                    Learning Outcome</span>
+                                <p class="text-lg leading-relaxed italic">"{{ $data->outcome }}"</p>
+                            </div>
                         </div>
                     </div>
                 @else
