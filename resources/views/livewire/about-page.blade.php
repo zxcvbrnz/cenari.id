@@ -25,6 +25,28 @@
                     </div>
                 </div>
             </section>
+
+            <section class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-6">
+                    <div
+                        class="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-md border border-slate-100 bg-slate-200 group">
+                        <img src="{{ asset('storage/' . $about->image_2) }}" alt="Tentang Kami - Ilustrasi 2"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                </div>
+                <div class="lg:col-span-6 space-y-5">
+                    <span
+                        class="inline-block text-[10px] bg-amber-50 text-amber-700 border border-amber-200 font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Komitmen & Implementasi
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Mendukung Transformasi Digital Berkelanjutan
+                    </h2>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        {{ $about->text_2 }}
+                    </p>
+                </div>
+            </section>
         @endif
 
         <section class="bg-white py-16 sm:py-24 border-y border-slate-100">
@@ -69,30 +91,6 @@
                 </div>
             </div>
         </section>
-
-        @if ($about)
-            <section class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-6">
-                    <div
-                        class="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-md border border-slate-100 bg-slate-200 group">
-                        <img src="{{ asset('storage/' . $about->image_2) }}" alt="Tentang Kami - Ilustrasi 2"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                </div>
-                <div class="lg:col-span-6 space-y-5">
-                    <span
-                        class="inline-block text-[10px] bg-amber-50 text-amber-700 border border-amber-200 font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
-                        Komitmen & Implementasi
-                    </span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                        Mendukung Transformasi Digital Berkelanjutan
-                    </h2>
-                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                        {{ $about->text_2 }}
-                    </p>
-                </div>
-            </section>
-        @endif
 
         @if ($about && ($about->pdf_url || $about->video_url))
             <section class="max-w-7xl mx-auto px-6">
