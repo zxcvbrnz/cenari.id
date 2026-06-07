@@ -53,7 +53,7 @@ class HomePage extends Component
     public function mount()
     {
         $this->stats = \App\Models\Stat::all();
-        $this->text = \App\Models\AboutUs::first()->homepage_text;
+        $this->text = \App\Models\AboutUs::first()->homepage_text ?? "Cenari ID adalah lembaga pendidikan teknologi terapan terdepan di Banjarmasin yang";
         $this->programs = Program::all();
         $this->seminars = Workshop::all();
         $this->events = Agenda::all();
