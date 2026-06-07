@@ -10,11 +10,20 @@
                 <p class="text-slate-500 text-[11px] leading-relaxed mb-6 max-w-[240px]">
                     Menghubungkan imajinasi dan realitas melalui pendidikan teknologi terapan di Banjarmasin.
                 </p>
-                <div class="flex gap-3">
+                <div class="flex items-center gap-3">
                     <a href="https://www.instagram.com/cenari.academy/" target="_blank"
-                        class="w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center hover:bg-slate-50 transition-colors">
+                        class="w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center hover:bg-slate-50 transition-colors"
+                        title="Instagram">
                         <span class="text-[10px] font-bold text-slate-400">IG</span>
                     </a>
+
+                    <!-- TAMBAHAN: Hubungi Kami -->
+                    {{-- <a href="https://wa.me/628xxxxxxxxxx" target="_blank"
+                        class="h-8 px-3 rounded-full border border-slate-100 flex items-center justify-center hover:bg-slate-50 hover:border-slate-200 transition-colors gap-1.5"
+                        title="Hubungi Kami lewat WhatsApp">
+                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                        <span class="text-[9px] font-black uppercase tracking-wider text-slate-400 hover:text-slate-600">Hubungi Kami</span>
+                    </a> --}}
                 </div>
             </div>
 
@@ -65,6 +74,16 @@
                         <a href="{{ route('b2b.institution') }}" wire:navigate
                             class="hover:text-[#3B82F6] transition-colors block">
                             Mitra Instansi
+                        </a>
+                    </li>
+
+                    <!-- TAMBAHAN: Tutorial & Modul -->
+                    <li>
+                        <a href="#" wire:navigate
+                            class="hover:text-[#3B82F6] text-slate-600 font-bold transition-colors block flex items-center gap-1">
+                            Tutorial & Modul
+                            <span
+                                class="bg-blue-50 text-blue-600 text-[8px] px-1.5 py-0.5 rounded-md font-black uppercase tracking-wide scale-90">Baru</span>
                         </a>
                     </li>
                 </ul>
