@@ -10,7 +10,7 @@ class TutorialKursus extends Component
     public $tab = 'instruktur';
 
     // Menyimpan ID video YouTube tutorial (Ganti dengan ID asli video Anda)
-    public $youtubeVideoId = 'dQw4w9WgXcQ';
+    public $youtubeVideoId = 'hrEVIU25fqY';
 
     public function setTab($role)
     {
