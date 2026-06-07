@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stats', function (Blueprint $table) {
             $table->id();
-            $table->string('svg_path');
+            $table->text('svg_path');
             $table->string('title');
             $table->string('value');
             $table->timestamps();
