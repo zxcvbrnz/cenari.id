@@ -124,6 +124,10 @@ Route::view('manage-partner', 'manage-partner')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.partner');
 
+Route::view('manage-about', 'manage-about')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('manage.about');
+
 Route::view('manage-settings', 'manage-settings')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.settings');

@@ -43,6 +43,12 @@ new class extends Component {
                             'icon' =>
                                 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', // Office / Building
                         ],
+                        [
+                            'route' => 'manage.about',
+                            'label' => 'Tentang Kami',
+                            'icon' =>
+                                'M11.25 11.25l.041-.02a.75.75 0 11.518 1.4L11.25 13v1.25A1.25 1.25 0 0012.5 15.5h1.5a1.25 1.25 0 001.25-1.25V13a1.25 1.25 0 00-1.25-1.25h-.25M12 9h.008v.008H12V9zm9.54 3.125a9 9 0 11-18 0 9 9 0 0118 0z', // Identification / Information Circle
+                        ],
                     ],
                     'Manajemen Konten' => [
                         [

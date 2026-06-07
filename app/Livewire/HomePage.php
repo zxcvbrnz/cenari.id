@@ -21,6 +21,8 @@ class HomePage extends Component
     public $featuredQuote;
     public $posts;
 
+    public $text = "Cenari ID adalah lembaga pendidikan teknologi terapan terdepan di Banjarmasin yang berkomitmen menjembatani dunia imajinasi digital dan realitas industri. Melalui program pelatihan intensif, ekosistem pembelajaran interaktif, dan kemitraan strategis, kami membekali generasi muda dengan keahlian teknis nyata yang siap kerja dan relevan terhadap perkembangan global.";
+
     public $stats = [
         [
             // Ikon Kalender / Jam

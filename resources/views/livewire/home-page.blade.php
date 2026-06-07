@@ -109,10 +109,7 @@
 
                 <div class="lg:col-span-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                     <p class="text-sm text-slate-600 leading-relaxed max-w-2xl">
-                        Cenari ID adalah lembaga pendidikan teknologi terapan terdepan di Banjarmasin yang berkomitmen
-                        menjembatani dunia imajinasi digital dan realitas industri. Melalui program pelatihan intensif,
-                        ekosistem pembelajaran interaktif, dan kemitraan strategis, kami membekali generasi muda dengan
-                        keahlian teknis nyata yang siap kerja dan relevan terhadap perkembangan global.
+                        {{ $text }}
                     </p>
                     <div class="flex-shrink-0">
                         <a href="#" wire:navigate
