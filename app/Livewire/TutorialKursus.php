@@ -21,6 +21,6 @@ class TutorialKursus extends Component
 
     public function render()
     {
-        return view('livewire.admin.tutorial-kursus');
+        return view('livewire.tutorial-kursus');
     }
 }
