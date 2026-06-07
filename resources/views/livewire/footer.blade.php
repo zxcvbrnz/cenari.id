@@ -79,7 +79,7 @@
 
                     <!-- TAMBAHAN: Tutorial & Modul -->
                     <li>
-                        <a href="#" wire:navigate
+                        <a href="{{ route('module.tutorial') }}" wire:navigate
                             class="hover:text-[#3B82F6] text-slate-600 font-bold transition-colors block flex items-center gap-1">
                             Tutorial & Modul
                             <span
