@@ -1,7 +1,7 @@
 <div class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col antialiased">
 
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-3">
                 <div
                     class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-md shadow-blue-500/20">
@@ -20,7 +20,7 @@
         </div>
     </header>
 
-    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-8 space-y-10">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-8 space-y-10">
 
         <section
             class="bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -201,7 +201,8 @@
                                 <li class="flex items-start gap-2"><span class="text-amber-500 font-bold">2.</span>
                                     Masuk ke kolom <strong class="text-slate-800">KAMERA</strong>, lalu klik tombol
                                     <strong class="text-blue-600 font-semibold">Request Camera Permissions</strong>
-                                    untuk mengaktifkan kamera.</li>
+                                    untuk mengaktifkan kamera.
+                                </li>
                                 <li class="flex items-start gap-2"><span class="text-amber-500 font-bold">3.</span>
                                     Pindai/Scan <strong class="text-slate-800">QR CODE</strong> yang ada di aplikasi
                                     instruktur. Jika sukses, status kehadiran langsung terekam di <strong
