@@ -93,7 +93,111 @@
         </section>
     </div>
 
-    {{-- section ini dipindah ke bawah section quote --}}
+    <section class="bg-white py-16 sm:py-24 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 space-y-12">
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
+                <div class="lg:col-span-4 space-y-2">
+                    <span
+                        class="text-[10px] bg-blue-50 text-blue-600 border border-blue-200 font-extrabold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
+                        Tentang Cenari ID
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Siapa Kami?
+                    </h2>
+                </div>
+
+                <div class="lg:col-span-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                    <p class="text-sm text-slate-600 leading-relaxed max-w-2xl">
+                        Cenari ID adalah lembaga pendidikan teknologi terapan terdepan di Banjarmasin yang berkomitmen
+                        menjembatani dunia imajinasi digital dan realitas industri. Melalui program pelatihan intensif,
+                        ekosistem pembelajaran interaktif, dan kemitraan strategis, kami membekali generasi muda dengan
+                        keahlian teknis nyata yang siap kerja dan relevan terhadap perkembangan global.
+                    </p>
+                    <div class="flex-shrink-0">
+                        <a href="#" wire:navigate
+                            class="inline-block text-xs font-bold text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-5 py-3 rounded-xl shadow-sm transition-all text-center w-full sm:w-auto">
+                            Lihat Detail →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-4">
+                @foreach ($stats as $stat)
+                    <div
+                        class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex flex-col justify-between space-y-5 hover:shadow-md hover:bg-white hover:border-blue-100 transition-all group">
+
+                        <div
+                            class="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor"
+                                class="w-5 h-5 text-slate-500 group-hover:text-blue-600 transition-colors">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="{{ $stat['svg_path'] }}" />
+                            </svg>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                {{ $stat['title'] }}
+                            </span>
+                            <p class="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+                                {{ $stat['value'] }}
+                            </p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+        </div>
+    </section>
+
+    @isset($featuredQuote)
+        <section class="relative py-24 px-6 md:py-32 overflow-hidden bg-gray-900">
+            <div class="absolute inset-0">
+                <img src="https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                    alt="Inspiring background" class="w-full h-full object-cover opacity-20 scale-105 select-none">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
+            </div>
+
+            <div class="max-w-4xl mx-auto relative z-10 text-center">
+                <svg class="w-12 h-12 md:w-16 md:h-16 text-blue-600/50 mx-auto mb-8" fill="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM3.01697 21L3.01697 18C3.01697 16.8954 3.9124 16 5.01697 16H8.01697C8.56925 16 9.01697 15.5523 9.01697 15V9C9.01697 8.44772 8.56925 8 8.01697 8H4.01697C3.46468 8 3.01697 8.44772 3.01697 9V11C3.01697 11.5523 2.56925 12 2.01697 12H1.01697V5H11.017V15C11.017 18.3137 8.33068 21 5.01697 21H3.01697Z" />
+                </svg>
+
+                <blockquote
+                    class="text-3xl md:text-5xl font-black leading-tight text-white mb-10 italic uppercase tracking-tighter">
+                    "{{ $featuredQuote->content }}"
+                </blockquote>
+
+                <div class="flex flex-col items-center gap-4">
+                    <div class="inline-flex items-center gap-3">
+                        <div class="h-px w-8 bg-blue-600"></div>
+                        <p class="text-sm md:text-lg font-bold text-gray-300 uppercase tracking-widest">
+                            {{ $featuredQuote->author }}
+                            @if ($featuredQuote->source)
+                                <span class="text-gray-500 font-medium normal-case italic ml-1">—
+                                    {{ $featuredQuote->source }}</span>
+                            @endif
+                        </p>
+                        <div class="h-px w-8 bg-blue-600"></div>
+                    </div>
+
+                    <!-- LinkedIn Logo Button -->
+                    <a href="https://www.linkedin.com/in/faridcenari" target="_blank" rel="noopener noreferrer"
+                        class="text-gray-400 hover:text-blue-500 transition-colors duration-200" title="LinkedIn Profile">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    @endisset
+
     <section class="max-w-7xl mx-auto px-6 py-24 bg-[#F8FAFC]">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             @foreach ($programs as $item)
@@ -178,52 +282,6 @@
             @endforeach
         </div>
     </section>
-
-    @isset($featuredQuote)
-        <section class="relative py-24 px-6 md:py-32 overflow-hidden bg-gray-900">
-            <div class="absolute inset-0">
-                <img src="https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    alt="Inspiring background" class="w-full h-full object-cover opacity-20 scale-105 select-none">
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent"></div>
-            </div>
-
-            <div class="max-w-4xl mx-auto relative z-10 text-center">
-                <svg class="w-12 h-12 md:w-16 md:h-16 text-blue-600/50 mx-auto mb-8" fill="currentColor"
-                    viewBox="0 0 24 24">
-                    <path
-                        d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM3.01697 21L3.01697 18C3.01697 16.8954 3.9124 16 5.01697 16H8.01697C8.56925 16 9.01697 15.5523 9.01697 15V9C9.01697 8.44772 8.56925 8 8.01697 8H4.01697C3.46468 8 3.01697 8.44772 3.01697 9V11C3.01697 11.5523 2.56925 12 2.01697 12H1.01697V5H11.017V15C11.017 18.3137 8.33068 21 5.01697 21H3.01697Z" />
-                </svg>
-
-                <blockquote
-                    class="text-3xl md:text-5xl font-black leading-tight text-white mb-10 italic uppercase tracking-tighter">
-                    "{{ $featuredQuote->content }}"
-                </blockquote>
-
-                <div class="flex flex-col items-center gap-4">
-                    <div class="inline-flex items-center gap-3">
-                        <div class="h-px w-8 bg-blue-600"></div>
-                        <p class="text-sm md:text-lg font-bold text-gray-300 uppercase tracking-widest">
-                            {{ $featuredQuote->author }}
-                            @if ($featuredQuote->source)
-                                <span class="text-gray-500 font-medium normal-case italic ml-1">—
-                                    {{ $featuredQuote->source }}</span>
-                            @endif
-                        </p>
-                        <div class="h-px w-8 bg-blue-600"></div>
-                    </div>
-
-                    <!-- LinkedIn Logo Button -->
-                    <a href="https://www.linkedin.com/in/faridcenari" target="_blank" rel="noopener noreferrer"
-                        class="text-gray-400 hover:text-blue-500 transition-colors duration-200" title="LinkedIn Profile">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </section>
-    @endisset
 
     <section class="max-w-7xl mx-auto px-6 py-24" x-data="{
         copied: false,

@@ -7,7 +7,7 @@ use Livewire\Component;
 class TutorialKursus extends Component
 {
     // State untuk mengontrol tab aktif ('instruktur' atau 'peserta')
-    public $tab = 'instruktur';
+    public $tab = 'peserta';
 
     // Menyimpan ID video YouTube tutorial (Ganti dengan ID asli video Anda)
     public $youtubeVideoId = 'hrEVlU25fqY';
