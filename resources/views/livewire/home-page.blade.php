@@ -112,7 +112,7 @@
                         {{ $text }}
                     </p>
                     <div class="flex-shrink-0">
-                        <a href="#" wire:navigate
+                        <a href="{{ route('about.us') }}" wire:navigate
                             class="inline-block text-xs font-bold text-slate-900 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-5 py-3 rounded-xl shadow-sm transition-all text-center w-full sm:w-auto">
                             Lihat Detail →
                         </a>

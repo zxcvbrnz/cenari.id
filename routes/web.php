@@ -28,6 +28,7 @@ use App\Livewire\WorkshopPage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MidtransCallbackController;
+use App\Livewire\AboutPage;
 use App\Livewire\PaymentFinish;
 use App\Livewire\TutorialKursus;
 
@@ -61,6 +62,8 @@ Route::get('/workshops/{slug}', WorkshopDetail::class)->name('workshop.detail');
 // Route::get('/contact-us', Contact::class)->name('contact.us');
 
 Route::get('/module-tutorial', TutorialKursus::class)->name('module.tutorial');
+
+Route::get('/about-us', AboutPage::class)->name('about.us');
 
 Route::get('/course-packages-user/list', LearningList::class)->name('course.packages.user.list')->middleware(['auth']);
 
