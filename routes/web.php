@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Storage;
 // Route::view('/', 'welcome');
 Route::get('/', HomePage::class)->name('home');
 
-Route::get('/download-profile', function () {
+Route::get('/download-profile-company', function () {
     // 1. Ambil data tentang kami untuk mendapatkan nama file
     $about = AboutUs::first();
 
