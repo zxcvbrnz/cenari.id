@@ -26,6 +26,11 @@ class AboutUs extends Model
         return $this->formatTextWithLinks($this->text_1);
     }
 
+    public function getFormattedHomepageTextAttribute()
+    {
+        return $this->formatTextWithLinks($this->homepage_text);
+    }
+
     /**
      * Accessor untuk Formatted Text 2
      */
