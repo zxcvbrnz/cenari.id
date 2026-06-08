@@ -42,7 +42,7 @@ class Post extends Model
         }, $text);
 
         // 4. FITUR H1: Mengubah "# Judul" di awal baris menjadi tag <h1> dengan class Tailwind
-        $text = preg_replace('/^#\s+(.+)$/m', '<h1 class="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight mt-4 mb-2">$1</h1>', $text);
+        $text = preg_replace('/^#\s+(.+)$/m', '<h1 class="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4 mb-2">$1</h1>', $text);
 
         // 5. FITUR BOLD: Mengubah **teks** menjadi <strong>teks</strong>
         $text = preg_replace('/\*\*(.*?)\*\*/s', '<strong class="font-bold text-slate-900">$1</strong>', $text);

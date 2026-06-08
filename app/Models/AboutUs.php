@@ -61,7 +61,7 @@ class AboutUs extends Model
 
         // 3. FITUR H1: Mengubah "# Judul Teks" menjadi tag <h1> dengan styling Tailwind
         // Pola ini mendeteksi tanda # di awal baris yang diikuti oleh spasi
-        $text = preg_replace('/^#\s+(.+)$/m', '<h1 class="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight mt-4 mb-2">$1</h1>', $text);
+        $text = preg_replace('/^#\s+(.+)$/m', '<h1 class="text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mt-4 mb-2">$1</h1>', $text);
 
         // 4. FITUR BOLD: Mengubah **teks** menjadi <strong>teks</strong>
         $text = preg_replace('/\*\*(.*?)\*\*/s', '<strong class="font-bold text-slate-900">$1</strong>', $text);
