@@ -70,29 +70,41 @@
                     <div class="flex w-full items-stretch divide-x divide-slate-200">
 
                         @forelse($businessLines as $line)
-                            <div
-                                class="flex-1 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group relative">
+                            <div class="flex-1 pt-6 sm:pt-8 pb-8 flex flex-col justify-between group relative">
 
-                                <div class="space-y-3 pr-4">
-                                    <h3
-                                        class="text-base sm:text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                                        {{ $line->name }}
-                                    </h3>
+                                <div class="space-y-4">
+                                    <div class="px-6 sm:px-8">
+                                        <h3
+                                            class="text-base sm:text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                                            {{ $line->name }}
+                                        </h3>
+                                    </div>
 
+                                    <div class="relative w-full flex items-center">
+                                        <div
+                                            class="h-[1px] bg-slate-200 group-hover:bg-blue-200 transition-colors w-full {{ $loop->last ? 'mr-6 sm:mr-8' : '' }}">
+                                        </div>
+
+                                        @if (!$loop->last)
+                                            <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10">
+                                                <div
+                                                    class="w-6 h-6 bg-white rounded-full flex items-center justify-center border border-slate-200 shadow-2xs text-slate-400 group-hover:text-blue-500 group-hover:border-blue-300 transition-all">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                                                        class="w-3 h-3">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 px-6 sm:px-8">
                                     <p class="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                                         {{ $line->description }}
                                     </p>
-                                </div>
-
-                                <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 last:hidden">
-                                    <div
-                                        class="w-7 h-7 bg-white rounded-full flex items-center justify-center border border-slate-200 shadow-xs text-slate-400 group-hover:text-blue-500 group-hover:border-blue-300 transition-all">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                                        </svg>
-                                    </div>
                                 </div>
 
                             </div>
