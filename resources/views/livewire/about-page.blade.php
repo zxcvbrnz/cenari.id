@@ -54,13 +54,14 @@
                 <div
                     class="w-full bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100/70 overflow-hidden">
 
-                    <div class="flex w-full items-stretch divide-x divide-slate-100/80">
+                    <div
+                        class="grid grid-cols-1 divide-y divide-slate-100/80 lg:grid-cols-none lg:flex lg:w-full lg:items-stretch lg:divide-y-0 lg:divide-x lg:divide-slate-100/80">
 
                         @forelse($businessLines as $line)
                             <div
-                                class="flex-1 pt-8 sm:pt-10 pb-10 flex flex-col justify-start group relative bg-gradient-to-b from-white to-slate-50/30 hover:to-white transition-all duration-500 ease-out">
+                                class="pt-8 pb-10 flex flex-col justify-start group relative bg-gradient-to-b from-white to-slate-50/30 hover:to-white transition-all duration-500 ease-out lg:flex-1 lg:pt-10">
 
-                                <div class="px-8 sm:px-10 min-h-[56px] flex items-start">
+                                <div class="px-8 sm:px-10 flex items-start lg:min-h-[56px]">
                                     <h3
                                         class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight group-hover:text-indigo-600 transition-colors duration-300 leading-snug">
                                         {{ $line->name }}
@@ -69,13 +70,14 @@
 
                                 <div class="relative w-full flex items-center mt-6">
                                     <div
-                                        class="w-full border-t border-dashed border-slate-200/80 group-hover:border-indigo-200 transition-colors duration-500 {{ $loop->last ? 'mr-8 sm:mr-10' : '' }}">
+                                        class="w-full border-t border-dashed border-slate-200/80 group-hover:border-indigo-200 transition-colors duration-500 lg:{{ $loop->last ? 'mr-8 sm:mr-10' : '' }}">
                                     </div>
 
                                     @if (!$loop->last)
-                                        <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10">
+                                        <div
+                                            class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 lg:left-auto lg:right-0 lg:translate-x-1/2">
                                             <div
-                                                class="w-7 h-7 bg-white rounded-full flex items-center justify-center border border-slate-100 shadow-sm shadow-slate-200/50 text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-indigo-500/5 transition-all duration-300">
+                                                class="w-7 h-7 bg-white rounded-full flex items-center justify-center border border-slate-100 shadow-sm shadow-slate-200/50 text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-indigo-500/5 transition-all duration-300 transform rotate-90 lg:rotate-0">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
                                                     class="w-3 h-3">
@@ -90,7 +92,7 @@
                                 <div class="mt-6 px-8 sm:px-10">
                                     <p
                                         class="text-xs sm:text-[13px] text-slate-500 leading-relaxed tracking-wide font-normal break-words">
-                                        {{ $line->description }}
+                                        {!! $line->formatted_description ?? $line->description !!}
                                     </p>
                                 </div>
 
