@@ -53,23 +53,25 @@ class AboutUs extends Model
 
         // 2. Pola Regex untuk mendeteksi URL (http, https, dan www)
         $urlPattern = '/(https?:\/\/[^\s]+|www\.[^\s]+)/i';
-
-        // 3. Ubah teks URL menjadi tag HTML <a> dengan target="_blank"
         $text = preg_replace_callback($urlPattern, function ($matches) {
             $url = $matches[0];
-
-            // Jika link diawali www. tanpa http, tambahkan http:// agar tidak rusak saat di-klik
             $href = preg_match('/^https?:\/\//i', $url) ? $url : 'http://' . $url;
-
             return '<a href="' . $href . '" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-medium break-all">' . $url . '</a>';
         }, $text);
 
-        // 4. FITUR BARU: Konversi format **teks** menjadi <strong>teks</strong> untuk Bold
-        // Menggunakan lazy matching [^*]+? agar jika ada beberapa bold dalam satu baris tidak rusak
-        $boldPattern = '/\*\*(.*?)\*\*/s';
-        $text = preg_replace($boldPattern, '<strong>$1</strong>', $text);
+        // 3. FITUR H1: Mengubah "# Judul Teks" menjadi tag <h1> dengan styling Tailwind
+        // Pola ini mendeteksi tanda # di awal baris yang diikuti oleh spasi
+        $text = preg_replace('/^#\s+(.+)$/m', '<h1 class="text-xl sm:text-2xl font-extrabold text-slate-950 tracking-tight mt-4 mb-2">$1</h1>', $text);
 
-        // 5. Ubah ketukan enter menjadi tag <br> untuk mempertahankan paragraf
+        // 4. FITUR BOLD: Mengubah **teks** menjadi <strong>teks</strong>
+        $text = preg_replace('/\*\*(.*?)\*\*/s', '<strong class="font-bold text-slate-900">$1</strong>', $text);
+
+        // 5. FITUR ITALIC: Mengubah *teks* atau _teks_ menjadi <em>teks</em>
+        // Menggunakan pola yang tidak bentrok dengan bintang ganda (bold)
+        $text = preg_replace('/(?<!\*)\*(?!\*)(.*?)(?<!\*)\*(?!\*)/s', '<em class="italic">$1</em>', $text);
+        $text = preg_replace('/_(.*?)_/s', '<em class="italic">$1</em>', $text);
+
+        // 6. Ubah ketukan enter menjadi tag <br> untuk mempertahankan paragraf
         return nl2br($text);
     }
 }

@@ -6,13 +6,6 @@
         @if ($about)
             <section class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-6 space-y-5 order-2 lg:order-1">
-                    <span
-                        class="inline-block text-[10px] bg-blue-50 text-blue-600 border border-blue-200 font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
-                        Visi & Filosofi
-                    </span>
-                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                        Membangun Fondasi Teknologi Masa Depan
-                    </h1>
                     <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
                         {!! $about->formatted_text_1 !!}
                     </p>
@@ -35,13 +28,6 @@
                     </div>
                 </div>
                 <div class="lg:col-span-6 space-y-5">
-                    <span
-                        class="inline-block text-[10px] bg-amber-50 text-amber-700 border border-amber-200 font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
-                        Komitmen & Implementasi
-                    </span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                        Mendukung Transformasi Digital Berkelanjutan
-                    </h2>
                     <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
                         {!! $about->formatted_text_2 !!}
                     </p>
