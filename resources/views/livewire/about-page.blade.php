@@ -14,7 +14,7 @@
                         Membangun Fondasi Teknologi Masa Depan
                     </h1>
                     <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                        {{ $about->text_1 }}
+                        {!! $about->formatted_text_1 !!}
                     </p>
                 </div>
                 <div class="lg:col-span-6 order-1 lg:order-2">
@@ -43,7 +43,7 @@
                         Mendukung Transformasi Digital Berkelanjutan
                     </h2>
                     <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                        {{ $about->text_2 }}
+                        {!! $about->formatted_text_2 !!}
                     </p>
                 </div>
             </section>
@@ -65,29 +65,37 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @forelse($businessLines as $line)
-                        <div
-                            class="bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-100 flex flex-col justify-between space-y-4 hover:shadow-md hover:bg-white hover:border-blue-100 transition-all group">
-                            <div class="space-y-3">
-                                <div
-                                    class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
-                                    <span class="text-blue-600 font-black text-sm">#{{ $loop->iteration }}</span>
+                <div class="w-full overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-200">
+
+                    <div
+                        class="flex flex-nowrap items-stretch bg-slate-50 border border-slate-200 rounded-2xl divide-x divide-slate-200 shadow-xs min-w-max">
+
+                        @forelse($businessLines as $line)
+                            <div
+                                class="w-80 sm:w-96 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group first:rounded-l-2xl last:rounded-r-2xl hover:shadow-[inline_0_0_20px_rgba(59,130,246,0.05)]">
+                                <div class="space-y-3">
+                                    <div
+                                        class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
+                                        <span class="text-blue-600 font-black text-sm">#{{ $loop->iteration }}</span>
+                                    </div>
+
+                                    <h3
+                                        class="text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                                        {{ $line->name }}
+                                    </h3>
+
+                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                        {{ $line->description }}
+                                    </p>
                                 </div>
-                                <h3
-                                    class="text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
-                                    {{ $line->name }}
-                                </h3>
-                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                                    {{ $line->description }}
-                                </p>
                             </div>
-                        </div>
-                    @empty
-                        <div class="col-span-full text-center py-12 text-slate-400 text-xs font-medium">
-                            Belum ada data lini bisnis yang tersedia.
-                        </div>
-                    @endforelse
+                        @empty
+                            <div class="w-full text-center py-12 text-slate-400 text-xs font-medium min-w-[100vw]">
+                                Belum ada data lini bisnis yang tersedia.
+                            </div>
+                        @endforelse
+
+                    </div>
                 </div>
             </div>
         </section>
