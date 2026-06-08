@@ -65,31 +65,33 @@
                     </p>
                 </div>
 
-                <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                <div
+                    class="w-full bg-white border border-slate-100 rounded-3xl shadow-xl shadow-slate-100/70 overflow-hidden">
 
-                    <div class="flex w-full items-stretch divide-x divide-slate-200">
+                    <div class="flex w-full items-stretch divide-x divide-slate-100/80">
 
                         @forelse($businessLines as $line)
-                            <div class="flex-1 pt-6 sm:pt-8 pb-8 flex flex-col justify-start group relative">
+                            <div
+                                class="flex-1 pt-8 sm:pt-10 pb-10 flex flex-col justify-start group relative bg-gradient-to-b from-white to-slate-50/30 hover:to-white transition-all duration-500 ease-out">
 
-                                <div class="px-6 sm:px-8 min-h-[48px] flex items-start">
+                                <div class="px-8 sm:px-10 min-h-[56px] flex items-start">
                                     <h3
-                                        class="text-base sm:text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors leading-tight">
+                                        class="text-base sm:text-lg font-extrabold text-slate-800 tracking-tight group-hover:text-indigo-600 transition-colors duration-300 leading-snug">
                                         {{ $line->name }}
                                     </h3>
                                 </div>
 
-                                <div class="relative w-full flex items-center mt-4">
+                                <div class="relative w-full flex items-center mt-6">
                                     <div
-                                        class="h-[1px] bg-slate-200 group-hover:bg-blue-200 transition-colors w-full {{ $loop->last ? 'mr-6 sm:mr-8' : '' }}">
+                                        class="w-full border-t border-dashed border-slate-200/80 group-hover:border-indigo-200 transition-colors duration-500 {{ $loop->last ? 'mr-8 sm:mr-10' : '' }}">
                                     </div>
 
                                     @if (!$loop->last)
                                         <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10">
                                             <div
-                                                class="w-6 h-6 bg-white rounded-full flex items-center justify-center border border-slate-200 shadow-2xs text-slate-400 group-hover:text-blue-500 group-hover:border-blue-300 transition-all">
+                                                class="w-7 h-7 bg-white rounded-full flex items-center justify-center border border-slate-100 shadow-sm shadow-slate-200/50 text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 group-hover:shadow-md group-hover:shadow-indigo-500/5 transition-all duration-300">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"
+                                                    viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
                                                     class="w-3 h-3">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -99,15 +101,23 @@
                                     @endif
                                 </div>
 
-                                <div class="mt-4 px-6 sm:px-8">
-                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
+                                <div class="mt-6 px-8 sm:px-10">
+                                    <p
+                                        class="text-xs sm:text-[13px] text-slate-500 leading-relaxed tracking-wide font-normal break-words">
                                         {{ $line->description }}
                                     </p>
                                 </div>
 
                             </div>
                         @empty
-                            <div class="w-full text-center py-12 text-slate-400 text-xs font-medium px-6">
+                            <div
+                                class="w-full text-center py-16 text-slate-400 text-xs font-medium px-6 bg-slate-50/50">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor"
+                                    class="w-8 h-8 mx-auto text-slate-300 mb-3">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.008 1.24l.885 1.77a2.25 2.25 0 0 0 2.007 1.24h1.98a2.25 2.25 0 0 0 2.007-1.24l.885-1.77a2.25 2.25 0 0 1 2.007-1.24h3.86m-18 0h18a2.25 2.25 0 0 1 2.25 2.25v4.25a2.25 2.25 0 0 1-2.25 2.25H2.25A2.25 2.25 0 0 1 0 18.5v-4.25A2.25 2.25 0 0 1 2.25 13.5S2.25 9.3 2.25 4.5A2.25 2.25 0 0 1 4.5 2.25h15A2.25 2.25 0 0 1 21.75 4.5c0 4.8 0 9 0 9" />
+                                </svg>
                                 Belum ada data lini bisnis yang tersedia.
                             </div>
                         @endforelse
