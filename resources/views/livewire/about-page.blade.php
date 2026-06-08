@@ -65,14 +65,13 @@
                     </p>
                 </div>
 
-                <div class="w-full overflow-visible">
+                <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
 
-                    <div
-                        class="inline-flex flex-nowrap items-stretch bg-slate-50 border border-slate-200 rounded-2xl divide-x divide-slate-200 shadow-sm min-w-full">
+                    <div class="flex w-full items-stretch divide-x divide-slate-200">
 
                         @forelse($businessLines as $line)
                             <div
-                                class="w-80 sm:w-96 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group first:rounded-l-2xl last:rounded-r-2xl">
+                                class="flex-1 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group">
                                 <div class="space-y-3">
                                     <div
                                         class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
@@ -80,11 +79,11 @@
                                     </div>
 
                                     <h3
-                                        class="text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
+                                        class="text-base sm:text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
                                         {{ $line->name }}
                                     </h3>
 
-                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                                         {{ $line->description }}
                                     </p>
                                 </div>
