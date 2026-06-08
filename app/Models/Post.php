@@ -37,6 +37,9 @@ class Post extends Model
             return '<a href="' . $href . '" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-medium">' . $url . '</a>';
         }, $text);
 
+        $boldPattern = '/\*\*(.*?)\*\*/s';
+        $text = preg_replace($boldPattern, '<strong>$1</strong>', $text);
+
         // 4. Ubah ketukan enter menjadi tag <br> untuk mempertahankan baris kosong pemisah paragraf
         return nl2br($text);
     }

@@ -52,19 +52,24 @@ class AboutUs extends Model
         $text = e($rawText);
 
         // 2. Pola Regex untuk mendeteksi URL (http, https, dan www)
-        $pattern = '/(https?:\/\/[^\s]+|www\.[^\s]+)/i';
+        $urlPattern = '/(https?:\/\/[^\s]+|www\.[^\s]+)/i';
 
         // 3. Ubah teks URL menjadi tag HTML <a> dengan target="_blank"
-        $text = preg_replace_callback($pattern, function ($matches) {
+        $text = preg_replace_callback($urlPattern, function ($matches) {
             $url = $matches[0];
 
             // Jika link diawali www. tanpa http, tambahkan http:// agar tidak rusak saat di-klik
             $href = preg_match('/^https?:\/\//i', $url) ? $url : 'http://' . $url;
 
-            return '<a href="' . $href . '" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline font-medium break-all">' . $url . '</a>';
+            return '<a href="' . $href . '" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:underline font-medium break-all">' . $url . '</a>';
         }, $text);
 
-        // 4. Ubah ketukan enter menjadi tag <br> untuk mempertahankan paragraf
+        // 4. FITUR BARU: Konversi format **teks** menjadi <strong>teks</strong> untuk Bold
+        // Menggunakan lazy matching [^*]+? agar jika ada beberapa bold dalam satu baris tidak rusak
+        $boldPattern = '/\*\*(.*?)\*\*/s';
+        $text = preg_replace($boldPattern, '<strong>$1</strong>', $text);
+
+        // 5. Ubah ketukan enter menjadi tag <br> untuk mempertahankan paragraf
         return nl2br($text);
     }
 }
