@@ -109,7 +109,7 @@
 
                 <div class="lg:col-span-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                     <p class="text-sm text-slate-600 leading-relaxed max-w-2xl">
-                        {{ $text }}
+                        {!! $text !!}
                     </p>
                     <div class="flex-shrink-0">
                         <a href="{{ route('about.us') }}" wire:navigate
