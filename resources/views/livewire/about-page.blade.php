@@ -122,7 +122,7 @@
                                     legalitas hukum, dan portofolio teknologi terapan secara komprehensif.
                                 </p>
                             </div>
-                            <a href="{{ asset('storage/' . $about->pdf_url) }}" target="_blank"
+                            <a href="{{ route('company.profile.download') }}" target="_blank"
                                 class="inline-flex items-center justify-center gap-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 px-5 py-3 rounded-xl transition-all shadow-sm shadow-red-600/10 tracking-wide w-full">
                                 Unduh Company Profile (PDF)
                             </a>

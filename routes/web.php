@@ -31,9 +31,38 @@ use App\Http\Controllers\MidtransCallbackController;
 use App\Livewire\AboutPage;
 use App\Livewire\PaymentFinish;
 use App\Livewire\TutorialKursus;
+use App\Models\AboutUs;
+use Illuminate\Support\Facades\Storage;
 
 // Route::view('/', 'welcome');
 Route::get('/', HomePage::class)->name('home');
+
+Route::get('/download-profile', function () {
+    // 1. Ambil data tentang kami untuk mendapatkan nama file
+    $about = AboutUs::first();
+
+    // Validasi jika data atau kolom file kosong
+    if (!$about || !$about->pdf_url) {
+        abort(404, 'File tidak ditemukan.');
+    }
+
+    // 2. Tentukan path file di dalam storage privat
+    // Jika Anda menyimpannya di disk 'public' (namun symlink dimatikan/dihapus), gunakan:
+    $filePath = $about->pdf_url;
+
+    if (!Storage::disk('public')->exists($filePath)) {
+        abort(404, 'File fisik tidak tersedia di server.');
+    }
+
+    // 3. Ambil nama asli file untuk diberikan saat didownload (opsional)
+    $downloadName = 'Company-Profile-' . date('Y') . '.pdf';
+
+    // 4. Return respon download tanpa membocorkan path asli folder
+    // Menggunakan 'inline' agar terbuka di tab baru browser, atau 'download' untuk langsung unduh otomatis
+    return Storage::disk('public')->response($filePath, $downloadName, [
+        'Content-Type' => 'application/pdf',
+    ]);
+})->name('company.profile.download');
 
 Route::get('/programs/{slug}', DetailProgram::class)->name('program.detail');
 Route::get('/programs/{slug}/{course_slug}', CoursePackageDetail::class)->name('program.course.detail');
