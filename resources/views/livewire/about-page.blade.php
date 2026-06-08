@@ -71,13 +71,9 @@
 
                         @forelse($businessLines as $line)
                             <div
-                                class="flex-1 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group">
-                                <div class="space-y-3">
-                                    <div
-                                        class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
-                                        <span class="text-blue-600 font-black text-sm">#{{ $loop->iteration }}</span>
-                                    </div>
+                                class="flex-1 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group relative">
 
+                                <div class="space-y-3 pr-4">
                                     <h3
                                         class="text-base sm:text-lg font-bold text-slate-900 tracking-tight group-hover:text-blue-600 transition-colors">
                                         {{ $line->name }}
@@ -87,6 +83,18 @@
                                         {{ $line->description }}
                                     </p>
                                 </div>
+
+                                <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 last:hidden">
+                                    <div
+                                        class="w-7 h-7 bg-white rounded-full flex items-center justify-center border border-slate-200 shadow-xs text-slate-400 group-hover:text-blue-500 group-hover:border-blue-300 transition-all">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="2.5" stroke="currentColor" class="w-3.5 h-3.5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                        </svg>
+                                    </div>
+                                </div>
+
                             </div>
                         @empty
                             <div class="w-full text-center py-12 text-slate-400 text-xs font-medium px-6">
