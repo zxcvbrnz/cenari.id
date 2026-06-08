@@ -65,14 +65,14 @@
                     </p>
                 </div>
 
-                <div class="w-full overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-slate-200">
+                <div class="w-full overflow-visible">
 
                     <div
-                        class="flex flex-nowrap items-stretch bg-slate-50 border border-slate-200 rounded-2xl divide-x divide-slate-200 shadow-xs min-w-max">
+                        class="inline-flex flex-nowrap items-stretch bg-slate-50 border border-slate-200 rounded-2xl divide-x divide-slate-200 shadow-sm min-w-full">
 
                         @forelse($businessLines as $line)
                             <div
-                                class="w-80 sm:w-96 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group first:rounded-l-2xl last:rounded-r-2xl hover:shadow-[inline_0_0_20px_rgba(59,130,246,0.05)]">
+                                class="w-80 sm:w-96 p-6 sm:p-8 flex flex-col justify-between space-y-4 hover:bg-white transition-all group first:rounded-l-2xl last:rounded-r-2xl">
                                 <div class="space-y-3">
                                     <div
                                         class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="w-full text-center py-12 text-slate-400 text-xs font-medium min-w-[100vw]">
+                            <div class="w-full text-center py-12 text-slate-400 text-xs font-medium px-6">
                                 Belum ada data lini bisnis yang tersedia.
                             </div>
                         @endforelse
