@@ -91,7 +91,12 @@ class ManageAbout extends Component
         $this->new_image_1 = $this->new_image_2 = $this->new_pdf = null;
         $this->loadAboutData();
 
-        session()->flash('success', 'Data Profile Utama Berhasil Diperbarui!');
+        // alert sukses
+        $this->dispatch('swal:modal', [
+            'title' => 'Sukses',
+            'icon' => 'success',
+            'text' => 'Data About Us berhasil disimpan.'
+        ]);
     }
 
     // --- PROSES CRUD BUSINESS LINES ---
@@ -110,6 +115,13 @@ class ManageAbout extends Component
 
         $this->resetBusinessForm();
         $this->loadSecondaryData();
+
+        // alert suskses
+        $this->dispatch('swal:modal', [
+            'title' => 'Sukses',
+            'icon' => 'success',
+            'text' => 'Lini bisnis berhasil disimpan.'
+        ]);
     }
 
     public function editBusinessLine($id)
@@ -125,6 +137,11 @@ class ManageAbout extends Component
     {
         BusinessLine::destroy($id);
         $this->loadSecondaryData();
+        $this->dispatch('swal:modal', [
+            'title' => 'Dihapus',
+            'icon' => 'success',
+            'text' => 'Lini bisnis berhasil dihapus.'
+        ]);
     }
 
     public function resetBusinessForm()
@@ -148,6 +165,12 @@ class ManageAbout extends Component
 
         $this->resetStatForm();
         $this->loadSecondaryData();
+        // alert suskses
+        $this->dispatch('swal:modal', [
+            'title' => 'Sukses',
+            'icon' => 'success',
+            'text' => 'Statistik berhasil disimpan.'
+        ]);
     }
 
     public function editStat($id)
@@ -163,6 +186,11 @@ class ManageAbout extends Component
     {
         Stat::destroy($id);
         $this->loadSecondaryData();
+        $this->dispatch('swal:modal', [
+            'title' => 'Dihapus',
+            'icon' => 'success',
+            'text' => 'Statistik berhasil dihapus.'
+        ]);
     }
 
     public function resetStatForm()
