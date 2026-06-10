@@ -130,6 +130,11 @@
                             <textarea wire:model="business_description" rows="2"
                                 class="w-full text-xs p-2.5 border border-slate-200 rounded-lg outline-none" placeholder="Deskripsi singkat..."></textarea>
                         </div>
+                        <div class="space-y-1">
+                            <input type="text" wire:model="business_link"
+                                class="w-full text-xs p-2.5 border border-slate-200 rounded-lg outline-none"
+                                placeholder="Link eksternal terkait lini bisnis (opsional)...">
+                        </div>
                         <div class="flex justify-end gap-2 text-[11px]">
                             @if ($business_id)
                                 <button type="button" wire:click="resetBusinessForm"
@@ -150,6 +155,11 @@
                                     <h4 class="text-xs font-bold text-slate-900">{{ $bl->name }}</h4>
                                     <p class="text-[11px] text-slate-500 leading-normal mt-0.5">
                                         {{ Str::limit($bl->description, 65) }}</p>
+                                    @if ($bl->link)
+                                        <a href="{{ $bl->link }}" target="_blank"
+                                            class="text-[10px] font-bold text-blue-600 mt-1 inline-block">Lihat
+                                            Link</a>
+                                    @endif
                                 </div>
                                 <div class="flex gap-1.5 flex-shrink-0">
                                     <button wire:click="editBusinessLine({{ $bl->id }})"

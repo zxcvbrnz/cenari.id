@@ -58,7 +58,8 @@
                         class="grid grid-cols-1 divide-y divide-slate-100/80 lg:grid-cols-none lg:flex lg:w-full lg:items-stretch lg:divide-y-0 lg:divide-x lg:divide-slate-100/80">
 
                         @forelse($businessLines as $line)
-                            <div
+                            {{-- tambahkan link --}}
+                            <a href="{{ $line->link ?? '#' }}" target="_blank" rel="noopener noreferrer"
                                 class="pt-8 pb-10 flex flex-col justify-start group relative bg-gradient-to-b from-white to-slate-50/30 hover:to-white transition-all duration-500 ease-out lg:flex-1 lg:pt-10">
 
                                 <div class="px-8 sm:px-10 flex items-start lg:min-h-[56px]">
@@ -96,7 +97,7 @@
                                     </p>
                                 </div>
 
-                            </div>
+                            </a>
                         @empty
                             <div
                                 class="w-full text-center py-16 text-slate-400 text-xs font-medium px-6 bg-slate-50/50">

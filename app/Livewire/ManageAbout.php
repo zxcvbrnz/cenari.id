@@ -21,7 +21,7 @@ class ManageAbout extends Component
     public $businessLines = [], $stats = [];
 
     // Properti Form Input Tambah/Edit Data Jamak
-    public $business_id, $business_name, $business_description;
+    public $business_id, $business_name, $business_description, $business_link;
     public $stat_id, $stat_svg_path, $stat_title, $stat_value;
 
     public function mount()
@@ -100,11 +100,12 @@ class ManageAbout extends Component
         $this->validate([
             'business_name' => 'required|string|max:255',
             'business_description' => 'required',
+            'business_link' => 'nullable|url',
         ]);
 
         BusinessLine::updateOrCreate(
             ['id' => $this->business_id],
-            ['name' => $this->business_name, 'description' => $this->business_description]
+            ['name' => $this->business_name, 'description' => $this->business_description, 'link' => $this->business_link]
         );
 
         $this->resetBusinessForm();
@@ -117,6 +118,7 @@ class ManageAbout extends Component
         $this->business_id = $bl->id;
         $this->business_name = $bl->name;
         $this->business_description = $bl->description;
+        $this->business_link = $bl->link;
     }
 
     public function deleteBusinessLine($id)
@@ -127,7 +129,7 @@ class ManageAbout extends Component
 
     public function resetBusinessForm()
     {
-        $this->reset(['business_id', 'business_name', 'business_description']);
+        $this->reset(['business_id', 'business_name', 'business_description', 'business_link']);
     }
 
     // --- PROSES CRUD STATS ---
