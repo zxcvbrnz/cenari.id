@@ -44,15 +44,58 @@
                             placeholder="Teks isi bagian penjelas visi..."></textarea>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Gambar Bagian
-                            1</label>
-                        <div class="border border-dashed border-slate-300 p-4 rounded-xl text-center bg-slate-50/50">
-                            @if ($image_1 && !$new_image_1)
-                                <img src="{{ asset('storage/' . $image_1) }}"
-                                    class="h-20 mx-auto object-cover rounded-lg mb-2 shadow-sm">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">
+                            Gambar Bagian 1
+                        </label>
+
+                        <div
+                            class="border border-dashed border-slate-300 p-4 rounded-xl text-center bg-slate-50/50 relative">
+
+                            <div wire:loading wire:target="new_image_1"
+                                class="absolute inset-0 bg-white/80 rounded-xl flex flex-col items-center justify-center z-10 backdrop-blur-[1px]">
+                                <div class="flex items-center gap-2">
+                                    <svg class="animate-spin h-4 w-4 text-blue-600" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10"
+                                            stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+                                    <span class="text-[11px] font-bold text-blue-600">Mengunggah gambar...</span>
+                                </div>
+                            </div>
+
+                            @if ($new_image_1 && !$errors->has('new_image_1'))
+                                <div wire:loading.remove wire:target="new_image_1" class="mb-2">
+                                    <div
+                                        class="text-[10px] font-bold text-emerald-600 mb-1 flex items-center justify-center gap-1">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        Preview Gambar Baru
+                                    </div>
+                                    <img src="{{ $new_image_1->temporaryUrl() }}"
+                                        class="h-20 mx-auto object-cover rounded-lg shadow-xs border border-slate-200">
+                                </div>
                             @endif
-                            <input type="file" wire:model="new_image_1"
-                                class="text-[10px] text-slate-500 block w-full file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+
+                            @if ($image_1 && !$new_image_1)
+                                <div wire:loading.remove wire:target="new_image_1" class="mb-2">
+                                    <div class="text-[10px] font-bold text-slate-400 mb-1">Gambar Saat Ini</div>
+                                    <img src="{{ asset('storage/' . $image_1) }}"
+                                        class="h-20 mx-auto object-cover rounded-lg shadow-xs border border-slate-100">
+                                </div>
+                            @endif
+
+                            <div class="mt-1">
+                                <input type="file" wire:model="new_image_1" id="new_image_1"
+                                    class="text-[10px] text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors cursor-pointer">
+
+                                @error('new_image_1')
+                                    <span
+                                        class="text-[10px] text-red-500 font-medium block mt-1.5">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -66,15 +109,58 @@
                             placeholder="Teks isi komitmen/implementasi kerja..."></textarea>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Gambar Bagian
-                            2</label>
-                        <div class="border border-dashed border-slate-300 p-4 rounded-xl text-center bg-slate-50/50">
-                            @if ($image_2 && !$new_image_2)
-                                <img src="{{ asset('storage/' . $image_2) }}"
-                                    class="h-20 mx-auto object-cover rounded-lg mb-2 shadow-sm">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">
+                            Gambar Bagian 2
+                        </label>
+
+                        <div
+                            class="border border-dashed border-slate-300 p-4 rounded-xl text-center bg-slate-50/50 relative">
+
+                            <div wire:loading wire:target="new_image_2"
+                                class="absolute inset-0 bg-white/80 rounded-xl flex flex-col items-center justify-center z-10 backdrop-blur-[1px]">
+                                <div class="flex items-center gap-2">
+                                    <svg class="animate-spin h-4 w-4 text-blue-600" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10"
+                                            stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+                                    <span class="text-[11px] font-bold text-blue-600">Mengunggah gambar...</span>
+                                </div>
+                            </div>
+
+                            @if ($new_image_2 && !$errors->has('new_image_2'))
+                                <div wire:loading.remove wire:target="new_image_2" class="mb-2">
+                                    <div
+                                        class="text-[10px] font-bold text-emerald-600 mb-1 flex items-center justify-center gap-1">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        Preview Gambar Baru
+                                    </div>
+                                    <img src="{{ $new_image_2->temporaryUrl() }}"
+                                        class="h-20 mx-auto object-cover rounded-lg shadow-xs border border-slate-200">
+                                </div>
                             @endif
-                            <input type="file" wire:model="new_image_2"
-                                class="text-[10px] text-slate-500 block w-full file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+
+                            @if ($image_2 && !$new_image_2)
+                                <div wire:loading.remove wire:target="new_image_2" class="mb-2">
+                                    <div class="text-[10px] font-bold text-slate-400 mb-1">Gambar Saat Ini</div>
+                                    <img src="{{ asset('storage/' . $image_2) }}"
+                                        class="h-20 mx-auto object-cover rounded-lg shadow-xs border border-slate-100">
+                                </div>
+                            @endif
+
+                            <div class="mt-1">
+                                <input type="file" wire:model="new_image_2" id="new_image_2"
+                                    class="text-[10px] text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors cursor-pointer">
+
+                                @error('new_image_2')
+                                    <span
+                                        class="text-[10px] text-red-500 font-medium block mt-1.5">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -87,17 +173,61 @@
                             class="w-full text-xs p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
                             placeholder="Contoh: dQw4w9WgXcQ">
                     </div>
-                    <div class="space-y-1.5">
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">File Company
-                            Profile (PDF)</label>
-                        <div class="border border-slate-200 p-2.5 rounded-xl bg-slate-50/50 flex flex-col gap-2">
-                            @if ($pdf_url)
-                                <span
-                                    class="text-[10px] font-bold text-red-600 bg-red-50 border border-red-100 px-2 py-0.5 rounded self-start">File
-                                    Tersimpan ✓</span>
-                            @endif
-                            <input type="file" wire:model="new_pdf"
-                                class="text-[10px] text-slate-500 block w-full file:mr-4 file:py-1 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">
+                            File Company Profile (PDF)
+                        </label>
+
+                        <div
+                            class="border border-slate-200 p-4 rounded-xl bg-slate-50/50 flex flex-col gap-3 relative overflow-hidden">
+
+                            <div wire:loading wire:target="new_pdf"
+                                class="absolute inset-0 bg-white/80 rounded-xl flex items-center justify-center z-10 backdrop-blur-[1px]">
+                                <div class="flex items-center gap-2">
+                                    <svg class="animate-spin h-4 w-4 text-red-600" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10"
+                                            stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+                                    <span class="text-[11px] font-bold text-red-600">Mengunggah file PDF...</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 items-center">
+                                @if ($new_pdf && !$errors->has('new_pdf'))
+                                    <div wire:loading.remove wire:target="new_pdf"
+                                        class="flex items-center gap-1.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-lg">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        PDF Baru Siap Disimpan ✓
+                                    </div>
+                                @endif
+
+                                @if ($pdf_url && !$new_pdf)
+                                    <div wire:loading.remove wire:target="new_pdf"
+                                        class="flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 border border-red-100 px-2.5 py-1 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="2.5" stroke="currentColor" class="w-3 h-3">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5A3.375 3.375 0 0 0 10.125 2.25H8.25m2.25 13.5H12m-2.25 3H12m0 0h3.75M12 18.75V16.5m-3-12h2.25A3.375 3.375 0 0 1 14.625 7.875V9.42a5.13 5.13 0 0 1 1.258.91l2.583 2.583c.313.313.57.678.762 1.082a5.13 5.13 0 0 1 .327 1.83V18.75A3.375 3.375 0 0 1 16.125 22H7.875A3.375 3.375 0 0 1 4.5 18.75V7.875A3.375 3.375 0 0 1 7.875 4.5H10.5z" />
+                                        </svg>
+                                        File Terarsip Berhasil Dimuat
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="w-full">
+                                <input type="file" wire:model="new_pdf" id="new_pdf" accept="application/pdf"
+                                    class="text-[10px] text-slate-500 block w-full file:mr-4 file:py-1.5 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors cursor-pointer">
+
+                                @error('new_pdf')
+                                    <span
+                                        class="text-[10px] text-red-500 font-medium block mt-2">{{ $message }}</span>
+                                @enderror
+                            </div>
+
                         </div>
                     </div>
                 </div>
