@@ -280,6 +280,59 @@
         </div>
     </section>
 
+    <div class="max-w-7xl mx-auto my-6 px-4 sm:px-6 lg:px-8">
+        <div
+            class="bg-gradient-to-r from-blue-50 via-slate-50 to-indigo-50 border border-blue-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm relative overflow-hidden">
+
+            {{-- Decorative Accent Circles --}}
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-blue-200/40 rounded-full blur-2xl pointer-events-none">
+            </div>
+            <div
+                class="absolute -bottom-12 -left-12 w-48 h-48 bg-indigo-200/40 rounded-full blur-2xl pointer-events-none">
+            </div>
+
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+
+                {{-- Content Left --}}
+                <div class="space-y-4 text-center md:text-left max-w-2xl">
+
+                    {{-- Badge --}}
+                    <div
+                        class="inline-flex items-center gap-2 bg-blue-100/80 border border-blue-200/60 px-3.5 py-1.5 rounded-full text-blue-700 font-black text-[10px] uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                        Cenari Academy
+                    </div>
+
+                    {{-- Main Title --}}
+                    <h2
+                        class="text-2xl sm:text-3xl md:text-4xl font-black italic uppercase tracking-tight text-slate-800 leading-tight">
+                        Yuk Belajar Coding & <span class="text-blue-600">AI</span> Untuk Pemula Sampai Mahir
+                    </h2>
+
+                    {{-- Subtitle --}}
+                    <p class="text-sm md:text-base font-medium text-slate-600 leading-relaxed">
+                        Ubah karier dan skill Anda — <span class="font-bold text-slate-800">dari tidak bisa coding
+                            menjadi AI builder</span> bersama kurikulum berbasis praktik.
+                    </p>
+                </div>
+
+                {{-- Action Right --}}
+                <div class="shrink-0 w-full md:w-auto text-center">
+                    <a href="https://coding-ai.cenari.id" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center gap-3 w-full md:w-auto bg-slate-900 text-white px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-[0.2em] shadow-xl hover:bg-blue-600 hover:shadow-blue-200 transition-all active:scale-95 group">
+                        <span>Mulai Belajar</span>
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <section class="max-w-7xl mx-auto px-6 py-24" x-data="{
         copied: false,
         copyToClipboard(url) {
