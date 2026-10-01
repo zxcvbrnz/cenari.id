@@ -12,8 +12,8 @@ class ManageWorkshop extends Component
     use WithFileUploads;
 
     public $view = 'list', $selectedId;
-    public $title, $date_string, $time_string, $type, $status, $price, $color = '#3B82F6', $image, $old_image;
-
+    public $title, $date_string, $time_string, $type, $price, $color = '#3B82F6', $image, $old_image;
+    public $status = 'Open';
     public function render()
     {
         return view('livewire.admin.manage-workshop', [
@@ -25,6 +25,8 @@ class ManageWorkshop extends Component
     {
         $this->reset(['selectedId', 'title', 'date_string', 'time_string', 'type', 'status', 'price', 'color', 'image', 'old_image']);
 
+        $this->status = 'Open';
+        $this->color = '#3B82F6';
         if ($id) {
             $w = Workshop::findOrFail($id);
             $this->selectedId = $w->id;

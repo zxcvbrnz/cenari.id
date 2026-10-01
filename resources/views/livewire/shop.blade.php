@@ -6,7 +6,7 @@
             <div>
                 <h1 class="text-4xl font-black text-slate-900 tracking-tighter italic">CENARI<span
                         class="text-blue-600">STORE</span></h1>
-                <p class="text-slate-400 text-sm">Temukan komponen dan kit robotik terbaik.</p>
+                <p class="text-slate-400 text-sm">Temukan komponen, kit robotik, dan souvenir terbaik.</p>
             </div>
 
             <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center">
@@ -20,13 +20,10 @@
                                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
 
-                        <!-- Badge Angka -->
-                        {{-- @if ($orderCount > 0) --}}
                         <span
                             class="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[8px] font-black text-white shadow-sm ring-2 ring-white">
                             {{ $orderCount }}
                         </span>
-                        {{-- @endif --}}
                     </div>
 
                     <span class="text-[10px] font-black uppercase tracking-widest text-slate-600">Pesanan Saya</span>
@@ -35,16 +32,19 @@
                 <input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari produk..."
                     class="px-6 py-3 rounded-2xl border-none bg-slate-100 focus:ring-2 focus:ring-blue-500 w-full md:w-64 text-sm font-medium">
 
+                {{-- Tab Switcher dengan Pilihan Souvenir --}}
                 <div class="bg-slate-100 p-1 rounded-2xl flex">
                     <button wire:click="$set('viewMode', 'kits')"
-                        class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'kits' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">Kits</button>
+                        class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'kits' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">Kits</button>
                     <button wire:click="$set('viewMode', 'items')"
-                        class="px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'items' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">Items</button>
+                        class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'items' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">Items</button>
+                    <button wire:click="$set('viewMode', 'souvenirs')"
+                        class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'souvenirs' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">Souvenirs</button>
                 </div>
             </div>
         </div>
 
-        {{-- Grid View --}}
+        {{-- Grid View berdasarkan viewMode --}}
         @if ($viewMode == 'kits')
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($kits as $kit)
@@ -53,7 +53,6 @@
                         $modulsPrice = $kit->moduls->sum('price');
                         $totalPrice = $itemsPrice + $modulsPrice - $kit->discount;
 
-                        // Logika stok kit (berdasarkan item terkecil)
                         $kitStock = $kit->items->isEmpty()
                             ? 0
                             : $kit->items->min(fn($i) => floor($i->stock / ($i->pivot->quantity ?: 1)));
@@ -66,14 +65,12 @@
                                 <img src="{{ $kit->images->isNotEmpty() ? asset('storage/' . $kit->images->first()->filename) : 'https://placehold.co/600x400' }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
 
-                                {{-- Badge Diskon --}}
                                 @if ($kit->discount > 0)
                                     <div
                                         class="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-black px-3 py-1 rounded-lg">
                                         SAVE Rp {{ number_format($kit->discount, 0, ',', '.') }}</div>
                                 @endif
 
-                                {{-- Badge Stok --}}
                                 <div
                                     class="absolute top-4 right-4 {{ $kitStock <= 0 ? 'bg-slate-900' : 'bg-blue-600' }} text-white text-[9px] font-black px-3 py-1 rounded-lg shadow-lg uppercase">
                                     {{ $kitStock <= 0 ? 'Habis' : 'Stok: ' . $kitStock }}
@@ -121,7 +118,7 @@
                     </div>
                 @endforeach
             </div>
-        @else
+            @elif ($viewMode == 'items')
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 @foreach ($items as $item)
                     <div
@@ -164,6 +161,42 @@
                                     Habis
                                 </button>
                             @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            {{-- Tampilan Grid Baru Khusus Souvenirs --}}
+        @else
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                @foreach ($souvenirs as $souvenir)
+                    <div
+                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden">
+                        {{-- Sesuaikan named route detail souvenir jika ada, contoh: 'souvenir.detail' --}}
+                        <a href="#" class="block">
+                            <div class="aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden relative">
+                                <img src="{{ $souvenir->images->isNotEmpty() ? asset('storage/' . $souvenir->images->first()->filename) : 'https://placehold.co/400x400' }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            </div>
+                            <h4
+                                class="text-xs font-bold text-slate-800 truncate group-hover:text-blue-600 transition-colors">
+                                {{ $souvenir->name }}</h4>
+                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Tersedia</p>
+                        </a>
+
+                        <div class="relative mt-2 h-[35px] flex items-center">
+                            <p
+                                class="text-blue-600 font-black text-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-2">
+                                Rp {{ number_format($souvenir->price, 0, ',', '.') }}
+                            </p>
+
+                            <button wire:click="addToCart({{ $souvenir->id }}, 'souvenir')"
+                                class="absolute inset-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-xl flex items-center justify-center gap-1 hover:bg-blue-600">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                Ke Keranjang
+                            </button>
                         </div>
                     </div>
                 @endforeach

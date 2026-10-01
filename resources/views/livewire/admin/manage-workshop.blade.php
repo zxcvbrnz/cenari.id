@@ -95,62 +95,81 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
 
                     <div class="space-y-5">
+                        <!-- TITLE -->
                         <div class="space-y-2">
                             <label class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Event
                                 Title</label>
                             <input type="text" wire:model="title"
-                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner"
+                                class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner @error('title') ring-2 ring-red-500 @enderror"
                                 placeholder="e.g Dasar IoT Laravel">
+                            @error('title')
+                                <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- DATE & TIME STRING -->
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Date
                                     (String)</label>
                                 <input type="text" wire:model="date_string"
-                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner"
+                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner @error('date_string') ring-2 ring-red-500 @enderror"
                                     placeholder="25 Maret 2024">
+                                @error('date_string')
+                                    <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="space-y-2">
                                 <label class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Time
                                     (String)</label>
                                 <input type="text" wire:model="time_string"
-                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner"
+                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner @error('time_string') ring-2 ring-red-500 @enderror"
                                     placeholder="09:00 - 15:00 WIB">
+                                @error('time_string')
+                                    <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
+                        <!-- TYPE & PRICE -->
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label
                                     class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Type</label>
                                 <select wire:model="type"
-                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner">
-                                    <option value="">Pilih...</option>
+                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner @error('type') ring-2 ring-red-500 @enderror">
+                                    <option value="">Pilih Type...</option>
                                     <option value="Workshop">Workshop</option>
                                     <option value="Seminar">Seminar</option>
                                     <option value="Bootcamp">Bootcamp</option>
                                     <option value="OnSchool">OnSchool</option>
                                 </select>
+                                @error('type')
+                                    <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="space-y-2">
                                 <label
                                     class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Price /
                                     Cost</label>
                                 <input type="text" wire:model="price"
-                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner"
+                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner @error('price') ring-2 ring-red-500 @enderror"
                                     placeholder="Free atau Rp 50.000">
+                                @error('price')
+                                    <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
                     <div class="space-y-5">
+                        <!-- POSTER IMAGE -->
                         <div class="space-y-2 text-center">
                             <label
                                 class="text-[10px] font-black uppercase text-slate-400 tracking-widest block text-left ml-1">Event
                                 Poster</label>
                             <div
-                                class="bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 p-4 min-h-[200px] flex flex-col items-center justify-center relative group transition-all hover:border-blue-300 overflow-hidden">
+                                class="bg-slate-50 rounded-[2rem] border-4 border-dashed border-slate-200 p-4 min-h-[200px] flex flex-col items-center justify-center relative group transition-all hover:border-blue-300 overflow-hidden @error('image') border-red-400 bg-red-50/50 @enderror">
 
                                 @if ($image)
                                     <img src="{{ $image->temporaryUrl() }}"
@@ -191,29 +210,40 @@
                                     </div>
                                 </div>
                             </div>
+                            @error('image')
+                                <p class="text-[10px] font-bold text-red-500 text-left ml-1 mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <!-- STATUS & COLOR -->
                         <div class="grid grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label
                                     class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Status</label>
                                 <select wire:model="status"
-                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner">
+                                    class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-xs uppercase focus:ring-2 focus:ring-blue-500 shadow-inner @error('status') ring-2 ring-red-500 @enderror">
+                                    <option value="">Pilih Status...</option>
                                     <option value="Open">Open</option>
                                     <option value="Closed">Closed</option>
                                 </select>
+                                @error('status')
+                                    <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="space-y-2">
                                 <label
                                     class="text-[10px] font-black uppercase text-slate-400 ml-1 tracking-widest">Brand
                                     Color</label>
                                 <div
-                                    class="flex gap-2 items-center bg-slate-50 p-2 rounded-2xl border border-transparent focus-within:ring-2 focus-within:ring-blue-500 transition-all shadow-inner">
+                                    class="flex gap-2 items-center bg-slate-50 p-2 rounded-2xl border border-transparent focus-within:ring-2 focus-within:ring-blue-500 transition-all shadow-inner @error('color') ring-2 ring-red-500 @enderror">
                                     <input type="color" wire:model="color"
                                         class="w-10 h-10 bg-transparent border-none cursor-pointer">
                                     <span
                                         class="text-[10px] font-mono font-bold text-slate-400 uppercase">{{ $color }}</span>
                                 </div>
+                                @error('color')
+                                    <p class="text-[10px] font-bold text-red-500 ml-1 mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>

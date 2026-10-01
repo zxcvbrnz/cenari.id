@@ -5,13 +5,14 @@ namespace App\Livewire;
 use App\Models\Item;
 use App\Models\KitRobotic;
 use App\Models\Order;
+use App\Models\Souvenir; // Pastikan model ini di-import
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Shop extends Component
 {
     public $search = '';
-    public $viewMode = 'kits';
+    public $viewMode = 'kits'; // Bisa berisi: 'kits', 'items', 'souvenirs'
 
     /**
      * Menghitung ketersediaan stok untuk sebuah Kit
@@ -30,12 +31,12 @@ class Shop extends Component
     {
         $cart = session()->get('cart', []);
         $key = $type . '_' . $id;
-        $product_name = '';
-        $currentStock = 0;
+        $product_price = 0;
+        $product_image = null;
+        $currentStock = 9999; // Default untuk souvenir karena tidak memiliki kolom stok di skema
 
         if ($type === 'kit') {
             $product = KitRobotic::with(['images', 'items', 'moduls'])->find($id);
-
             if (!$product) return;
 
             $currentStock = $this->calculateKitStock($product);
@@ -53,7 +54,7 @@ class Shop extends Component
             $modulsPrice = $product->moduls->sum('price');
             $product_price = $itemsPrice + $modulsPrice - $product->discount;
             $product_image = $product->images->first()->filename ?? null;
-        } else {
+        } elseif ($type === 'item') {
             $product = Item::with('images')->find($id);
 
             if (!$product || $product->stock <= 0) {
@@ -66,6 +67,23 @@ class Shop extends Component
             }
 
             $currentStock = $product->stock;
+            $product_price = $product->price;
+            $product_image = $product->images->first()->filename ?? null;
+        } elseif ($type === 'souvenir') {
+            // Logika baru untuk Souvenir
+            $product = Souvenir::with('images')->find($id);
+
+            if (!$product) {
+                $this->dispatch('swal:modal', [
+                    'title' => 'Gagal!',
+                    'icon' => 'error',
+                    'text' => 'Data souvenir tidak ditemukan.'
+                ]);
+                return;
+            }
+
+            // Karena skema souvenir tidak memiliki kolom stok, dianggap selalu tersedia
+            $currentStock = 999;
             $product_price = $product->price;
             $product_image = $product->images->first()->filename ?? null;
         }
@@ -117,13 +135,20 @@ class Shop extends Component
             ->latest()
             ->get();
 
+        // Mengambil data Souvenir berdasarkan input search
+        $souvenirs = Souvenir::with('images')
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->latest()
+            ->get();
+
         $orderCount = Order::where('user_id', Auth::id())
-            ->whereIn('status', ['pending', 'processing']) // Sesuaikan status yang ingin dihitung
+            ->whereIn('status', ['pending', 'processing'])
             ->count();
 
         return view('livewire.shop', [
             'kits' => $kits,
             'items' => $items,
+            'souvenirs' => $souvenirs, // Parsing ke view
             'orderCount' => $orderCount
         ]);
     }
