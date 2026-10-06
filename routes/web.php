@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MidtransCallbackController;
 use App\Livewire\AboutPage;
 use App\Livewire\PaymentFinish;
+use App\Livewire\SouvenirDetail;
 use App\Livewire\TutorialKursus;
 use App\Models\AboutUs;
 use Illuminate\Support\Facades\Storage;
@@ -79,6 +80,7 @@ Route::get('/portfolio-gallery', PortfolioGallery::class)->name('portfolio.galle
 Route::get('/shop', Shop::class)->name('shop');
 Route::get('/shop/kit/{id}', KitDetail::class)->name('kit.detail');
 Route::get('/shop/item/{id}', ItemDetail::class)->name('item.detail');
+Route::get('/shop/souvenir/{id}', SouvenirDetail::class)->name('souvenir.detail');
 
 Route::get('/artikel', Blog::class)->name('blog.index');
 Route::get('/artikel/{slug}', BlogShow::class)->name('blog.show');
