@@ -1,321 +1,486 @@
-<div class="p-8 min-h-screen font-sans text-slate-900">
-    <div class="max-w-7xl mx-auto">
+<div class="p-6 max-w-7xl mx-auto">
+    @if (session()->has('message'))
+        <div class="mb-4 p-4 bg-emerald-100 text-emerald-800 rounded-xl font-medium border border-emerald-200">
+            {{ session('message') }}
+        </div>
+    @endif
 
-        <div class="flex justify-between items-center mb-10">
-            <div class="flex bg-white p-1.5 rounded-2xl shadow-sm border border-slate-200">
-                <button wire:click="setTab('kit')"
-                    class="px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all {{ $activeTab == 'kit' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-400' }}">Paket
-                    Kit</button>
-                <button wire:click="setTab('item')"
-                    class="px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest transition-all {{ $activeTab == 'item' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-400' }}">Komponen</button>
-            </div>
-            @if ($view == 'index')
-                <button wire:click="{{ $activeTab == 'kit' ? 'openKitCreate' : 'openItemCreate' }}"
-                    class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-100">+
-                    Tambah Baru</button>
+    {{-- Navigation Header --}}
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Manajemen Produk & Modul</h2>
+        <div class="space-x-2">
+            @if ($view !== 'list')
+                <button wire:click="setView('list')"
+                    class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-semibold transition">
+                    &larr; Kembali
+                </button>
+            @else
+                <button wire:click="setView('kit-form')"
+                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition">
+                    + Kit
+                </button>
+                <button wire:click="setView('item-form')"
+                    class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-semibold transition">
+                    + Item
+                </button>
+                <button wire:click="setView('souvenir-form')"
+                    class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-semibold transition">
+                    + Souvenir
+                </button>
+            @endif
+        </div>
+    </div>
+
+    @if ($view === 'list')
+        {{-- Search Input Global --}}
+        <div class="mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-3">
+            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input type="text" wire:model.live.debounce.300ms="search"
+                placeholder="Cari nama atau deskripsi kit, item, atau souvenir..."
+                class="w-full border-none focus:outline-none focus:ring-0 text-slate-700 placeholder-slate-400">
+            @if ($search)
+                <button wire:click="$set('search', '')"
+                    class="text-xs bg-slate-100 text-slate-500 px-3 py-1.5 rounded-lg font-medium hover:bg-slate-200">Reset</button>
             @endif
         </div>
 
-        @if ($view == 'index')
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                @if ($activeTab == 'kit')
-                    @foreach ($kits as $k)
-                        <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">
-                            @if ($k->images->first())
-                                <img src="{{ asset('storage/' . $k->images->first()->filename) }}"
-                                    class="w-full h-40 object-cover rounded-2xl mb-4">
-                            @else
-                                <div
-                                    class="w-full h-40 bg-slate-50 rounded-2xl mb-4 flex items-center justify-center text-[10px] font-bold text-slate-300 italic uppercase">
-                                    No Image</div>
-                            @endif
-                            <h4 class="font-black uppercase text-xs mb-3 italic">{{ $k->name }}</h4>
-                            <div
-                                class="flex flex-col gap-1 mb-4 bg-slate-50 p-3 rounded-xl text-[9px] font-black italic">
-                                <span class="text-blue-600">KIT: Rp
-                                    {{ number_format($k->items->sum('price'), 0, ',', '.') }}</span>
-                                <span class="text-orange-600">DISC: {{ $k->discount }}%</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button wire:click="openKitEdit({{ $k->id }})"
-                                    class="flex-1 bg-slate-900 text-white py-2.5 rounded-xl font-bold text-[9px] uppercase tracking-widest">Edit</button>
-                                <button onclick="confirm('Hapus?') || event.stopImmediatePropagation()"
-                                    wire:click="deleteKit({{ $k->id }})"
-                                    class="px-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition-all">🗑️</button>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    @foreach ($all_items as $item)
-                        <div class="bg-white p-4 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col h-full">
-                            @if ($item->images->first())
-                                <img src="{{ asset('storage/' . $item->images->first()->filename) }}"
-                                    class="w-full h-32 object-cover rounded-2xl mb-3">
-                            @else
-                                <div
-                                    class="w-full h-32 bg-slate-50 rounded-2xl mb-3 flex items-center justify-center text-[8px] font-bold text-slate-300 italic uppercase">
-                                    No Image
-                                </div>
-                            @endif
-
-                            <h5 class="font-bold text-slate-700 text-[10px] truncate mb-1">{{ $item->name }}</h5>
-
-                            <div class="flex justify-between items-center mb-4">
-                                <p class="text-[10px] font-black text-blue-500 italic uppercase">
-                                    Rp {{ number_format($item->price, 0, ',', '.') }}
-                                </p>
-
-                                {{-- Indikator Stok --}}
-                                <div class="flex items-center gap-1.5">
-                                    <span
-                                        class="text-[8px] font-black uppercase {{ $item->stock <= 5 ? 'text-red-500' : 'text-slate-400' }}">
-                                        Stok: {{ $item->stock }}
-                                    </span>
-                                    <div
-                                        class="w-1.5 h-1.5 rounded-full {{ $item->stock <= 0 ? 'bg-red-500' : ($item->stock <= 5 ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400') }}">
+        {{-- TABLE SOUVENIR --}}
+        <div class="mb-10 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 class="text-lg font-bold mb-4 text-purple-700 flex items-center gap-2">
+                <span>Daftar Souvenir</span>
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b bg-slate-50 text-slate-600 text-sm">
+                            <th class="p-3">Gambar</th>
+                            <th class="p-3">Nama Souvenir</th>
+                            <th class="p-3">Harga</th>
+                            <th class="p-3">Stok</th>
+                            <th class="p-3 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @forelse($souvenirs as $souvenir)
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3">
+                                    <div class="flex space-x-1">
+                                        @forelse($souvenir->images as $img)
+                                            <img src="{{ asset('storage/' . $img->image_path) }}"
+                                                class="w-10 h-10 object-cover rounded-lg border">
+                                        @empty
+                                            <span class="text-xs text-slate-400">No Image</span>
+                                        @endforelse
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-auto flex gap-1">
-                                <button wire:click="openItemEdit({{ $item->id }})"
-                                    class="flex-1 bg-slate-100 text-slate-600 py-2 rounded-xl text-[8px] font-black uppercase hover:bg-slate-900 hover:text-white transition-all">
-                                    Edit
-                                </button>
-                                <button onclick="confirm('Hapus item ini?') || event.stopImmediatePropagation()"
-                                    wire:click="deleteItem({{ $item->id }})"
-                                    class="px-2.5 bg-red-50 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all">
-                                    ×
-                                </button>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
+                                </td>
+                                <td class="p-3 font-semibold text-slate-800">{{ $souvenir->name }}</td>
+                                <td class="p-3 text-purple-600 font-bold">Rp
+                                    {{ number_format($souvenir->price, 0, ',', '.') }}</td>
+                                <td class="p-3 font-medium">{{ $souvenir->stock }}</td>
+                                <td class="p-3 text-right space-x-2">
+                                    <button wire:click="openSouvenirEdit({{ $souvenir->id }})"
+                                        class="text-blue-600 hover:underline font-semibold">Edit</button>
+                                    <button wire:click="deleteSouvenir({{ $souvenir->id }})"
+                                        onclick="confirm('Hapus souvenir ini?') || event.stopImmediatePropagation()"
+                                        class="text-red-600 hover:underline font-semibold">Hapus</button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="p-4 text-center text-slate-400">Data souvenir tidak ditemukan.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-        @elseif($view == 'kit-form')
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100">
-                    <h2 class="text-xl font-black uppercase italic mb-8 tracking-tighter">
-                        {{ $kit_id ? 'Edit Paket' : 'Paket Baru' }}</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="md:col-span-2">
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Nama Paket</label>
-                            <input type="text" wire:model="k_name"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Harga Pelatihan
-                                (Rp)</label>
-                            <input type="number" step="0.01" wire:model="k_pelatihan_price"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold text-green-600">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Harga Private
-                                (Rp)</label>
-                            <input type="number" step="0.01" wire:model="k_private_price"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold text-orange-600">
-                        </div>
+            <div class="mt-4">{{ $souvenirs->links() }}</div>
+        </div>
 
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Diskon Hardware
-                                (%)</label>
-                            <input type="number" step="0.01" wire:model="k_discount"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600" placeholder="0">
-                        </div>
-
-                        <div class="md:col-span-2 bg-blue-50/50 p-6 rounded-[2rem] border border-blue-100">
-                            <label class="text-[9px] font-black uppercase text-blue-600 block mb-4 italic">Modul
-                                Pembelajaran</label>
-                            <div class="flex items-start gap-4">
-                                <label
-                                    class="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-xl cursor-pointer relative overflow-hidden flex-shrink-0">
-                                    <span class="text-xl font-bold">+</span>
-                                    <input type="file" wire:model="modul_file" class="hidden">
-                                    <div wire:loading wire:target="modul_file"
-                                        class="absolute inset-0 bg-blue-600 flex items-center justify-center">
-                                        <div
-                                            class="w-4 h-4 border-2 border-white border-t-transparent animate-spin rounded-full">
-                                        </div>
+        {{-- TABLE KIT ROBOTIC --}}
+        <div class="mb-10 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 class="text-lg font-bold mb-4 text-blue-700 flex items-center gap-2">
+                <span>Daftar Kit Robotic</span>
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b bg-slate-50 text-slate-600 text-sm">
+                            <th class="p-3">Gambar</th>
+                            <th class="p-3">Nama Kit</th>
+                            <th class="p-3">Pelatihan</th>
+                            <th class="p-3">Private</th>
+                            <th class="p-3">Modul</th>
+                            <th class="p-3 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @forelse($kits as $kit)
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3">
+                                    <div class="flex space-x-1">
+                                        @forelse($kit->images as $img)
+                                            <img src="{{ asset('storage/' . $img->image_path) }}"
+                                                class="w-10 h-10 object-cover rounded-lg border">
+                                        @empty
+                                            <span class="text-xs text-slate-400">No Image</span>
+                                        @endforelse
                                     </div>
-                                </label>
-                                <div class="flex flex-col gap-1 w-full">
-                                    <input type="text" wire:model="modul_name" placeholder="Nama Modul..."
-                                        class="text-[11px] font-black uppercase italic border-none bg-transparent p-0 focus:ring-0">
-                                    @if ($modul_file)
-                                        <span class="text-[9px] font-black text-green-500 italic uppercase">✓ Siap:
-                                            {{ $modul_file->getClientOriginalName() }}</span>
-                                    @elseif($existing_modul_file)
-                                        <a href="{{ asset('storage/' . $existing_modul_file) }}" target="_blank"
-                                            class="text-[9px] font-black text-blue-600 uppercase italic underline">{{ basename($existing_modul_file) }}</a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                                <td class="p-3 font-semibold text-slate-800">{{ $kit->name }}</td>
+                                <td class="p-3 text-green-600 font-bold">Rp
+                                    {{ number_format($kit->pelatihan_price, 0, ',', '.') }}</td>
+                                <td class="p-3 text-orange-600 font-bold">Rp
+                                    {{ number_format($kit->private_price, 0, ',', '.') }}</td>
+                                <td class="p-3 font-medium text-slate-600">
+                                    {{ $kit->moduls ? $kit->moduls->name : '-' }}</td>
+                                <td class="p-3 text-right space-x-2">
+                                    <button wire:click="openKitEdit({{ $kit->id }})"
+                                        class="text-blue-600 hover:underline font-semibold">Edit</button>
+                                    <button wire:click="deleteKit({{ $kit->id }})"
+                                        onclick="confirm('Hapus kit beserta modulnya?') || event.stopImmediatePropagation()"
+                                        class="text-red-600 hover:underline font-semibold">Hapus</button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="p-4 text-center text-slate-400">Data kit tidak ditemukan.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4">{{ $kits->links() }}</div>
+        </div>
 
-                        <div class="md:col-span-2">
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2 block mb-3 italic">Galeri
-                                Foto Paket</label>
-                            <div class="flex flex-wrap gap-3">
-                                @if ($kit_id)
-                                    @foreach (\App\Models\KitRobotic::find($kit_id)->images as $img)
-                                        <div class="relative">
-                                            <img src="{{ asset('storage/' . $img->filename) }}"
-                                                class="w-20 h-20 object-cover rounded-2xl border-2 border-white shadow-md">
-                                            <button wire:click="deleteImageKit({{ $img->id }})"
-                                                class="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-[10px]">×</button>
-                                        </div>
-                                    @endforeach
-                                @endif
-                                <label
-                                    class="w-20 h-20 border-2 border-dashed border-slate-200 rounded-2xl flex items-center justify-center cursor-pointer relative transition-all hover:bg-slate-50">
-                                    <span class="text-2xl text-slate-200">+</span>
-                                    <input type="file" wire:model="new_images_kit" multiple class="hidden">
-                                    <div wire:loading wire:target="new_images_kit"
-                                        class="absolute inset-0 bg-white/80 flex items-center justify-center rounded-2xl">
-                                        <div
-                                            class="w-5 h-5 border-2 border-blue-500 border-t-transparent animate-spin rounded-full">
-                                        </div>
+        {{-- TABLE ITEM --}}
+        <div class="mb-10 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 class="text-lg font-bold mb-4 text-emerald-700 flex items-center gap-2">
+                <span>Daftar Item / Komponen</span>
+            </h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b bg-slate-50 text-slate-600 text-sm">
+                            <th class="p-3">Gambar</th>
+                            <th class="p-3">Nama Item</th>
+                            <th class="p-3">Harga</th>
+                            <th class="p-3">Stok</th>
+                            <th class="p-3 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @forelse($items as $item)
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3">
+                                    <div class="flex space-x-1">
+                                        @forelse($item->images as $img)
+                                            <img src="{{ asset('storage/' . $img->image_path) }}"
+                                                class="w-10 h-10 object-cover rounded-lg border">
+                                        @empty
+                                            <span class="text-xs text-slate-400">No Image</span>
+                                        @endforelse
                                     </div>
-                                </label>
-                                @foreach ($new_images_kit as $temp)
-                                    <img src="{{ $temp->temporaryUrl() }}"
-                                        class="w-20 h-20 object-cover rounded-2xl opacity-40">
-                                @endforeach
-                            </div>
-                        </div>
+                                </td>
+                                <td class="p-3 font-semibold text-slate-800">{{ $item->name }}</td>
+                                <td class="p-3 text-emerald-600 font-bold">Rp
+                                    {{ number_format($item->price, 0, ',', '.') }}</td>
+                                <td class="p-3 font-medium">{{ $item->stock }}</td>
+                                <td class="p-3 text-right space-x-2">
+                                    <button wire:click="openItemEdit({{ $item->id }})"
+                                        class="text-blue-600 hover:underline font-semibold">Edit</button>
+                                    <button wire:click="deleteItem({{ $item->id }})"
+                                        onclick="confirm('Hapus item ini?') || event.stopImmediatePropagation()"
+                                        class="text-red-600 hover:underline font-semibold">Hapus</button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="p-4 text-center text-slate-400">Data item tidak ditemukan.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4">{{ $items->links() }}</div>
+        </div>
+    @elseif ($view === 'souvenir-form')
+        {{-- FORM SOUVENIR --}}
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
+            <h3 class="text-xl font-bold mb-4 text-purple-700">
+                {{ $souvenir_id ? 'Edit Souvenir' : 'Tambah Souvenir' }}</h3>
+            <form wire:submit.prevent="saveSouvenir" class="space-y-4">
+                <div>
+                    <label class="block font-semibold mb-1 text-slate-700">Nama Souvenir</label>
+                    <input type="text" wire:model="s_name" class="w-full border-slate-200 rounded-xl p-3 border">
+                    @error('s_name')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
 
-                        <div class="md:col-span-2 border-t border-slate-100 pt-6">
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2 block mb-3 italic">Pilih
-                                Komponen (Cari atau Pilih Rekomendasi)</label>
-                            <div class="relative mb-4">
-                                <input type="text" wire:model.live="searchItem"
-                                    placeholder="Ketik untuk memfilter..."
-                                    class="w-full border-slate-200 rounded-2xl p-4 font-bold text-xs bg-slate-50 focus:bg-white transition-all shadow-inner">
-                                <div
-                                    class="mt-2 flex flex-wrap gap-2 max-h-40 overflow-y-auto p-2 bg-slate-50 rounded-2xl border border-slate-100">
-                                    @forelse($searchResults as $res)
-                                        <button wire:click="addItem({{ $res->id }})"
-                                            class="bg-white border border-slate-200 px-4 py-2 rounded-xl font-black text-[9px] uppercase italic hover:bg-blue-600 hover:text-white transition-all shadow-sm">
-                                            + {{ $res->name }}
-                                        </button>
-                                    @empty
-                                        <span class="text-[9px] font-bold text-slate-400 p-2">Semua komponen sudah
-                                            terpilih atau tidak ditemukan.</span>
-                                    @endforelse
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                @foreach ($selectedItems as $idx => $si)
-                                    <div
-                                        class="flex justify-between items-center bg-slate-900 text-white p-4 rounded-2xl shadow-lg border-l-4 border-blue-500 animate-in slide-in-from-left gap-4">
-                                        <div class="flex flex-col flex-1">
-                                            <span
-                                                class="text-[9px] font-black uppercase italic tracking-tighter truncate">{{ $si['name'] }}</span>
-                                            <span class="text-[8px] text-slate-400">Harga Satuan: Rp
-                                                {{ number_format($si['price'] ?? 0, 0, ',', '.') }}</span>
-                                        </div>
-
-                                        <div class="flex items-center gap-2 bg-slate-800 px-3 py-1 rounded-xl">
-                                            <label class="text-[8px] font-bold text-slate-500 uppercase">Qty</label>
-                                            <input type="number"
-                                                wire:model.live="selectedItems.{{ $idx }}.quantity"
-                                                min="1"
-                                                class="w-12 bg-transparent border-none p-0 text-center text-[10px] font-black focus:ring-0">
-                                        </div>
-
-                                        <button wire:click="removeItem({{ $idx }})"
-                                            class="text-red-400 font-black text-[9px] hover:scale-110 transition-transform">
-                                            HAPUS
-                                        </button>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div class="md:col-span-2 flex gap-4 mt-6">
-                            <button wire:click="backToIndex"
-                                class="flex-1 bg-slate-100 text-slate-400 py-5 rounded-[2rem] font-black text-[10px] uppercase">Batal</button>
-                            <button wire:click="saveKit"
-                                class="flex-[2] bg-blue-600 text-white py-5 rounded-[2rem] font-black text-[10px] uppercase shadow-xl relative overflow-hidden hover:bg-blue-700">
-                                <span wire:loading.remove wire:target="saveKit">Simpan Paket Kit</span>
-                                <div wire:loading wire:target="saveKit"
-                                    class="w-4 h-4 border-2 border-white border-t-transparent animate-spin rounded-full mx-auto">
-                                </div>
-                            </button>
-                        </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-700">Harga (Rp)</label>
+                        <input type="number" step="1" wire:model="s_price"
+                            class="w-full border-slate-200 rounded-xl p-3 border font-bold text-purple-600">
+                        @error('s_price')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-700">Stok</label>
+                        <input type="number" wire:model="s_stock"
+                            class="w-full border-slate-200 rounded-xl p-3 border">
+                        @error('s_stock')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
-            </div>
-        @elseif($view == 'item-form')
-            <div class="max-w-2xl mx-auto">
-                <div class="bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100">
-                    <h2 class="text-xl font-black uppercase italic mb-8 tracking-tighter">Data Komponen</h2>
-                    <div class="space-y-6">
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Nama Komponen</label>
-                            <input type="text" wire:model="i_name"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Harga (Rp)</label>
-                            <input type="number" step="0.01" wire:model="i_price"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Stock</label>
-                            <input type="number" wire:model="i_stock"
-                                class="w-full border-slate-200 rounded-2xl p-4 font-bold text-blue-600">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2">Deskripsi</label>
-                            <input type="text" wire:model="i_description"
-                                class="w-full border-slate-200 rounded-2xl p-4 text-slate-600">
-                        </div>
-                        <div>
-                            <label class="text-[9px] font-black uppercase text-slate-400 ml-2 block mb-3 italic">Foto
-                                Komponen</label>
-                            <div class="flex flex-wrap gap-3">
-                                @if ($item_id)
-                                    @foreach (\App\Models\Item::find($item_id)->images as $img)
-                                        <div class="relative">
-                                            <img src="{{ asset('storage/' . $img->filename) }}"
-                                                class="w-20 h-20 object-cover rounded-2xl border-2 border-white shadow-md">
-                                            <button wire:click="deleteImageItem({{ $img->id }})"
-                                                class="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 flex items-center justify-center rounded-full text-[10px]">×</button>
-                                        </div>
-                                    @endforeach
-                                @endif
-                                <label
-                                    class="w-20 h-20 border-2 border-dashed border-slate-200 rounded-2xl flex items-center justify-center cursor-pointer relative transition-all overflow-hidden hover:bg-slate-50">
-                                    <span class="text-2xl text-slate-200">+</span>
-                                    <input type="file" wire:model="new_images_item" multiple class="hidden">
-                                    <div wire:loading wire:target="new_images_item"
-                                        class="absolute inset-0 bg-white/80 flex items-center justify-center">
-                                        <div
-                                            class="w-4 h-4 border-2 border-slate-900 border-t-transparent animate-spin rounded-full">
-                                        </div>
+
+                <div>
+                    <label class="block font-semibold mb-1 text-slate-700">Deskripsi</label>
+                    <textarea wire:model="s_description" rows="3" class="w-full border-slate-200 rounded-xl p-3 border"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold mb-1 text-slate-700">Upload Gambar</label>
+                    <input type="file" wire:model="s_new_images" multiple class="w-full p-2 border rounded-xl">
+                    @if ($souvenir_id)
+                        @php $existingSouvenir = \App\Models\Souvenir::with('images')->find($souvenir_id); @endphp
+                        @if ($existingSouvenir && $existingSouvenir->images->count() > 0)
+                            <div class="flex space-x-2 mt-3">
+                                @foreach ($existingSouvenir->images as $img)
+                                    <div class="relative group">
+                                        <img src="{{ asset('storage/' . $img->image_path) }}"
+                                            class="w-16 h-16 object-cover rounded-lg border">
+                                        <button type="button" wire:click="deleteSouvenirImage({{ $img->id }})"
+                                            class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow">
+                                            &times;
+                                        </button>
                                     </div>
-                                </label>
-                                @foreach ($new_images_item as $tmp)
-                                    <img src="{{ $tmp->temporaryUrl() }}"
-                                        class="w-20 h-20 object-cover rounded-2xl opacity-40">
                                 @endforeach
                             </div>
-                        </div>
-                        <div class="flex gap-4 pt-6">
-                            <button wire:click="backToIndex"
-                                class="flex-1 bg-slate-50 text-slate-400 py-5 rounded-[2rem] font-black text-[10px] uppercase">Kembali</button>
-                            <button wire:click="saveItem"
-                                class="flex-[2] bg-slate-900 text-white py-5 rounded-[2rem] font-black text-[10px] uppercase shadow-xl relative overflow-hidden">
-                                <span wire:loading.remove wire:target="saveItem">Simpan Data</span>
-                                <div wire:loading wire:target="saveItem"
-                                    class="w-4 h-4 border-2 border-white border-t-transparent animate-spin rounded-full mx-auto">
-                                </div>
-                            </button>
-                        </div>
+                        @endif
+                    @endif
+                </div>
+
+                <div class="pt-4 flex justify-end space-x-2 border-t">
+                    <button type="button" wire:click="setView('list')"
+                        class="px-5 py-2.5 bg-slate-200 text-slate-700 rounded-xl font-semibold">Batal</button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700">Simpan
+                        Souvenir</button>
+                </div>
+            </form>
+        </div>
+    @elseif ($view === 'item-form')
+        {{-- FORM ITEM --}}
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
+            <h3 class="text-xl font-bold mb-4 text-emerald-700">{{ $item_id ? 'Edit Item' : 'Tambah Item' }}</h3>
+            <form wire:submit.prevent="saveItem" class="space-y-4">
+                <div>
+                    <label class="block font-semibold mb-1 text-slate-700">Nama Item / Komponen</label>
+                    <input type="text" wire:model="i_name" class="w-full border-slate-200 rounded-xl p-3 border">
+                    @error('i_name')
+                        <span class="text-red-500 text-xs">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-700">Harga (Rp)</label>
+                        <input type="number" step="1" wire:model="i_price"
+                            class="w-full border-slate-200 rounded-xl p-3 border font-bold text-emerald-600">
+                        @error('i_price')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-700">Stok</label>
+                        <input type="number" wire:model="i_stock"
+                            class="w-full border-slate-200 rounded-xl p-3 border">
+                        @error('i_stock')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
-            </div>
-        @endif
-    </div>
+
+                <div>
+                    <label class="block font-semibold mb-1 text-slate-700">Deskripsi</label>
+                    <textarea wire:model="i_description" rows="3" class="w-full border-slate-200 rounded-xl p-3 border"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold mb-1 text-slate-700">Upload Gambar</label>
+                    <input type="file" wire:model="i_new_images" multiple class="w-full p-2 border rounded-xl">
+                    @if ($item_id)
+                        @php $existingItem = \App\Models\Item::with('images')->find($item_id); @endphp
+                        @if ($existingItem && $existingItem->images->count() > 0)
+                            <div class="flex space-x-2 mt-3">
+                                @foreach ($existingItem->images as $img)
+                                    <div class="relative group">
+                                        <img src="{{ asset('storage/' . $img->image_path) }}"
+                                            class="w-16 h-16 object-cover rounded-lg border">
+                                        <button type="button" wire:click="deleteItemImage({{ $img->id }})"
+                                            class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow">
+                                            &times;
+                                        </button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    @endif
+                </div>
+
+                <div class="pt-4 flex justify-end space-x-2 border-t">
+                    <button type="button" wire:click="setView('list')"
+                        class="px-5 py-2.5 bg-slate-200 text-slate-700 rounded-xl font-semibold">Batal</button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl font-semibold hover:bg-emerald-700">Simpan
+                        Item</button>
+                </div>
+            </form>
+        </div>
+    @elseif ($view === 'kit-form')
+        {{-- FORM KIT --}}
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm max-w-4xl mx-auto">
+            <h3 class="text-xl font-bold mb-4 text-blue-700">{{ $kit_id ? 'Edit Kit Robotic' : 'Tambah Kit Robotic' }}
+            </h3>
+            <form wire:submit.prevent="saveKit" class="space-y-6">
+
+                {{-- Data Utama Kit --}}
+                <div class="space-y-4">
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-700">Nama Kit Robotic</label>
+                        <input type="text" wire:model="k_name"
+                            class="w-full border-slate-200 rounded-xl p-3 border">
+                        @error('k_name')
+                            <span class="text-red-500 text-xs">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block font-semibold mb-1 text-slate-700">Harga Pelatihan (Rp)</label>
+                            <input type="number" step="1" wire:model="k_pelatihan_price"
+                                class="w-full border-slate-200 rounded-xl p-3 border font-bold text-green-600">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-slate-700">Harga Private (Rp)</label>
+                            <input type="number" step="1" wire:model="k_private_price"
+                                class="w-full border-slate-200 rounded-xl p-3 border font-bold text-orange-600">
+                        </div>
+                        <div>
+                            <label class="block font-semibold mb-1 text-slate-700">Diskon (%)</label>
+                            <input type="number" wire:model="k_discount"
+                                class="w-full border-slate-200 rounded-xl p-3 border">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold mb-1 text-slate-700">Deskripsi Kit</label>
+                        <textarea wire:model="k_description" rows="3" class="w-full border-slate-200 rounded-xl p-3 border"></textarea>
+                    </div>
+                </div>
+
+                {{-- Pilih Item / Komponen Pendukung --}}
+                <div class="border-t pt-4">
+                    <h4 class="font-bold text-slate-800 mb-2">Pilih Item Komponen ke Kit</h4>
+                    <div class="flex gap-2 mb-3">
+                        <select id="itemSelect" class="w-full border-slate-200 rounded-xl p-3 border">
+                            <option value="">-- Pilih Item --</option>
+                            @foreach ($allItems as $optItem)
+                                <option value="{{ $optItem->id }}">{{ $optItem->name }} (Rp
+                                    {{ number_format($optItem->price, 0, ',', '.') }})</option>
+                            @endforeach
+                        </select>
+                        <button type="button"
+                            onclick="const val = document.getElementById('itemSelect').value; if(val) @this.addItemToKit(val);"
+                            class="px-4 py-2 bg-slate-800 text-white rounded-xl font-semibold">
+                            Tambah
+                        </button>
+                    </div>
+
+                    @if (!empty($selectedItems))
+                        <div class="bg-slate-50 p-3 rounded-xl space-y-2 border">
+                            @foreach ($selectedItems as $index => $item)
+                                <div class="flex items-center justify-between bg-white p-2.5 rounded-lg border">
+                                    <span class="font-medium text-slate-700">{{ $item['name'] }}</span>
+                                    <div class="flex items-center gap-3">
+                                        <input type="number" min="1"
+                                            wire:model="selectedItems.{{ $index }}.quantity"
+                                            class="w-20 p-1 border rounded text-center">
+                                        <button type="button" wire:click="removeItemFromKit({{ $index }})"
+                                            class="text-red-500 font-bold hover:underline">Hapus</button>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Modul Pembelajaran --}}
+                <div class="border-t pt-4 space-y-3">
+                    <h4 class="font-bold text-slate-800">Modul Pembelajaran (Opsional)</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 text-slate-700">Nama Modul</label>
+                            <input type="text" wire:model="modul_name"
+                                class="w-full border-slate-200 rounded-xl p-3 border">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1 text-slate-700">Harga Modul (Rp)</label>
+                            <input type="number" step="1" wire:model="modul_price"
+                                class="w-full border-slate-200 rounded-xl p-3 border">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">File Modul
+                            (PDF/DOCX/ZIP)</label>
+                        <input type="file" wire:model="modul_file" class="w-full p-2 border rounded-xl">
+                        @if ($existing_modul_file)
+                            <p class="text-xs text-slate-500 mt-1">File saat ini: <a
+                                    href="{{ asset('storage/' . $existing_modul_file) }}" target="_blank"
+                                    class="text-blue-600 underline">Lihat Modul</a></p>
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Gambar Kit --}}
+                <div class="border-t pt-4">
+                    <label class="block font-semibold mb-1 text-slate-700">Upload Gambar Kit</label>
+                    <input type="file" wire:model="k_new_images" multiple class="w-full p-2 border rounded-xl">
+                    @if ($kit_id)
+                        @php $existingKit = \App\Models\KitRobotic::with('images')->find($kit_id); @endphp
+                        @if ($existingKit && $existingKit->images->count() > 0)
+                            <div class="flex space-x-2 mt-3">
+                                @foreach ($existingKit->images as $img)
+                                    <div class="relative group">
+                                        <img src="{{ asset('storage/' . $img->image_path) }}"
+                                            class="w-16 h-16 object-cover rounded-lg border">
+                                        <button type="button" wire:click="deleteKitImage({{ $img->id }})"
+                                            class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow">
+                                            &times;
+                                        </button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    @endif
+                </div>
+
+                <div class="pt-4 flex justify-end space-x-2 border-t">
+                    <button type="button" wire:click="setView('list')"
+                        class="px-5 py-2.5 bg-slate-200 text-slate-700 rounded-xl font-semibold">Batal</button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700">Simpan
+                        Kit Robotic</button>
+                </div>
+            </form>
+        </div>
+    @endif
 </div>
