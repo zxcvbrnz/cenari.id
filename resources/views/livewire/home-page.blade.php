@@ -484,7 +484,148 @@
             </div>
         </template>
     </section>
+    <section class="relative overflow-hidden py-16 bg-[#FDFDFD]">
+        {{-- Background Decorative Blur Circles --}}
+        <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div
+            class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
 
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            {{-- Card Banner Container --}}
+            <div
+                class="relative bg-slate-900 rounded-[2.5rem] p-8 md:p-14 overflow-hidden shadow-2xl border border-slate-800">
+
+                {{-- Decorative Grid Overlay --}}
+                <div
+                    class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-20 pointer-events-none">
+                </div>
+                <div
+                    class="absolute -top-32 -right-32 w-80 h-80 bg-blue-600/30 rounded-full blur-3xl pointer-events-none">
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+
+                    {{-- Left Text Column --}}
+                    <div class="lg:col-span-6 space-y-6 text-left">
+                        <div
+                            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-md">
+                            <span class="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+                            <span class="text-blue-400 font-extrabold text-[10px] tracking-widest uppercase">Eksplorasi
+                                Ekosistem Cenari</span>
+                        </div>
+
+                        <h2 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                            Segala Kebutuhan <br>
+                            <span
+                                class="bg-gradient-to-r from-blue-400 via-indigo-300 to-sky-400 bg-clip-text text-transparent">
+                                Robotik & Kreativitas
+                            </span>
+                            Dalam Satu Tempat.
+                        </h2>
+
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed font-normal max-w-xl">
+                            Mulai dari kit pembelajaran robotik praktis, komponen elektronik berkualitas, hingga merch &
+                            souvenir eksklusif Cenari untuk menemani perjalanan inovasimu.
+                        </p>
+
+                        <div class="pt-2 flex flex-wrap gap-4 items-center">
+                            <a href="{{ route('shop') }}" wire:navigate
+                                class="px-8 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs uppercase tracking-widest transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-3 group">
+                                <span>Jelajahi CENARI STORE</span>
+                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Right Category Feature Cards (Kit, Item, Souvenir) dengan Link Direct --}}
+                    <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+                        {{-- 1. Kit Robotik --}}
+                        <a href="{{ route('shop') }}?viewMode=kits" wire:navigate
+                            class="group bg-slate-800/50 hover:bg-slate-800/90 border border-slate-700/60 hover:border-blue-500/50 p-5 rounded-3xl transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 block">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-[9px] font-black uppercase tracking-widest text-blue-400 block mb-1">Bundle
+                                Praktis</span>
+                            <h3 class="text-base font-bold text-white mb-1.5 flex items-center justify-between">
+                                Kit Robotik
+                                <svg class="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </h3>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">Set modul belajar terlengkap +
+                                panduan siap pakai.</p>
+                        </a>
+
+                        {{-- 2. Item & Komponen --}}
+                        <a href="{{ route('shop') }}?viewMode=items" wire:navigate
+                            class="group bg-slate-800/50 hover:bg-slate-800/90 border border-slate-700/60 hover:border-indigo-500/50 p-5 rounded-3xl transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 block">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-[9px] font-black uppercase tracking-widest text-indigo-400 block mb-1">Part
+                                Terpisah</span>
+                            <h3 class="text-base font-bold text-white mb-1.5 flex items-center justify-between">
+                                Item Robotik
+                                <svg class="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </h3>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">Mikrokontroler, sensor, motor, & suku
+                                cadang presisi.</p>
+                        </a>
+
+                        {{-- 3. Souvenir Eksklusif --}}
+                        <a href="{{ route('shop') }}?viewMode=souvenirs" wire:navigate
+                            class="group bg-slate-800/50 hover:bg-slate-800/90 border border-slate-700/60 hover:border-sky-500/50 p-5 rounded-3xl transition-all duration-300 backdrop-blur-sm hover:-translate-y-1 block">
+                            <div
+                                class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 mb-4 group-hover:scale-110 group-hover:bg-sky-600 group-hover:text-white transition-all">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                        d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V6a2 2 0 10-2 2h2zm0 13C10.832 21 2 13.5 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 5-8.832 12.5-10 12.5z" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-[9px] font-black uppercase tracking-widest text-sky-400 block mb-1">Merchandise</span>
+                            <h3 class="text-base font-bold text-white mb-1.5 flex items-center justify-between">
+                                Souvenir
+                                <svg class="w-3.5 h-3.5 text-slate-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </h3>
+                            <p class="text-slate-400 text-[11px] leading-relaxed">Aksesoris, apparel, dan merchandise
+                                khas komunitas Cenari.</p>
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
