@@ -34,10 +34,14 @@
                     class="px-6 py-3 rounded-2xl border-none bg-slate-100 focus:ring-2 focus:ring-blue-500 w-full md:w-64 text-sm font-medium">
 
                 {{-- Tab Switcher --}}
-                <div class="bg-slate-100 p-1 rounded-2xl flex">
+                <div class="bg-slate-100 p-1 rounded-2xl flex flex-wrap gap-1">
+                    <button wire:click="$set('viewMode', 'all')"
+                        class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'all' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">
+                        Semua
+                    </button>
                     <button wire:click="$set('viewMode', 'kits')"
                         class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'kits' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">
-                        Bunddle
+                        Bundle
                     </button>
                     <button wire:click="$set('viewMode', 'items')"
                         class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'items' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">
@@ -52,21 +56,82 @@
         </div>
 
         {{-- Grid View berdasarkan viewMode --}}
-        @if ($viewMode == 'kits')
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse ($kits as $kit)
+        @if ($viewMode == 'all')
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                @forelse ($allProducts as $product)
                     @php
-                        $itemsPrice = $kit->items->sum(fn($i) => ($i->price ?? 0) * ($i->pivot->quantity ?? 1));
-                        $modulsPrice = $kit->moduls->sum('price');
-                        $totalPrice = $itemsPrice + $modulsPrice - ($kit->discount ?? 0);
-
-                        $kitStock = $kit->items->isEmpty()
-                            ? 0
-                            : $kit->items->min(fn($i) => floor(($i->stock ?? 0) / ($i->pivot->quantity ?: 1)));
+                        $detailRoute = '#';
+                        if ($product->type === 'kit') {
+                            $detailRoute = route('kit.detail', $product->id);
+                        } elseif ($product->type === 'item') {
+                            $detailRoute = route('item.detail', $product->id);
+                        } elseif ($product->type === 'souvenir' && Route::has('souvenir.detail')) {
+                            $detailRoute = route('souvenir.detail', $product->id);
+                        }
                     @endphp
 
                     <div
-                        class="group bg-white rounded-[2.5rem] border border-slate-100 p-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden {{ $kitStock <= 0 ? 'opacity-80' : '' }}">
+                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden {{ $product->computed_stock <= 0 ? 'opacity-70' : '' }}">
+                        <a href="{{ $detailRoute }}" wire:navigate class="block">
+                            <div class="aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden relative">
+                                <img src="{{ $product->images->isNotEmpty() ? asset('storage/' . $product->images->first()->filename) : 'https://placehold.co/400x400' }}"
+                                    alt="{{ $product->name }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+
+                                <span
+                                    class="absolute top-2 left-2 bg-slate-900/80 text-white text-[8px] font-black px-2 py-0.5 rounded uppercase backdrop-blur-sm">
+                                    {{ $product->type }}
+                                </span>
+
+                                @if ($product->computed_stock <= 0)
+                                    <div class="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
+                                        <span
+                                            class="text-[8px] font-black bg-slate-900 text-white px-2 py-1 rounded">HABIS</span>
+                                    </div>
+                                @endif
+                            </div>
+                            <h4
+                                class="text-xs font-bold text-slate-800 truncate group-hover:text-blue-600 transition-colors">
+                                {{ $product->name }}
+                            </h4>
+                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Stok: {{ $product->computed_stock }}
+                            </p>
+                        </a>
+
+                        <div class="relative mt-2 h-[35px] flex items-center">
+                            <p
+                                class="text-blue-600 font-black text-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-2">
+                                Rp {{ number_format($product->computed_price, 0, ',', '.') }}
+                            </p>
+
+                            @if ($product->computed_stock > 0)
+                                <button wire:click="addToCart({{ $product->id }}, '{{ $product->type }}')"
+                                    class="absolute inset-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-xl flex items-center justify-center gap-1 hover:bg-blue-600">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Ke Keranjang
+                                </button>
+                            @else
+                                <button disabled
+                                    class="absolute inset-0 bg-slate-100 text-slate-400 text-[9px] font-black uppercase rounded-xl flex items-center justify-center cursor-not-allowed">
+                                    Habis
+                                </button>
+                            @endif
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full py-12 text-center text-slate-400 text-sm">
+                        Tidak ada produk yang ditemukan.
+                    </div>
+                @endforelse
+            </div>
+        @elseif ($viewMode == 'kits')
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @forelse ($kits as $kit)
+                    <div
+                        class="group bg-white rounded-[2.5rem] border border-slate-100 p-4 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden {{ $kit->computed_stock <= 0 ? 'opacity-80' : '' }}">
                         <a href="{{ route('kit.detail', $kit->id) }}" wire:navigate class="block">
                             <div class="relative h-56 rounded-[2rem] overflow-hidden mb-6 shadow-inner bg-slate-50">
                                 <img src="{{ $kit->images->isNotEmpty() ? asset('storage/' . $kit->images->first()->filename) : 'https://placehold.co/600x400' }}"
@@ -81,8 +146,8 @@
                                 @endif
 
                                 <div
-                                    class="absolute top-4 right-4 {{ $kitStock <= 0 ? 'bg-slate-900' : 'bg-blue-600' }} text-white text-[9px] font-black px-3 py-1 rounded-lg shadow-lg uppercase">
-                                    {{ $kitStock <= 0 ? 'Habis' : 'Stok: ' . $kitStock }}
+                                    class="absolute top-4 right-4 {{ $kit->computed_stock <= 0 ? 'bg-slate-900' : 'bg-blue-600' }} text-white text-[9px] font-black px-3 py-1 rounded-lg shadow-lg uppercase">
+                                    {{ $kit->computed_stock <= 0 ? 'Habis' : 'Stok: ' . $kit->computed_stock }}
                                 </div>
                             </div>
 
@@ -93,7 +158,8 @@
                                 </h3>
                                 <div class="flex justify-between text-[11px] font-medium text-slate-400 italic mb-4">
                                     <span>Base Cost</span>
-                                    <span>Rp {{ number_format($itemsPrice + $modulsPrice, 0, ',', '.') }}</span>
+                                    <span>Rp
+                                        {{ number_format($kit->computed_price + ($kit->discount ?? 0), 0, ',', '.') }}</span>
                                 </div>
                             </div>
                         </a>
@@ -104,12 +170,13 @@
                                 <div>
                                     <p class="text-[9px] font-black text-slate-300 uppercase leading-none">Special
                                         Bundle</p>
-                                    <p class="text-xl font-black text-blue-600">Rp
-                                        {{ number_format(max(0, $totalPrice), 0, ',', '.') }}</p>
+                                    <p class="text-xl font-black text-blue-600">
+                                        Rp {{ number_format($kit->computed_price, 0, ',', '.') }}
+                                    </p>
                                 </div>
                             </div>
 
-                            @if ($kitStock > 0)
+                            @if ($kit->computed_stock > 0)
                                 <button wire:click="addToCart({{ $kit->id }}, 'kit')"
                                     class="absolute inset-x-0 bottom-0 top-0 bg-blue-600 text-white font-black text-[10px] uppercase tracking-[0.2em] opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2 hover:bg-slate-900 rounded-b-[2rem]">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,13 +203,13 @@
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 @forelse ($items as $item)
                     <div
-                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden {{ ($item->stock ?? 0) <= 0 ? 'opacity-70' : '' }}">
+                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden {{ $item->computed_stock <= 0 ? 'opacity-70' : '' }}">
                         <a href="{{ route('item.detail', $item->id) }}" wire:navigate class="block">
                             <div class="aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden relative">
                                 <img src="{{ $item->images->isNotEmpty() ? asset('storage/' . $item->images->first()->filename) : 'https://placehold.co/400x400' }}"
                                     alt="{{ $item->name }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                @if (($item->stock ?? 0) <= 0)
+                                @if ($item->computed_stock <= 0)
                                     <div class="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
                                         <span
                                             class="text-[8px] font-black bg-slate-900 text-white px-2 py-1 rounded">HABIS</span>
@@ -153,16 +220,16 @@
                                 class="text-xs font-bold text-slate-800 truncate group-hover:text-blue-600 transition-colors">
                                 {{ $item->name }}
                             </h4>
-                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Stok: {{ $item->stock ?? 0 }}</p>
+                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Stok: {{ $item->computed_stock }}</p>
                         </a>
 
                         <div class="relative mt-2 h-[35px] flex items-center">
                             <p
                                 class="text-blue-600 font-black text-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-2">
-                                Rp {{ number_format($item->price ?? 0, 0, ',', '.') }}
+                                Rp {{ number_format($item->computed_price, 0, ',', '.') }}
                             </p>
 
-                            @if (($item->stock ?? 0) > 0)
+                            @if ($item->computed_stock > 0)
                                 <button wire:click="addToCart({{ $item->id }}, 'item')"
                                     class="absolute inset-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-xl flex items-center justify-center gap-1 hover:bg-blue-600">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,20 +252,18 @@
                     </div>
                 @endforelse
             </div>
-
-            {{-- View Souvenirs --}}
         @else
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 @forelse ($souvenirs as $souvenir)
                     <div
-                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden {{ ($souvenir->stock ?? 0) <= 0 ? 'opacity-70' : '' }}">
+                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden {{ $souvenir->computed_stock <= 0 ? 'opacity-70' : '' }}">
                         <a href="{{ Route::has('souvenir.detail') ? route('souvenir.detail', $souvenir->id) : '#' }}"
                             class="block">
                             <div class="aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden relative">
                                 <img src="{{ $souvenir->images->isNotEmpty() ? asset('storage/' . $souvenir->images->first()->filename) : 'https://placehold.co/400x400' }}"
                                     alt="{{ $souvenir->name }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                @if (($souvenir->stock ?? 0) <= 0)
+                                @if ($souvenir->computed_stock <= 0)
                                     <div class="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
                                         <span
                                             class="text-[8px] font-black bg-slate-900 text-white px-2 py-1 rounded">HABIS</span>
@@ -209,16 +274,17 @@
                                 class="text-xs font-bold text-slate-800 truncate group-hover:text-blue-600 transition-colors">
                                 {{ $souvenir->name }}
                             </h4>
-                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Stok: {{ $souvenir->stock ?? 0 }}</p>
+                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Stok: {{ $souvenir->computed_stock }}
+                            </p>
                         </a>
 
                         <div class="relative mt-2 h-[35px] flex items-center">
                             <p
                                 class="text-blue-600 font-black text-sm transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-2">
-                                Rp {{ number_format($souvenir->price ?? 0, 0, ',', '.') }}
+                                Rp {{ number_format($souvenir->computed_price, 0, ',', '.') }}
                             </p>
 
-                            @if (($souvenir->stock ?? 0) > 0)
+                            @if ($souvenir->computed_stock > 0)
                                 <button wire:click="addToCart({{ $souvenir->id }}, 'souvenir')"
                                     class="absolute inset-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-xl flex items-center justify-center gap-1 hover:bg-blue-600">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

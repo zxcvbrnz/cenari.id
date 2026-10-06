@@ -5,18 +5,15 @@ namespace App\Livewire;
 use App\Models\Item;
 use App\Models\KitRobotic;
 use App\Models\Order;
-use App\Models\Souvenir; // Pastikan model ini di-import
+use App\Models\Souvenir;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Shop extends Component
 {
     public $search = '';
-    public $viewMode = 'kits'; // Bisa berisi: 'kits', 'items', 'souvenirs'
+    public $viewMode = 'all'; // Default diset ke 'all'
 
-    /**
-     * Menghitung ketersediaan stok untuk sebuah Kit
-     */
     private function calculateKitStock($kit)
     {
         if ($kit->items->isEmpty()) return 0;
@@ -86,7 +83,6 @@ class Shop extends Component
             $product_image = $product->images->first()->filename ?? null;
         }
 
-        // Cek apakah jumlah di keranjang melebihi stok yang ada
         $qtyInCart = isset($cart[$key]) ? $cart[$key]['quantity'] : 0;
         if ($qtyInCart + 1 > $currentStock) {
             $this->dispatch('swal:modal', [
@@ -124,30 +120,55 @@ class Shop extends Component
     {
         $kits = KitRobotic::with(['items', 'moduls', 'images'])
             ->where('name', 'like', '%' . $this->search . '%')
-            ->latest()
-            ->get();
+            ->get()
+            ->map(function ($kit) {
+                $itemsPrice = $kit->items->sum(fn($i) => ($i->price ?? 0) * ($i->pivot->quantity ?? 1));
+                $modulsPrice = $kit->moduls->sum('price');
+
+                $kit->type = 'kit';
+                $kit->computed_price = max(0, $itemsPrice + $modulsPrice - ($kit->discount ?? 0));
+                $kit->computed_stock = $this->calculateKitStock($kit);
+                return $kit;
+            });
 
         $items = Item::with('images')
             ->where('name', 'like', '%' . $this->search . '%')
-            ->orderByRaw('stock = 0 asc')
-            ->latest()
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                $item->type = 'item';
+                $item->computed_price = $item->price;
+                $item->computed_stock = $item->stock ?? 0;
+                return $item;
+            });
 
-        // Mengambil data Souvenir berdasarkan input search
         $souvenirs = Souvenir::with('images')
             ->where('name', 'like', '%' . $this->search . '%')
-            ->latest()
-            ->get();
+            ->get()
+            ->map(function ($souvenir) {
+                $souvenir->type = 'souvenir';
+                $souvenir->computed_price = $souvenir->price;
+                $souvenir->computed_stock = $souvenir->stock ?? 0;
+                return $souvenir;
+            });
+
+        // Pengurutan stok habis ke paling bawah
+        $sortStock = fn($collection) => $collection->sortBy(fn($product) => $product->computed_stock <= 0 ? 1 : 0);
+
+        $allProducts = collect();
+        if ($this->viewMode === 'all') {
+            $allProducts = $sortStock($kits->concat($items)->concat($souvenirs));
+        }
 
         $orderCount = Order::where('user_id', Auth::id())
             ->whereIn('status', ['pending', 'processing'])
             ->count();
 
         return view('livewire.shop', [
-            'kits' => $kits,
-            'items' => $items,
-            'souvenirs' => $souvenirs, // Parsing ke view
-            'orderCount' => $orderCount
+            'allProducts' => $allProducts,
+            'kits'        => $sortStock($kits),
+            'items'       => $sortStock($items),
+            'souvenirs'   => $sortStock($souvenirs),
+            'orderCount'  => $orderCount
         ]);
     }
 }
