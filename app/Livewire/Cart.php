@@ -54,7 +54,7 @@ class Cart extends Component
     {
         $cart = session()->get('cart', []);
 
-        // mengecek apakah user sudah login, jika tidak maka terdapat sweetalert setelahkan di alihkan ke halaman login
+        // Mengecek apakah user sudah login, jika tidak maka alihkan ke halaman login
         if (!Auth::check()) {
             return redirect()->route('login');
         }
@@ -64,7 +64,11 @@ class Cart extends Component
         if ($this->shipping_method === 'send') {
             $address = UserAddress::find($this->selectedAddressId);
             if (!$address) {
-                $this->dispatch('swal:modal', ['icon' => 'error', 'title' => 'Gagal!', 'text' => 'Silahkan pilih alamat terlebih dahulu.']);
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Gagal!',
+                    'text' => 'Silahkan pilih alamat terlebih dahulu.'
+                ]);
                 return;
             }
         }
@@ -93,21 +97,81 @@ class Cart extends Component
 
             $order = Order::create($orderData);
 
-            // 2. Simpan Items
+            // 2. Simpan Order Items & Kurangi Stok
             foreach ($cart as $item) {
+                $productType = match ($item['type']) {
+                    'kit' => KitRobotic::class,
+                    'souvenir' => Souvenir::class,
+                    default => Item::class,
+                };
+
+                // A. Simpan detail item ke database order
                 $order->items()->create([
                     'product_id' => $item['id'],
-                    'product_type' => $item['type'] == 'kit' ? KitRobotic::class : ($item['type'] == 'souvenir' ? Souvenir::class : Item::class),
+                    'product_type' => $productType,
                     'name' => $item['name'],
                     'price' => $item['price'],
                     'quantity' => $item['quantity'],
                     'image' => $item['image']
                 ]);
+
+                // B. Logika Pengurangan Stok berdasarkan Tipe Produk
+                if ($item['type'] === 'kit') {
+                    $kit = KitRobotic::with('items')->find($item['id']);
+
+                    if (!$kit) {
+                        throw new \Exception("Data Kit Robotic tidak ditemukan.");
+                    }
+
+                    // 1) Kurangi stok Kit itu sendiri (jika ada kolom stock di tabel kit_robotics)
+                    if (isset($kit->stock)) {
+                        if ($kit->stock < $item['quantity']) {
+                            throw new \Exception("Stok Kit '{$kit->name}' tidak mencukupi (Tersisa: {$kit->stock}).");
+                        }
+                        $kit->decrement('stock', $item['quantity']);
+                    }
+
+                    // 2) Kurangi stok tiap Item penyusun di dalam Kit tersebut
+                    foreach ($kit->items as $componentItem) {
+                        // Jumlah komponen per 1 unit kit (mengambil dari table pivot 'quantity')
+                        $qtyPerKit = $componentItem->pivot->quantity ?? 1;
+                        $totalDeduction = $qtyPerKit * $item['quantity'];
+
+                        if ($componentItem->stock < $totalDeduction) {
+                            throw new \Exception("Stok komponen '{$componentItem->name}' tidak mencukupi untuk Kit '{$kit->name}'.");
+                        }
+
+                        $componentItem->decrement('stock', $totalDeduction);
+                    }
+                } elseif ($item['type'] === 'souvenir') {
+                    $souvenir = Souvenir::find($item['id']);
+
+                    if (!$souvenir) {
+                        throw new \Exception("Data Souvenir tidak ditemukan.");
+                    }
+
+                    if ($souvenir->stock < $item['quantity']) {
+                        throw new \Exception("Stok Souvenir '{$souvenir->name}' tidak mencukupi (Tersisa: {$souvenir->stock}).");
+                    }
+
+                    $souvenir->decrement('stock', $item['quantity']);
+                } else { // Tipe 'item' / produk tunggal
+                    $singleItem = Item::find($item['id']);
+
+                    if (!$singleItem) {
+                        throw new \Exception("Data Item tidak ditemukan.");
+                    }
+
+                    if ($singleItem->stock < $item['quantity']) {
+                        throw new \Exception("Stok Item '{$singleItem->name}' tidak mencukupi (Tersisa: {$singleItem->stock}).");
+                    }
+
+                    $singleItem->decrement('stock', $item['quantity']);
+                }
             }
 
-            // 3. Midtrans Setup
+            // 3. Midtrans Setup (jika bukan COD)
             if ($this->shipping_method !== 'cod') {
-
                 Config::$serverKey = config('midtrans.server_key');
                 Config::$isProduction = config('midtrans.is_production');
                 Config::$isSanitized = true;
@@ -129,7 +193,7 @@ class Cart extends Component
                 $order->update(['snap_token' => $snapToken]);
             }
 
-
+            // Commit transaksi jika semua sukses tanpa exception
             DB::commit();
             session()->forget('cart');
 
@@ -140,6 +204,7 @@ class Cart extends Component
                 'redirectUrl' => route('order.show', $order->id)
             ]);
 
+            // 4. Pengiriman Notifikasi WhatsApp via Wablas
             $send = new Message();
 
             $queue = [
@@ -156,24 +221,24 @@ class Cart extends Component
                         "www.cenari.id",
                 ],
                 [
-                    'phone' => '089691884833', // Nomor admin
+                    'phone' => '089691884833', // Nomor admin 1
                     'message' => "Halo *Admin*\n" .
                         "Terdapat pesanan baru dari web Cenari ID\n" .
                         "```\n" .
                         "Order Number : " . $order->order_number . "\n" .
-                        "Nama        : " . Auth::user()->name . "\n" .
+                        "Nama         : " . Auth::user()->name . "\n" .
                         "Total Amount : Rp " . number_format($order->total_amount, 0, ',', '.') . "\n" .
                         "Status       : " . ucfirst($order->status) . "\n" .
                         "```\n" .
                         "www.cenari.id",
                 ],
                 [
-                    'phone' => '085103326061', // Nomor admin
+                    'phone' => '085103326061', // Nomor admin 2
                     'message' => "Halo *Admin*\n" .
                         "Terdapat pesanan baru dari web Cenari ID\n" .
                         "```\n" .
                         "Order Number : " . $order->order_number . "\n" .
-                        "Nama        : " . Auth::user()->name . "\n" .
+                        "Nama         : " . Auth::user()->name . "\n" .
                         "Total Amount : Rp " . number_format($order->total_amount, 0, ',', '.') . "\n" .
                         "Status       : " . ucfirst($order->status) . "\n" .
                         "```\n" .
@@ -181,18 +246,21 @@ class Cart extends Component
                 ],
             ];
 
-            foreach ($queue as $index => $item) {
-                $send->multiple_text([$item]);
+            foreach ($queue as $index => $msgItem) {
+                $send->multiple_text([$msgItem]);
 
-                // Beri jeda 5-9 detik kecuali setelah pesan terakhir
+                // Beri jeda acak 10-20 detik antar pengiriman pesan
                 if ($index < count($queue) - 1) {
                     sleep(rand(10, 20));
                 }
             }
-            // return redirect()->route('order.show', $order->id);
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->dispatch('swal:modal', ['icon' => 'error', 'title' => 'Gagal!', 'text' => $e->getMessage()]);
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Gagal!',
+                'text' => $e->getMessage()
+            ]);
         }
     }
 
