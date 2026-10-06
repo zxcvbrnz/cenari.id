@@ -118,6 +118,10 @@ Route::view('manage-instansi', 'manage-instansi')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.instansi');
 
+Route::view('manage-seo', 'manage-seo')
+    ->middleware(['auth', 'verified', 'admin'])
+    ->name('manage.seo');
+
 Route::view('manage-program', 'manage-program')
     ->middleware(['auth', 'verified', 'admin'])
     ->name('manage.program');

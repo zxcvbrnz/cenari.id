@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cenari ID - Rancang Masa Depanmu</title>
+
+    <!-- Title dinamis atau default -->
+    <title>{{ $metaTitle ?? 'Cenari ID - Rancang Masa Depanmu' }}</title>
+
+    <!-- Meta Description & Keywords dari variabel Livewire -->
+    <meta name="description" content="{{ $metaDescription ?? 'cenari id' }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? 'cenari, cenari education center, pendidikan teknologi' }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="shortcut icon" href="{{ asset('logoCenari2020 PATEN.png') }}" type="image/x-icon">
@@ -30,28 +36,14 @@
     </style>
 </head>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T3HKDM2PS8"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'G-T3HKDM2PS8');
-</script>
-
 <body class="font-body bg-[#F8FAFC] text-[#0F172A] scroll-smooth">
     <livewire:components.navbar />
 
     {{ $slot }}
 
     <livewire:footer />
-    <div class="fixed bottom-8 right-8 z-[100]">
 
-        {{-- floating button whatsapp dengan link langsung ke wa dan langsung memuat text --}}
+    <div class="fixed bottom-8 right-8 z-[100]">
         <a href="https://wa.me/6285103326061?text=Halo,%20saya%20ingin%20informasi%20lebih%20lanjut%20tentang%20cenari%20id."
             target="_blank"
             class="w-16 h-16 bg-[#25D366] rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition group">
@@ -64,17 +56,6 @@
                 class="absolute right-20 bg-white text-[#0F172A] px-4 py-2 rounded-xl text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition whitespace-nowrap">Chat
                 WhatsApp</span>
         </a>
-        {{-- <button
-            class="w-16 h-16 bg-[#3B82F6] rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition group">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
-                </path>
-            </svg>
-            <span
-                class="absolute right-20 bg-white text-[#0F172A] px-4 py-2 rounded-xl text-sm font-bold shadow-xl opacity-0 group-hover:opacity-100 transition whitespace-nowrap">Cenari
-                Bot</span>
-        </button> --}}
     </div>
 
     @livewireScripts

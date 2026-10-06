@@ -101,6 +101,11 @@ class HomePage extends Component
 
     public function render()
     {
-        return view('livewire.home-page');
+        $keyword = \App\Models\KeyWord::first();
+        return view('livewire.home-page')
+            ->layoutData([
+                'metaDescription' => $keyword->description,
+                'metaKeywords'    => $keyword->keyword,
+            ]);;
     }
 }
