@@ -8,10 +8,13 @@ use App\Models\Order;
 use App\Models\Souvenir;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\Attributes\Url;
 
 class Shop extends Component
 {
+    #[Url]
     public $search = '';
+    #[Url]
     public $viewMode = 'all'; // Default diset ke 'all'
 
     private function calculateKitStock($kit)
