@@ -191,19 +191,25 @@
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 @forelse ($souvenirs as $souvenir)
                     <div
-                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden">
+                        class="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all group relative overflow-hidden {{ ($souvenir->stock ?? 0) <= 0 ? 'opacity-70' : '' }}">
                         <a href="{{ Route::has('souvenir.detail') ? route('souvenir.detail', $souvenir->id) : '#' }}"
                             class="block">
                             <div class="aspect-square rounded-2xl bg-slate-50 mb-4 overflow-hidden relative">
                                 <img src="{{ $souvenir->images->isNotEmpty() ? asset('storage/' . $souvenir->images->first()->filename) : 'https://placehold.co/400x400' }}"
                                     alt="{{ $souvenir->name }}"
                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                @if (($souvenir->stock ?? 0) <= 0)
+                                    <div class="absolute inset-0 bg-slate-900/40 flex items-center justify-center">
+                                        <span
+                                            class="text-[8px] font-black bg-slate-900 text-white px-2 py-1 rounded">HABIS</span>
+                                    </div>
+                                @endif
                             </div>
                             <h4
                                 class="text-xs font-bold text-slate-800 truncate group-hover:text-blue-600 transition-colors">
                                 {{ $souvenir->name }}
                             </h4>
-                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Tersedia</p>
+                            <p class="text-[9px] text-slate-400 mt-1 font-bold">Stok: {{ $souvenir->stock ?? 0 }}</p>
                         </a>
 
                         <div class="relative mt-2 h-[35px] flex items-center">
@@ -212,14 +218,21 @@
                                 Rp {{ number_format($souvenir->price ?? 0, 0, ',', '.') }}
                             </p>
 
-                            <button wire:click="addToCart({{ $souvenir->id }}, 'souvenir')"
-                                class="absolute inset-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-xl flex items-center justify-center gap-1 hover:bg-blue-600">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                Ke Keranjang
-                            </button>
+                            @if (($souvenir->stock ?? 0) > 0)
+                                <button wire:click="addToCart({{ $souvenir->id }}, 'souvenir')"
+                                    class="absolute inset-0 bg-slate-900 text-white text-[9px] font-black uppercase tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-xl flex items-center justify-center gap-1 hover:bg-blue-600">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 4v16m8-8H4" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                    Ke Keranjang
+                                </button>
+                            @else
+                                <button disabled
+                                    class="absolute inset-0 bg-slate-100 text-slate-400 text-[9px] font-black uppercase rounded-xl flex items-center justify-center cursor-not-allowed">
+                                    Habis
+                                </button>
+                            @endif
                         </div>
                     </div>
                 @empty
