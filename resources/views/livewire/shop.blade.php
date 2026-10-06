@@ -35,17 +35,17 @@
 
                 {{-- Tab Switcher --}}
                 <div class="bg-slate-100 p-1 rounded-2xl flex">
-                    <button wire:click="$wire.set('viewMode', 'kits')"
+                    <button wire:click="$set('viewMode', 'kits')"
                         class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'kits' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">
-                        Kits
+                        Bunddle
                     </button>
-                    <button wire:click="$wire.set('viewMode', 'items')"
+                    <button wire:click="$set('viewMode', 'items')"
                         class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'items' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">
-                        Items
+                        Item Robotik
                     </button>
-                    <button wire:click="$wire.set('viewMode', 'souvenirs')"
+                    <button wire:click="$set('viewMode', 'souvenirs')"
                         class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $viewMode == 'souvenirs' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-400' }}">
-                        Souvenirs
+                        Souvenir
                     </button>
                 </div>
             </div>
