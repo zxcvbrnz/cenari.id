@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Souvenir extends Model
 {
-    protected $fillable = ['name', 'price', 'description'];
+    protected $fillable = ['name', 'price', 'description', 'stock'];
 
     public function images()
     {
