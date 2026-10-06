@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Item;
 use App\Models\KitRobotic;
 use App\Models\Order;
+use App\Models\Souvenir;
 use App\Models\UserAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -96,7 +97,7 @@ class Cart extends Component
             foreach ($cart as $item) {
                 $order->items()->create([
                     'product_id' => $item['id'],
-                    'product_type' => $item['type'] == 'kit' ? KitRobotic::class : Item::class,
+                    'product_type' => $item['type'] == 'kit' ? KitRobotic::class : ($item['type'] == 'souvenir' ? Souvenir::class : Item::class),
                     'name' => $item['name'],
                     'price' => $item['price'],
                     'quantity' => $item['quantity'],

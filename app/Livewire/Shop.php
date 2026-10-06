@@ -33,7 +33,7 @@ class Shop extends Component
         $key = $type . '_' . $id;
         $product_price = 0;
         $product_image = null;
-        $currentStock = 9999; // Default untuk souvenir karena tidak memiliki kolom stok di skema
+        $currentStock = 0;
 
         if ($type === 'kit') {
             $product = KitRobotic::with(['images', 'items', 'moduls'])->find($id);
@@ -70,20 +70,18 @@ class Shop extends Component
             $product_price = $product->price;
             $product_image = $product->images->first()->filename ?? null;
         } elseif ($type === 'souvenir') {
-            // Logika baru untuk Souvenir
             $product = Souvenir::with('images')->find($id);
 
-            if (!$product) {
+            if (!$product || $product->stock <= 0) {
                 $this->dispatch('swal:modal', [
-                    'title' => 'Gagal!',
+                    'title' => 'Kosong!',
                     'icon' => 'error',
-                    'text' => 'Data souvenir tidak ditemukan.'
+                    'text' => 'Stok souvenir ini sudah habis.'
                 ]);
                 return;
             }
 
-            // Karena skema souvenir tidak memiliki kolom stok, dianggap selalu tersedia
-            $currentStock = 999;
+            $currentStock = $product->stock;
             $product_price = $product->price;
             $product_image = $product->images->first()->filename ?? null;
         }
